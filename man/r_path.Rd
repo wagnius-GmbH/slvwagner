@@ -6,18 +6,16 @@
 \usage{
 r_path(path = "clipboard")
 }
+\arguments{
+\item{empty}{no argument needed}
+}
 \value{
 Character vector of R compatible file path
 }
 \description{
-Copy the file path from in the windows explorer to your clipboard and call the function with no argument.
-The R compatible file Path will be returned
-}
-\details{
-Copy the file path from in the windows explorer to your clipboard and call the function with no argument.
+Copy the file path from in the windows explorer to your clipboard and call the function with no argument.The R compatible file Path will be returned
 }
 \examples{
-Importent: Copy file path first to the cliboard.
+Importend: Copy file path first to the cliboard.
 r_path()
 }
-\keyword{conversion}
