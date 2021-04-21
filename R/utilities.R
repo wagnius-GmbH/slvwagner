@@ -2,9 +2,10 @@
 #'
 #'Copy the file path from in the windows explorer to your clipboard and call the function with no argument.
 #'
-#' @name slvwagner
+#' @name r_path
 #' @description Copy the file path from in the windows explorer to your clipboard and call the function with no argument.
 #' The R compatible file Path will be returned
+
 #' @keywords conversion
 #' @param empty
 #' @return Character vector of R compatible file path
