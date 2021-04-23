@@ -3,4 +3,5 @@
 export(math_betrag)
 export(math_circle_from3points)
 export(math_inbetweenAngle)
+export(math_slerp)
 export(r_path)

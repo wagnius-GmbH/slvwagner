@@ -94,8 +94,87 @@ math_circle_from3points<-function(x,type = "tibble"){
 #' u <- c(-12,13, -2.56)
 #' v <- c(3,5,-100)
 #' math_inbetweenAngle(u,v)
+#' @
 #' @export
 
 math_inbetweenAngle <- function(u,v){
   return(acos(sum(u*v)/(sqrt(sum(u^2))*sqrt(sum(v^2)))))
 }
+
+
+#######################################
+#' slerp  by 3 points and a given radius.
+#'
+#' @name math_slerp
+#' @description
+#' Radius interpolation by 3 points and a given radius.
+#' The centrer point is used to for linear function through x1 and cp as well as for linear function through x2 and cp.
+#' The common point therefore is cp and will be used as position vector.
+#' @param  R radius
+#' @param  x1 first point vector
+#' @param  x2 second point vector
+#' @param  cp position vector
+#' @param  nb_points cout of points to generate each radius vector
+#' @author Florian Wagner
+#' @returns
+#' Returns point matrix with the coordinates for every generated point \code{x}
+#' @examples
+#' Testing
+#'  df <- math_slerp(R  =1,
+#'                   x1 = c(-10,-5,50),
+#'                   x2 = c(-20,10,2),
+#'                   cp = c(10,-10,10),
+#'                   nb_points = 200)
+#'
+#' Plot 3D
+#' library(rgl)
+#' plot3d( df$x, df$y, df$z, type = "p", lwd = 2, top = TRUE,
+#'         col = rainbow(nrow(df_points)),
+#'         aspect = c(diff(c(min(df$x),max(df$x))),
+#'                    diff(c(min(df$y),max(df$y))),
+#'                    diff(c(min(df$z),max(df$z)))
+#'                    ))
+#' @export
+
+math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radius, Punktanzahl
+  #(CenterPoint ist der Ortsvektor)
+  #Verschieben des Koordinatensystems: Neuer Ursprung cp
+  sp <- x1-cp
+  cp <- cp-cp
+  ep <- x2-cp
+  #Stuetzvektoren
+  s1l   <- sp-cp #Stuetzvektor aus Ortsvektor und Startpunkt
+  s2l   <- ep-cp #Stuetzvektor aus Ortsvektor und Endpunkt
+  #Stuetzvektoren gleich gross machen
+  s1 <- s1l*math_betrag(s2l)
+  s2 <- s2l*math_betrag(s1l)
+  #Skallierung der Stuetzvektoren auf Betrag = 1 =>Einheisvektoren
+  skalierung <- math_betrag(s1)
+  s1 <- s1/skalierung
+  s2 <- s2/skalierung
+  #Zwischenwinkel der beiden Vektoren
+  phi<-math_inbetweenAngle(s1,s2)
+  print(paste0("Zwischenwinkel s1,s2: ",round((phi/pi)*180,digits = 3),"°"))
+  ###############################################################################
+  #Slerp Einheitsvektoren mit s1,s2
+  t <- seq(0,1,1/nb_points)#Zahl zwischen Null und eins 0...1 die den Winkel aufteilt
+  slerp <- data.frame(x=t,y=t,z=t)
+  slerp_transposed <- t(slerp)
+  for(i in 1:length(t)){
+    slerp_transposed[,i] <- (sin((1-t[i])*phi)/sin(phi))*(s1)+(sin(t[i]*phi)/sin(phi)*(s2))
+    #slerp_transposed[,i] <- slerp_transposed[,i]+cp_input
+  }
+  #Vektoren strecken mit vorgegebenen Radius R
+  slerp <- t(slerp_transposed*R)
+  #Data conversion
+  df_points <- as.data.frame(matrix(c(cp),ncol = 3,byrow = TRUE),.name_repair = NULL)
+  names(df_points) <- c("x","y","z")
+  #Daten zusammenfuegen
+  df_points <- rbind(df_points,slerp)
+  #Koordinaten auf cp zurueckverschieben
+  for(i in 1:nrow(df_points)){
+    df_points[i,]<-df_points[i,]+cp
+  }
+  return(df_points)
+}
+
