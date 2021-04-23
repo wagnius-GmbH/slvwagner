@@ -27,19 +27,19 @@ The common point therefore is cp and will be used as position vector.
 }
 \examples{
 Testing
- df <- math_slerp(R  =1,
-                  x1 = c(-10,-5,50),
-                  x2 = c(-20,10,2),
-                  cp = c(10,-10,10),
-                  nb_points = 200)
+m <- math_slerp(R  =1,
+               x1 = c(-10,-5,50),
+               x2 = c(-20,10,2),
+               cp = c(10,-10,10),
+               nb_points = 10)
 
 Plot 3D
 library(rgl)
-plot3d( df$x, df$y, df$z, type = "p", lwd = 2, top = TRUE,
-        col = rainbow(nrow(df_points)),
-        aspect = c(diff(c(min(df$x),max(df$x))),
-                   diff(c(min(df$y),max(df$y))),
-                   diff(c(min(df$z),max(df$z)))
+plot3d( m[,1], m[,2], m[,3], type = "p", lwd = 2, top = TRUE,
+        #col = rainbow(nrow(m)),
+        aspect = c(diff(c(min(m[,1]),max(m[,1]))),
+                   diff(c(min(m[,2]),max(m[,2]))),
+                   diff(c(min(m[,3]),max(m[,3])))
                    ))
 }
 \author{
