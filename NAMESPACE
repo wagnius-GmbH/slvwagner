@@ -2,4 +2,5 @@
 
 export(math_betrag)
 export(math_circle_from3points)
+export(math_inbetweenAngle)
 export(r_path)

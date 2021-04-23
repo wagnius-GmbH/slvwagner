@@ -9,10 +9,11 @@ math_circle_from3points(x, type = "tibble")
 \arguments{
 \item{x}{numerical point matrix}
 
-\item{type}{c("tibble","vector")}
+\item{type}{c("tibble","vector")  to choose the return class}
 }
 \value{
 tibble or vector
+\code{x}
 }
 \description{
 Get the circle using 3 points.The function returns a tibble (dataframe) or

@@ -27,10 +27,11 @@ math_betrag <- function(x) {
 #' Get the circle using 3 points.The function returns a tibble (dataframe) or
 #' a named vector with the center point and the radius.
 #' @param x numerical point matrix
-#' @param type c("tibble","vector")
+#' @param type c("tibble","vector")  to choose the return class
 #' @author Florian Wagner
 #' @returns
 #' tibble or vector
+#' \code{x}
 #' @examples
 #' Matrix
 #' x <- matrix(c(c(-2.23 , 4.389 ),
@@ -68,4 +69,33 @@ math_circle_from3points<-function(x,type = "tibble"){
       writeLines("unknown type")
     }
   }
+}
+
+
+#######################################
+#' Angle between 2 vectors
+#'
+#' @name math_inbetweenAngle
+#' @description
+#' Get the angle between 2 vectors. Returns the smallest Angle between 2 vectors (scalar) in radiant.
+#' @param u fist vector
+#' @param v second vector
+#' @author Florian Wagner
+#' @returns
+#' Returns the smallest Angle between 2 vectors (scalar) in radiant.
+#' \code{x}
+#' @examples
+#' 2D
+#' u <- c(-0,1)
+#' v <- c(1,0)
+#' math_inbetweenAngle(u,v)
+#'
+#'3D
+#' u <- c(-12,13, -2.56)
+#' v <- c(3,5,-100)
+#' math_inbetweenAngle(u,v)
+#' @export
+
+math_inbetweenAngle <- function(u,v){
+  return(acos(sum(u*v)/(sqrt(sum(u^2))*sqrt(sum(v^2)))))
 }
