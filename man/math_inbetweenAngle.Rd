@@ -16,7 +16,7 @@ Returns the smallest Angle between 2 vectors (scalar) in radiant.
 \code{x}
 }
 \description{
-Get the angle between 2 vectors. Returns the smallest Angle between 2 vectors (scalar) in radiant.
+Get the angle between 2 vectors. Returns the smallest Angle between 2 vectors in radiant.
 }
 \examples{
 2D

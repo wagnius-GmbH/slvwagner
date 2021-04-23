@@ -13,9 +13,9 @@ r_path(path = "clipboard")
 Character vector of R compatible file path
 }
 \description{
-Copy the file path from in the windows explorer to your clipboard and call the function with no argument.The R compatible file Path will be returned
+Copy the file path from windows explorer to your clipboard and call the function with no argument.The R compatible file Path will be returned
 }
 \examples{
-Importend: Copy file path first to the cliboard.
+Importend: Copy file path first to the cliboard before calling the function.
 r_path()
 }

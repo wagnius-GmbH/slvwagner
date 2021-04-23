@@ -77,7 +77,7 @@ math_circle_from3points<-function(x,type = "tibble"){
 #'
 #' @name math_inbetweenAngle
 #' @description
-#' Get the angle between 2 vectors. Returns the smallest Angle between 2 vectors (scalar) in radiant.
+#' Get the angle between 2 vectors. Returns the smallest Angle between 2 vectors in radiant.
 #' @param u fist vector
 #' @param v second vector
 #' @author Florian Wagner

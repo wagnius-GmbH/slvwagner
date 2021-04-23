@@ -1,11 +1,13 @@
 #' Convert Windows file path to R compatible file path
 #'
-#'Copy the file path from in the windows explorer to your clipboard and call the function with no argument.The R compatible file Path will be returned
+#' @name r_path
+#' @description
+#'Copy the file path from windows explorer to your clipboard and call the function with no argument.The R compatible file Path will be returned
 
 #' @param empty no argument needed
 #' @return Character vector of R compatible file path
 #' @examples
-#' Importend: Copy file path first to the cliboard.
+#' Importend: Copy file path first to the cliboard before calling the function.
 #' r_path()
 #' @export
 
