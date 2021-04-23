@@ -2,7 +2,7 @@
 % Please edit documentation in R/math.R
 \name{math_betrag}
 \alias{math_betrag}
-\title{Magnitued of a vector}
+\title{Magnitude of a vector}
 \usage{
 math_betrag(x)
 }
@@ -10,11 +10,11 @@ math_betrag(x)
 \item{x}{numerical vector}
 }
 \value{
-numeriacal vector of lenght one
+numerical vector of length one
 \code{x}
 }
 \description{
-Get the magnitude of a vector of any lenght
+Get the magnitude of a vector of any length
 }
 \details{
 Get the magnitude of a vector of any lenght
@@ -24,5 +24,5 @@ math_betrag(c(1,1))
 math_betrag(c(1,1,1))
 }
 \author{
-Florian Wagner slvwagner@gmail.com
+Florian Wagner
 }
