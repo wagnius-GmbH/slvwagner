@@ -19,6 +19,9 @@ vector length l
 \description{
 linear function with parameter slope and intercept given by data frame.
 }
+\details{
+\eqn{f(x)=mx+b}
+}
 \examples{
 math_lf(-12:10,0.8,3.265)
 }

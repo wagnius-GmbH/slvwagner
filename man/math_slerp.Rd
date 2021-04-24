@@ -22,14 +22,20 @@ Returns point matrix with the calculated coordinates \code{x}
 }
 \description{
 Radius interpolation by 3 points and a given radius.
-The centrer point is used to for linear function through x1 and cp as well as for linear function through x2 and cp.
+The Radius interpolation will be calculated using the cp = conmen or centrer point and the lines defined by x1,x2 and the comon center point cp
 The common point therefore is cp and will be used as position vector.
 }
+\details{
+\deqn{sin[(1-t)*phi] / sin(phi) * x1   +  sin(t*phi/sin(phi)  *  x2)}
+phi ==> smallest angel between vector x1 and x2
+\url{https://en.wikipedia.org/wiki/Slerp}
+}
 \examples{
-Testing
-p <- t(as.matrix(data.frame(x1 = c(-10,-5,50),x2 = c(-20,10,2),cp = c(10,-10,10))))
+p <- t(as.matrix(data.frame(x1 = c(-10,-5,50),
+                            x2 = c(-20,10,2),
+                            cp = c(10,-10,10))))
 
-m <- math_slerp(R  =35,
+m <- math_slerp(R  =10,
                 x1 = p["x1",],
                 x2 = p["x2",],
                 cp = p["cp",],

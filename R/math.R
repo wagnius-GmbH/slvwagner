@@ -110,6 +110,7 @@ math_inbetweenAngle <- function(u,v){
 #' @name math_lf
 #' @description
 #' linear function with parameter slope and intercept given by data frame.
+#' @details \eqn{f(x)=mx+b}
 #' @param x vector
 #' @param m slope
 #' @param b intercept
@@ -194,8 +195,12 @@ math_lf_fromPoints <- function (lf){
 #' @name math_slerp
 #' @description
 #' Radius interpolation by 3 points and a given radius.
-#' The centrer point is used to for linear function through x1 and cp as well as for linear function through x2 and cp.
+#' The Radius interpolation will be calculated using the cp = conmen or centrer point and the lines defined by x1,x2 and the comon center point cp
 #' The common point therefore is cp and will be used as position vector.
+#' @details
+#' \deqn{sin[(1-t)*phi] / sin(phi) * x1   +  sin(t*phi/sin(phi)  *  x2)}
+#' phi ==> smallest angel between vector x1 and x2
+#' \url{https://en.wikipedia.org/wiki/Slerp}
 #' @param  R radius
 #' @param  x1 first point vector
 #' @param  x2 second point vector
@@ -206,9 +211,11 @@ math_lf_fromPoints <- function (lf){
 #' @returns
 #' Returns point matrix with the calculated coordinates \code{x}
 #' @examples
-#' p <- t(as.matrix(data.frame(x1 = c(-10,-5,50),x2 = c(-20,10,2),cp = c(10,-10,10))))
+#' p <- t(as.matrix(data.frame(x1 = c(-10,-5,50),
+#'                             x2 = c(-20,10,2),
+#'                             cp = c(10,-10,10))))
 #'
-#' m <- math_slerp(R  =35,
+#' m <- math_slerp(R  =10,
 #'                 x1 = p["x1",],
 #'                 x2 = p["x2",],
 #'                 cp = p["cp",],
@@ -227,12 +234,12 @@ math_lf_fromPoints <- function (lf){
 math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radius, Punkteanzahl
   #(cp => Ortsvektor)
   #Verschieben des Koordinatensystems: Neuer Ursprung cp
-  sp <- -x1-cp #Stützvektor
-  ep <- -x2-cp #Stützvektor
+  sp <- x1-cp #Stützvektor
+  ep <- x2-cp #Stützvektor
 
   #Stuetzvektoren
-  s1l   <- sp-cp #Stuetzvektor aus Ortsvektor und Startpunkt
-  s2l   <- ep-cp #Stuetzvektor aus Ortsvektor und Endpunkt
+  s1l   <- sp-c(0,0,0) #Stuetzvektor aus Ortsvektor und Startpunkt
+  s2l   <- ep-c(0,0,0) #Stuetzvektor aus Ortsvektor und Endpunkt
   #Stuetzvektoren gleich gross machen
   s1 <- s1l*math_betrag(s2l)
   s2 <- s2l*math_betrag(s1l)
