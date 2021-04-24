@@ -13,12 +13,12 @@ math_slerp(R, x1, x2, cp, nb_points = 10)
 
 \item{x2}{second point vector}
 
-\item{cp}{position vector}
+\item{cp}{position vector, common centrer}
 
-\item{nb_points}{cout of points to generate each radius vector}
+\item{nb_points}{count of points to generate for the radius interpolation}
 }
 \value{
-Returns point matrix with the coordinates for every generated point \code{x}
+Returns point matrix with the calculated coordinates \code{x}
 }
 \description{
 Radius interpolation by 3 points and a given radius.
@@ -27,13 +27,15 @@ The common point therefore is cp and will be used as position vector.
 }
 \examples{
 Testing
-m <- math_slerp(R  =1,
-               x1 = c(-10,-5,50),
-               x2 = c(-20,10,2),
-               cp = c(10,-10,10),
-               nb_points = 10)
+p <- t(as.matrix(data.frame(x1 = c(-10,-5,50),x2 = c(-20,10,2),cp = c(10,-10,10))))
 
-Plot 3D
+m <- math_slerp(R  =35,
+                x1 = p["x1",],
+                x2 = p["x2",],
+                cp = p["cp",],
+                nb_points = 20)
+m <- rbind(p,m)
+#Plot 3D
 library(rgl)
 plot3d( m[,1], m[,2], m[,3], type = "p", lwd = 2, top = TRUE,
         #col = rainbow(nrow(m)),
@@ -44,4 +46,5 @@ plot3d( m[,1], m[,2], m[,3], type = "p", lwd = 2, top = TRUE,
 }
 \author{
 Florian Wagner
+\email{florian.wagner@wagnius.ch}
 }

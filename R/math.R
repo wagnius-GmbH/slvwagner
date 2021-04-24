@@ -11,6 +11,7 @@
 #' @examples math_betrag(c(1,1))
 #' @examples math_betrag(c(1,1,1))
 #' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
 #' @export
 
 
@@ -29,6 +30,7 @@ math_betrag <- function(x) {
 #' @param x numerical point matrix
 #' @param type c("tibble","vector")  to choose the return class
 #' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
 #' @returns
 #' tibble or vector
 #' \code{x}
@@ -81,6 +83,7 @@ math_circle_from3points<-function(x,type = "tibble"){
 #' @param u fist vector
 #' @param v second vector
 #' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
 #' @returns
 #' Returns the smallest Angle between 2 vectors (scalar) in radiant.
 #' \code{x}
@@ -94,13 +97,96 @@ math_circle_from3points<-function(x,type = "tibble"){
 #' u <- c(-12,13, -2.56)
 #' v <- c(3,5,-100)
 #' math_inbetweenAngle(u,v)
-#' @
+#'
 #' @export
 
 math_inbetweenAngle <- function(u,v){
   return(acos(sum(u*v)/(sqrt(sum(u^2))*sqrt(sum(v^2)))))
 }
 
+#######################################
+#' linear function
+#'
+#' @name math_lf
+#' @description
+#' linear function with parameter slope and intercept given by data frame.
+#' @param x vector
+#' @param m slope
+#' @param b intercept
+#' @return vector length l
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @examples
+#' math_lf(-12:10,0.8,3.265)
+#' @export
+
+math_lf <- function(x,m,b){#dataframe spalten $intercept und $slope
+  return(m*x+b)
+}
+
+
+#######################################
+#' find linear function perpendicular to linear function
+#'
+#' @name math_lf_perpendicular
+#' @description
+#' find linear function perpendicular to another linear function defined by a given point.
+#' @param lf data.frame(slope = c(0.12,0.78),
+#'                                  intercept = c(-25, 13))
+#' @param point vector
+#' @return data.frame(x,y) \code{x}
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @examples
+#' math_lf_perpendicular(point = c(2,-9),
+#'                       data.frame(slope =c(-2,5),intercept = c(3,5)))
+#' @export
+math_lf_perpendicular <- function(point,lf){ #point c(x,y) lf(intercept, slope)
+  s=-1/lf$slope
+  i =point[2]-(math_lf_rev_slope(lf$slope)*point[1])
+  return(data.frame(intercept = i, slope = s))
+}
+
+#######################################
+#' find perpendicular slope to linerar function
+#'
+#' @name math_lf_rev_slope
+#' @description
+#' find perpendicular slope to linerar function $-\frac{1}{slope}$
+#' @param lf data.frame(slope = c(0.12,0.78),
+#'                                  intercept = c(-25, 13))
+#' @param point vector
+#' @return data.frame(x,y) \code{x}
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @examples
+#' math_lf_rev_slope(c(0.1,-0.89))
+#' @export
+#senkrechte zu einer geraden
+math_lf_rev_slope <- function(slope){#
+  return(-1/slope)
+}
+
+#######################################
+#' linear function from 2 points
+#'
+#' @name math_lf_fromPoints
+#' @description
+#' get linear fuction from 2 points
+#' @param lf data.frame(x1,x2) or matrix[x1,x2]
+#'
+#' @return data.frame(slope, intercept) \code{x}
+#' #' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @examples
+#' math_lm_from_Points(data.frame(c(-2,5), c(3,5)))
+#' @export
+math_lf_fromPoints <- function (lf){
+  delta <- lf[1,]-lf[2,]
+  s <- delta[2]/delta[1]
+  i <- lf[1,2]-lf[1,1]*delta[2]/delta[1]
+  return(data.frame(slope = s,intercept = i))
+}
 
 #######################################
 #' slerp  by 3 points and a given radius.
@@ -113,20 +199,22 @@ math_inbetweenAngle <- function(u,v){
 #' @param  R radius
 #' @param  x1 first point vector
 #' @param  x2 second point vector
-#' @param  cp position vector
-#' @param  nb_points cout of points to generate each radius vector
+#' @param  cp position vector, common centrer
+#' @param  nb_points count of points to generate for the radius interpolation
 #' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' Returns point matrix with the coordinates for every generated point \code{x}
+#' Returns point matrix with the calculated coordinates \code{x}
 #' @examples
-#' Testing
-#' m <- math_slerp(R  =1,
-#'                x1 = c(-10,-5,50),
-#'                x2 = c(-20,10,2),
-#'                cp = c(10,-10,10),
-#'                nb_points = 10)
+#' p <- t(as.matrix(data.frame(x1 = c(-10,-5,50),x2 = c(-20,10,2),cp = c(10,-10,10))))
 #'
-#' Plot 3D
+#' m <- math_slerp(R  =35,
+#'                 x1 = p["x1",],
+#'                 x2 = p["x2",],
+#'                 cp = p["cp",],
+#'                 nb_points = 20)
+#' m <- rbind(p,m)
+#' #Plot 3D
 #' library(rgl)
 #' plot3d( m[,1], m[,2], m[,3], type = "p", lwd = 2, top = TRUE,
 #'         #col = rainbow(nrow(m)),
@@ -136,12 +224,12 @@ math_inbetweenAngle <- function(u,v){
 #'                    ))
 #' @export
 
-math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radius, Punktanzahl
-  #(CenterPoint ist der Ortsvektor)
+math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radius, Punkteanzahl
+  #(cp => Ortsvektor)
   #Verschieben des Koordinatensystems: Neuer Ursprung cp
-  sp <- x1-cp
-  cp <- cp-cp
-  ep <- x2-cp
+  sp <- -x1-cp #Stützvektor
+  ep <- -x2-cp #Stützvektor
+
   #Stuetzvektoren
   s1l   <- sp-cp #Stuetzvektor aus Ortsvektor und Startpunkt
   s2l   <- ep-cp #Stuetzvektor aus Ortsvektor und Endpunkt
@@ -154,27 +242,14 @@ math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Rad
   s2 <- s2/skalierung
   #Zwischenwinkel der beiden Vektoren
   phi<-math_inbetweenAngle(s1,s2)
-  print(paste0("Zwischenwinkel s1,s2: ",round((phi/pi)*180,digits = 3),"°"))
-  ###############################################################################
-  #Slerp Einheitsvektoren mit s1,s2
+  #Slerp zwischen den Einheitsvektoren mit s1,s2
   t <- seq(0,1,1/nb_points)#Zahl zwischen Null und eins 0...1 die den Winkel aufteilt
-  slerp <- data.frame(x=t,y=t,z=t)
-  slerp_transposed <- t(slerp)
-  for(i in 1:length(t)){
-    slerp_transposed[,i] <- (sin((1-t[i])*phi)/sin(phi))*(s1)+(sin(t[i]*phi)/sin(phi)*(s2))
-    #slerp_transposed[,i] <- slerp_transposed[,i]+cp_input
-  }
+  #slerp Berechnung
+  slerp <- t(sapply(sin((1-t)*phi)/sin(phi), function(i) i*s1, simplify = TRUE)+
+               sapply(sin(t*phi)/sin(phi), function(i) i*s2, simplify = TRUE ))
   #Vektoren strecken mit vorgegebenen Radius R
-  slerp <- t(slerp_transposed*R)
-  #Data conversion
-  df_points <- matrix(c(cp),ncol = 3,byrow = TRUE)
-  names(df_points) <- paste0("x",1:ncol(df_points))
-  #Daten zusammenfuegen
-  df_points <- rbind(df_points,slerp)
-  #Koordinaten auf cp zurueckverschieben
-  for(i in 1:nrow(df_points)){
-    df_points[i,]<-df_points[i,]+cp
-  }
-  return(df_points)
+  slerp <- slerp*R
+  #Koordinaten um cp (Ortsvektor) verschieben
+  return(t(apply(slerp, 1, function(i) i + cp)))
 }
 

@@ -25,4 +25,5 @@ math_betrag(c(1,1,1))
 }
 \author{
 Florian Wagner
+\email{florian.wagner@wagnius.ch}
 }

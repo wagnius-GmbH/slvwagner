@@ -28,7 +28,9 @@ math_inbetweenAngle(u,v)
 u <- c(-12,13, -2.56)
 v <- c(3,5,-100)
 math_inbetweenAngle(u,v)
+
 }
 \author{
 Florian Wagner
+\email{florian.wagner@wagnius.ch}
 }

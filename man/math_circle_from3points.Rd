@@ -35,4 +35,5 @@ math_circle_from3points(x, type = "vector")
 }
 \author{
 Florian Wagner
+\email{florian.wagner@wagnius.ch}
 }
