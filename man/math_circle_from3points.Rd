@@ -4,23 +4,20 @@
 \alias{math_circle_from3points}
 \title{Circle from 3 points}
 \usage{
-math_circle_from3points(x, type = "tibble")
+math_circle_from3points(x, type = "m")
 }
 \arguments{
-\item{x}{numerical point matrix}
+\item{x}{numerical vector}
 
-\item{type}{c("tibble","vector")  to choose the return class}
+\item{type}{c("df,"m","v"), df = data.frame(), m = matrix(), v = c()}
 }
 \value{
-tibble or vector
+data frame, matrix or vector
 \code{x}
 }
 \description{
-Get the circle using 3 points.The function returns a tibble (dataframe) or
+calculate circle using 3 points.The function returns a tibble (dataframe) or
 a named vector with the center point and the radius.
-}
-\details{
-get center and radius from point matrix
 }
 \examples{
 Matrix
@@ -30,8 +27,8 @@ x <- matrix(c(c(-2.23 , 4.389 ),
             nrow = 3, byrow = TRUE)
 
 math_circle_from3points(x)
-
-math_circle_from3points(x, type = "vector")
+math_circle_from3points(x, type = "df")
+math_circle_from3points(x, type = "v")
 }
 \author{
 Florian Wagner

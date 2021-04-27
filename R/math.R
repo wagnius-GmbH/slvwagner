@@ -1,7 +1,6 @@
 ####################################
 #' Magnitude of a vector
 #'
-#' Get the magnitude of a vector of any lenght
 #' @name math_betrag
 #' @description Get the magnitude of a vector of any length
 
@@ -22,17 +21,17 @@ math_betrag <- function(x) {
 #######################################
 #' Circle from 3 points
 #'
-#' get center and radius from point matrix
 #' @name math_circle_from3points
 #' @description
-#' Get the circle using 3 points.The function returns a tibble (dataframe) or
+#' calculate circle using 3 points.The function returns a tibble (dataframe) or
 #' a named vector with the center point and the radius.
 #' @param x numerical point matrix
-#' @param type c("tibble","vector")  to choose the return class
+#' @param x numerical vector
+#' @param type c("df,"m","v"), df = data.frame(), m = matrix(), v = c()
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' tibble or vector
+#' data frame, matrix or vector
 #' \code{x}
 #' @examples
 #' Matrix
@@ -42,12 +41,12 @@ math_betrag <- function(x) {
 #'             nrow = 3, byrow = TRUE)
 #'
 #' math_circle_from3points(x)
-#'
-#' math_circle_from3points(x, type = "vector")
+#' math_circle_from3points(x, type = "df")
+#' math_circle_from3points(x, type = "v")
 #' @export
 
-math_circle_from3points<-function(x,type = "tibble"){
-  if(sum(class(A)==c("matrix","array"))==2){
+math_circle_from3points<-function(x,type = "m"){
+  if(sum(class(x)==c("matrix","array"))==2){
     A <- cbind(c(1,1,1), x)
     b <- c(-(A[1,2]^2+A[1,3]^2),
            -(A[2,2]^2+A[2,3]^2),
@@ -57,18 +56,24 @@ math_circle_from3points<-function(x,type = "tibble"){
   }else{
     return(writeLines(past("only point matrix can be calculated => matrix[3][2] 3points and 2 coordinates")))
   }
-  if(type == "tibble"){
-    return(tibble(x_center = -c_result[2]/2,
-                  y_center = -c_result[3]/2,
-                  r  = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1]))
+  if(type == "m"){
+    return(as.matrix(data.frame(x_center = -c_result[2]/2,
+                                y_center = -c_result[3]/2,
+                                r  = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1])))
     )
   }else{
-    if(type == "vector"){
+    if(type == "v"){
       c(x_center = -c_result[2]/2,
         y_center = -c_result[3]/2,
         r = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1]))
     }else{
-      writeLines("unknown type")
+      if(type == "df"){
+        data.frame(x_center = -c_result[2]/2,
+                   y_center = -c_result[3]/2,
+                   r  = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1]))
+      }else{
+        writeLines(paste("math_circle_from3points:\nunknown type argument type:",type))
+        }
     }
   }
 }
@@ -114,14 +119,15 @@ math_inbetweenAngle <- function(u,v){
 #' @param x vector
 #' @param m slope
 #' @param b intercept
-#' @return vector length l
+#' @return vector \code{x}
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
 #' math_lf(-12:10,0.8,3.265)
+#' plot(math_lf(-12:10,0.8,3.265))
 #' @export
 
-math_lf <- function(x,m,b){#dataframe spalten $intercept und $slope
+math_lf <- function(x,m,b){
   return(m*x+b)
 }
 

@@ -16,9 +16,6 @@ numerical vector of length one
 \description{
 Get the magnitude of a vector of any length
 }
-\details{
-Get the magnitude of a vector of any lenght
-}
 \examples{
 math_betrag(c(1,1))
 math_betrag(c(1,1,1))

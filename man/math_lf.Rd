@@ -14,7 +14,7 @@ math_lf(x, m, b)
 \item{b}{intercept}
 }
 \value{
-vector length l
+vector \code{x}
 }
 \description{
 linear function with parameter slope and intercept given by data frame.
@@ -24,6 +24,7 @@ linear function with parameter slope and intercept given by data frame.
 }
 \examples{
 math_lf(-12:10,0.8,3.265)
+plot(math_lf(-12:10,0.8,3.265))
 }
 \author{
 Florian Wagner
