@@ -4,19 +4,34 @@
 \alias{math_lf_fromPoints}
 \title{linear function from 2 points}
 \usage{
-math_lf_fromPoints(lf)
+math_lf_fromPoints(x)
 }
 \arguments{
-\item{lf}{data.frame(x1,x2) or matrix[x1,x2]}
+\item{x}{matrix or data frame}
 }
 \value{
 data.frame(slope, intercept) \code{x}
-#' @author Florian Wagner
-\email{florian.wagner@wagnius.ch}
 }
 \description{
-get linear fuction from 2 points
+get linear fuction from 2 points x1 and x2
 }
 \examples{
-math_lm_from_Points(data.frame(c(-2,5), c(3,5)))
+x <- matrix(c(c(-2,5),
+              c( 3,3)), nrow = 2, byrow = FALSE)
+
+y <- data.frame(x1 = c(x = -1, y = -5),
+                x2 = c(x =  3, y =  3))
+
+math_lf_fromPoints(x)
+
+result <- math_lf_fromPoints(y)
+
+library(tidyverse)
+ggplot(as_tibble(t(y)),aes(x,y))+
+geom_point()+
+geom_abline(data = result,aes(slope = slope, intercept =intercept))
+}
+\author{
+Florian Wagner
+\email{florian.wagner@wagnius.ch}
 }

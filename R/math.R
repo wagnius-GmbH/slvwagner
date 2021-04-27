@@ -34,20 +34,28 @@ math_betrag <- function(x) {
 #' data frame, matrix or vector
 #' \code{x}
 #' @examples
-#' Matrix
 #' x <- matrix(c(c(-2.23 , 4.389 ),
 #'               c( 1.001,-3.23  ),
 #'               c(  15.5,-7.2365)),
-#'             nrow = 3, byrow = TRUE)
+#'               ncol = 3, byrow = FALSE)
+#' colnames(x) <- paste0("x",1:3)
+#' rownames(x)<- c("x","y")
 #'
 #' math_circle_from3points(x)
-#' math_circle_from3points(x, type = "df")
 #' math_circle_from3points(x, type = "v")
+#' result <- math_circle_from3points(x, type = "df")
+#'
+#' library(tidyverse)
+#' library(ggforce)
+#' ggplot()+
+#' geom_point(data = as.data.frame(t(x)),aes(x,y))+
+#' geom_circle(data = result, aes(x0 = x_center , y0 = y_center,r = r))+
+#' coord_fixed()
 #' @export
 
 math_circle_from3points<-function(x,type = "m"){
   if(sum(class(x)==c("matrix","array"))==2){
-    A <- cbind(c(1,1,1), x)
+    A <- cbind(c(1,1,1), t(x))
     b <- c(-(A[1,2]^2+A[1,3]^2),
            -(A[2,2]^2+A[2,3]^2),
            -(A[3,2]^2+A[3,3]^2))
@@ -95,12 +103,12 @@ math_circle_from3points<-function(x,type = "m"){
 #' @examples
 #' 2D
 #' u <- c(-0,1)
-#' v <- c(1,0)
+#' v <- c( 1,0)
 #' math_inbetweenAngle(u,v)
 #'
 #'3D
-#' u <- c(-12,13, -2.56)
-#' v <- c(3,5,-100)
+#' u <- c(-12, 13,   -2.56)
+#' v <- c(  3,  5, -100   )
 #' math_inbetweenAngle(u,v)
 #'
 #' @export
@@ -133,11 +141,11 @@ math_lf <- function(x,m,b){
 
 
 #######################################
-#' find linear function perpendicular to linear function
+#' Find linear function perpendicular to linear function through given point
 #'
 #' @name math_lf_perpendicular
 #' @description
-#' find linear function perpendicular to another linear function defined by a given point.
+#' Find linear function perpendicular to linear function through given point.
 #' @param lf data.frame(slope = c(0.12,0.78),
 #'                                  intercept = c(-25, 13))
 #' @param point vector
@@ -151,17 +159,17 @@ math_lf <- function(x,m,b){
 math_lf_perpendicular <- function(point,lf){ #point c(x,y) lf(intercept, slope)
   s=-1/lf$slope
   i =point[2]-(math_lf_rev_slope(lf$slope)*point[1])
-  return(data.frame(intercept = i, slope = s))
+  return(data.frame(slope = s,intercept = i))
 }
 
 #######################################
-#' find perpendicular slope to linerar function
+#' find perpendicular slope to linear function
 #'
 #' @name math_lf_rev_slope
 #' @description
-#' find perpendicular slope to linerar function $-\frac{1}{slope}$
-#' @param lf data.frame(slope = c(0.12,0.78),
-#'                                  intercept = c(-25, 13))
+#' find perpendicular slope to linear function
+#' @param lf data.frame(slope     = c(  0.12, 0.78),
+#'                      intercept = c(-25   ,13   ))
 #' @param point vector
 #' @return data.frame(x,y) \code{x}
 #' @author Florian Wagner
@@ -179,21 +187,35 @@ math_lf_rev_slope <- function(slope){#
 #'
 #' @name math_lf_fromPoints
 #' @description
-#' get linear fuction from 2 points
-#' @param lf data.frame(x1,x2) or matrix[x1,x2]
-#'
+#' get linear fuction from 2 points x1 and x2
+#' @param x matrix or data frame
 #' @return data.frame(slope, intercept) \code{x}
-#' #' @author Florian Wagner
+#' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
-#' math_lm_from_Points(data.frame(c(-2,5), c(3,5)))
+#' x <- matrix(c(c(-2,5),
+#'               c( 3,3)), nrow = 2, byrow = FALSE)
+#'
+#' y <- data.frame(x1 = c(x = -1, y = -5),
+#'                 x2 = c(x =  3, y =  3))
+#'
+#' math_lf_fromPoints(x)
+#'
+#' result <- math_lf_fromPoints(y)
+#'
+#' library(tidyverse)
+#' ggplot(as_tibble(t(y)),aes(x,y))+
+#' geom_point()+
+#' geom_abline(data = result,aes(slope = slope, intercept =intercept))
+
 #' @export
-math_lf_fromPoints <- function (lf){
-  delta <- lf[1,]-lf[2,]
+math_lf_fromPoints <- function (x){
+  delta <- x[,1]-x[,2]
   s <- delta[2]/delta[1]
-  i <- lf[1,2]-lf[1,1]*delta[2]/delta[1]
+  i <- x[1,2]-x[1,2]*delta[2]/delta[1]
   return(data.frame(slope = s,intercept = i))
 }
+
 
 #######################################
 #' slerp  by 3 points and a given radius.

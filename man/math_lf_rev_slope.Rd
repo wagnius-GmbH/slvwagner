@@ -2,13 +2,13 @@
 % Please edit documentation in R/math.R
 \name{math_lf_rev_slope}
 \alias{math_lf_rev_slope}
-\title{find perpendicular slope to linerar function}
+\title{find perpendicular slope to linear function}
 \usage{
 math_lf_rev_slope(slope)
 }
 \arguments{
-\item{lf}{data.frame(slope = c(0.12,0.78),
-intercept = c(-25, 13))}
+\item{lf}{data.frame(slope     = c(  0.12, 0.78),
+intercept = c(-25   ,13   ))}
 
 \item{point}{vector}
 }
@@ -16,7 +16,7 @@ intercept = c(-25, 13))}
 data.frame(x,y) \code{x}
 }
 \description{
-find perpendicular slope to linerar function $-\frac{1}{slope}$
+find perpendicular slope to linear function
 }
 \examples{
 math_lf_rev_slope(c(0.1,-0.89))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/math.R
 \name{math_lf_perpendicular}
 \alias{math_lf_perpendicular}
-\title{find linear function perpendicular to linear function}
+\title{Find linear function perpendicular to linear function through given point}
 \usage{
 math_lf_perpendicular(point, lf)
 }
@@ -16,7 +16,7 @@ intercept = c(-25, 13))}
 data.frame(x,y) \code{x}
 }
 \description{
-find linear function perpendicular to another linear function defined by a given point.
+Find linear function perpendicular to linear function through given point.
 }
 \examples{
 math_lf_perpendicular(point = c(2,-9),

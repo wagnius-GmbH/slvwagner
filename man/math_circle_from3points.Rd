@@ -20,15 +20,23 @@ calculate circle using 3 points.The function returns a tibble (dataframe) or
 a named vector with the center point and the radius.
 }
 \examples{
-Matrix
 x <- matrix(c(c(-2.23 , 4.389 ),
               c( 1.001,-3.23  ),
               c(  15.5,-7.2365)),
-            nrow = 3, byrow = TRUE)
+              ncol = 3, byrow = FALSE)
+colnames(x) <- paste0("x",1:3)
+rownames(x)<- c("x","y")
 
 math_circle_from3points(x)
-math_circle_from3points(x, type = "df")
 math_circle_from3points(x, type = "v")
+result <- math_circle_from3points(x, type = "df")
+
+library(tidyverse)
+library(ggforce)
+ggplot()+
+geom_point(data = as.data.frame(t(x)),aes(x,y))+
+geom_circle(data = result, aes(x0 = x_center , y0 = y_center,r = r))+
+coord_fixed()
 }
 \author{
 Florian Wagner
