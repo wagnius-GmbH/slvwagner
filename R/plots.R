@@ -1,6 +1,6 @@
 #' Get normal distributed overlay for faceted histogram
 #'
-#' @name get_gausOverlay
+#' @name plot_gausOverlay
 #' @description
 #' To compare histograms, it is best practice to facet each feature using ggplot.
 #' To know whether the distribution is similar to the normal gaussian distribution, an overlay with the gaussian distribution can help.
@@ -32,7 +32,7 @@
 #' # find the min and max values of all data an create a vector with defined bin size
 #' binwidth = 1
 #' c_bins <- seq(floor(min(df_transformed$value)),ceiling(max(df_transformed$value)),binwidth)
-#' df_gaus <- get_gausOverlay(df_data%>%as.list(),binwidth = binwidth, 10)
+#' df_gaus <- plot_gausOverlay(df_data%>%as.list(),binwidth = binwidth, 10)
 #'
 #' # facetted histogramms with normal distributed line overlay
 #' df_transformed%>%
@@ -44,7 +44,7 @@
 #'
 #' @export
 
-get_gausOverlay <- function(l_feature, binwidth = 1, ratio = 5) {
+plot_gausOverlay <- function(l_feature, binwidth = 1, ratio = 5) {
   data <- unlist(l_feature)
   bins <- seq(floor(min(data)),ceiling(max(data)),binwidth/ratio)
   l_gaus <- list()
