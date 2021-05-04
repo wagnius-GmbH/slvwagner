@@ -13,7 +13,7 @@
 #' @param l_feature named list of vectors (features)
 #' @param binwidth number to define the bin width, binwidth = 1
 #' @param ratio number to define how many more data points as bins are generated, ratio = 5
-#' @return tibble with coordinates x,y and feature name
+#' @return returns a tibble with coordinates x, y  and feature name
 #' @examples
 #' library(tidyverse)
 #' # create some data to Test
