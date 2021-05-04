@@ -3,7 +3,7 @@
 #' @name get_gausOverlay
 #' @description
 #' To compare histograms, it is best practice to facet each feature using ggplot.
-#' To know whether the distribution is similar to the normal gaussian distribution an overlay with the gaussian distribution can help.
+#' To know whether the distribution is similar to the normal gaussian distribution, an overlay with the gaussian distribution can help.
 #' @details
 #' The first argument is a named list of vectors to calculate the normal distribution for each vector,
 #' where as the name is representing the feature name or the facet in the histogram.
@@ -13,7 +13,7 @@
 #' @param l_feature named list of vectors (features)
 #' @param binwidth number to define the bin width, binwidth = 1
 #' @param ratio number to define how many more data points as bins are generated, ratio = 5
-#' @return returns a tibble with coordinates x, y  and feature name
+#' @return returns tibble with coordinates x, y and feature name
 #' @examples
 #' library(tidyverse)
 #' # create some data to Test

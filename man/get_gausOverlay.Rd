@@ -14,10 +14,10 @@ get_gausOverlay(l_feature, binwidth = 1, ratio = 5)
 \item{ratio}{number to define how many more data points as bins are generated, ratio = 5}
 }
 \value{
-tibble with coordinates x,y and feature name
+returns tibble with coordinates x, y and feature name
 }
 \description{
-To compare histograms it is best practice to facet each feature using ggplot.
+To compare histograms, it is best practice to facet each feature using ggplot.
 To know whether the distribution is similar to the normal gaussian distribution an overlay with the gaussian distribution can help.
 }
 \details{
