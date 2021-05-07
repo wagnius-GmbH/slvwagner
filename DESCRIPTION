@@ -1,7 +1,7 @@
 Package: slvwagner
 Type: Package
 Title: All stuff that I am missing
-Version: 0.2.0
+Version: 0.3.0
 Author: Florian Wagner
 Maintainer: Florian Wagner <slvwagner@gmail.com>
 Description: All stuff I am using a lot so I do not want to rewrite it over and over.
