@@ -1,16 +1,21 @@
 #' Get normal distributed overlay for faceted histogram
 #'
-#' @name plot_gausOverlay
+#' @name plot_gausOverlayData
 #' @description
-#' To compare histograms, it is best practice to facet each feature using ggplot.
+#' To compare histograms, it is best practice to facet each (diagram) feature using ggplot.
 #' To know whether the distribution is similar to the normal gaussian distribution, an overlay with the gaussian distribution can help.
+#' Of corse the Q-Q Plot is a more appropriated tool to compare normal distribution and sample distribution.
+#'
 #' @details
-#' The first argument is a named list of vectors to calculate the normal distribution for each vector,
-#' where as the name is representing the feature name or the facet in the histogram.
+#' The first argument is a (named) list of vectors or a (named) data frame to calculate the normal distribution for each vector,
+#' where as the name is representing the feature name or the facet in the histogram. If no names are provided the function
+#' paste("list_element",1:length(features)) will name the features.
 #' The second argument is the number of bins to be used in the histogram.
-#' The third argument is the ration or multiplier of, how many more data points are generated.
-#' This ensures that for small bin enough data points are available.
-#' @param l_feature named list of vectors (features)
+#' The third argument is the ration or multiplier of, how many more data points are generated than bins are ploted in the histogram.
+#' This ensures that for small bin count enough data points are available.
+#' To be able to generate a faceted plot the bin width is important to set equal in the ggplot call
+#' ggplot()+geom_histogram(aes(...),binwidth = 1). Check the examples for further information.
+#' @param features named list of vectors (features)
 #' @param binwidth number to define the bin width, binwidth = 1
 #' @param ratio number to define how many more data points as bins are generated, ratio = 5
 #' @return returns tibble with coordinates x, y and feature name
@@ -32,7 +37,7 @@
 #' # find the min and max values of all data an create a vector with defined bin size
 #' binwidth = 1
 #' c_bins <- seq(floor(min(df_transformed$value)),ceiling(max(df_transformed$value)),binwidth)
-#' df_gaus <- plot_gausOverlay(df_data%>%as.list(),binwidth = binwidth, 10)
+#' df_gaus <- plot_gausOverlayData(df_data%>%as.list(),binwidth = binwidth, 10)
 #'
 #' # facetted histogramms with normal distributed line overlay
 #' df_transformed%>%
@@ -44,22 +49,33 @@
 #'
 #' @export
 
-plot_gausOverlay <- function(l_feature, binwidth = 1, ratio = 5) {
-  data <- unlist(l_feature)
+plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
+  if(max(class(features)=="data.frame")>0){
+    features <- as.list(features)
+  }else{
+    if (is.null(names(features))){
+      names(features) <- paste("list_element",1:length(features))
+    }
+  }
+  data <- unlist(features)
   bins <- seq(floor(min(data)),ceiling(max(data)),binwidth/ratio)
   l_gaus <- list()
-  for(i in 1:length(l_feature)){
-    hist <- hist(l_feature[[i]], breaks = bins, plot = FALSE)#, main = paste(levels(df$Messungen)[i]))
+  for(i in 1:length(features)){
+    hist <- hist(features[[i]], breaks = bins, plot = FALSE)#, main = paste(levels(df$Messungen)[i]))
     #Normalverteilung
     if(hist$equidist == TRUE){
       multiplier <- hist$counts / hist$density
       multiplier <- mean(multiplier, na.rm = TRUE)*ratio
     }else{writeLines("Error: \ncan not overlay a histogram with non equal bin distance with normal distribution")}
-    gaus <- multiplier*dnorm(hist$breaks,mean = mean(l_feature[[i]]), sd = sd(l_feature[[i]]))
-    l_gaus[[i]] <- tibble(x= hist$breaks,
-                          y = gaus,
-                          feature = factor(rep(names(l_feature)[i],length(gaus))))%>%
-      mutate(y = if_else(is.na(y),0,y)) #NA`s mit 0 ersetzen
+    gaus <- multiplier*dnorm(hist$breaks,mean = mean(features[[i]]), sd = sd(features[[i]]))
+    l_gaus[[i]] <- data.frame(x= hist$breaks,
+                              y = gaus,
+                              feature = factor(rep(names(features)[i],length(gaus))))
+    l_gaus[[i]]$y <- ifelse(is.na(l_gaus[[i]]$y),0,l_gaus[[i]]$y) #NA`s mit 0 ersetzen
   }
-  bind_rows(l_gaus)
+  df_temp <- l_gaus[[1]]
+  for (i in 2:length(features)) {
+    df_temp <- rbind(df_temp,l_gaus[[i]])
+  }
+  return(df_temp)
 }
