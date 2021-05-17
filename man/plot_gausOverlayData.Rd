@@ -7,7 +7,7 @@
 plot_gausOverlayData(features, binwidth = 1, ratio = 5)
 }
 \arguments{
-\item{features}{named list of vectors (features)}
+\item{features}{list of vectors (features) or data frame}
 
 \item{binwidth}{number to define the bin width, binwidth = 1}
 
