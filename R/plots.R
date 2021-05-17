@@ -50,32 +50,38 @@
 #' @export
 
 plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
-  if(max(class(features)=="data.frame")>0){
-    features <- as.list(features)
-  }else{
-    if (is.null(names(features))){
-      names(features) <- paste("list_element",1:length(features))
+  # check data
+  if(is.data.frame(features)|| is.list(features) & is.null(features)){
+    # change df to list
+    if(is.data.frame(features)){
+      features <- as.list(features)
+    }# check for feature names
+    if(is.null(names(features))){ # if the feature does not have a feature name, create one according to the list elemente entry
+        names(features) <- paste("list_element",1:length(features))
     }
-  }
-  data <- unlist(features)
-  bins <- seq(floor(min(data)),ceiling(max(data)),binwidth/ratio)
-  l_gaus <- list()
-  for(i in 1:length(features)){
-    hist <- hist(features[[i]], breaks = bins, plot = FALSE)#, main = paste(levels(df$Messungen)[i]))
-    #Normalverteilung
-    if(hist$equidist == TRUE){
-      multiplier <- hist$counts / hist$density
-      multiplier <- mean(multiplier, na.rm = TRUE)*ratio
-    }else{writeLines("Error: \ncan not overlay a histogram with non equal bin distance with normal distribution")}
-    gaus <- multiplier*dnorm(hist$breaks,mean = mean(features[[i]]), sd = sd(features[[i]]))
-    l_gaus[[i]] <- data.frame(x= hist$breaks,
-                              y = gaus,
-                              feature = factor(rep(names(features)[i],length(gaus))))
-    l_gaus[[i]]$y <- ifelse(is.na(l_gaus[[i]]$y),0,l_gaus[[i]]$y) #NA`s mit 0 ersetzen
-  }
-  df_temp <- l_gaus[[1]]
-  for (i in 2:length(features)) {
-    df_temp <- rbind(df_temp,l_gaus[[i]])
-  }
-  return(df_temp)
+    data <- unlist(features)
+    bins <- seq(floor(min(data)),ceiling(max(data)),binwidth/ratio)
+    l_gaus <- list()
+    for(i in 1:length(features)){
+      hist <- hist(features[[i]], breaks = bins, plot = FALSE)#, main = paste(levels(df$Messungen)[i]))
+      #Normalverteilung
+      if(hist$equidist == TRUE){
+        multiplier <- hist$counts / hist$density
+        multiplier <- mean(multiplier, na.rm = TRUE)*ratio
+      }else{writeLines("Error: \ncan not overlay a histogram with non equal bin distance with normal distribution")}
+      gaus <- multiplier*dnorm(hist$breaks,mean = mean(features[[i]]), sd = sd(features[[i]]))
+      l_gaus[[i]] <- data.frame(x= hist$breaks,
+                                y = gaus,
+                                feature = factor(rep(names(features)[i],length(gaus))))
+      l_gaus[[i]]$y <- ifelse(is.na(l_gaus[[i]]$y),0,l_gaus[[i]]$y) #NA`s mit 0 ersetzen
+    }
+    df_temp <- l_gaus[[1]]
+    for (i in 2:length(features)) {
+      df_temp <- rbind(df_temp,l_gaus[[i]])
+    }
+    return(df_temp)
+  }else{
+    print("You need to supply a list or a data frame with the first argument wich is not NULL")
+    }
 }
+
