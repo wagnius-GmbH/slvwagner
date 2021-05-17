@@ -51,7 +51,7 @@
 
 plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
   # check data
-  if(is.data.frame(features)|| is.list(features) & is.null(features)){
+  if(is.data.frame(features)|| is.list(features) & !is.null(features)){
     # change df to list
     if(is.data.frame(features)){
       features <- as.list(features)
@@ -76,8 +76,10 @@ plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
       l_gaus[[i]]$y <- ifelse(is.na(l_gaus[[i]]$y),0,l_gaus[[i]]$y) #NA`s mit 0 ersetzen
     }
     df_temp <- l_gaus[[1]]
-    for (i in 2:length(features)) {
-      df_temp <- rbind(df_temp,l_gaus[[i]])
+    if(length(l_gaus)>1){
+      for (i in 2:length(features)) {
+        df_temp <- rbind(df_temp,l_gaus[[i]])
+      }
     }
     return(df_temp)
   }else{
