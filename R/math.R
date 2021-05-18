@@ -288,3 +288,60 @@ math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Rad
   return(t(apply(slerp, 1, function(i) i + cp)))
 }
 
+#######################################
+#' 2d rotation matrix
+#'
+#' @name math_rot_matrix2d
+#' @description
+#' calculates a 2D rotation matrix with a given angle \code{x}
+#' @details
+#' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
+#' @param  x vector of angel in rad
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Returns matrix for given angle
+#' @examples
+#' math_rot_matrix2d(c(pi))
+#' math_rot_matrix2d(c(-pi))
+#' @export
+
+math_rot_matrix2d <- function(x){
+  #Drehmatrix 2D
+  matrix(c(cos(x),sin(x),-sin(x),cos(x)), ncol = 2)
+}
+
+#######################################
+#' 2d rotation matrix
+#'
+#' @name math_rot_matrix3d
+#' @description
+#' calculates a 3D rotation matrix from axis and angle
+#' @details
+#' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
+#' @param  winkel vector of angel in rad
+#' @param  x unit vector c(x1,x2,x3)
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Returns matrix for given angle
+#' @examples
+#' math_rot_matrix2d(c(pi))
+#' math_rot_matrix2d(c(-pi))
+#' @export
+
+math_rot_matrix3d <- function(x,angle){
+  #Drehmatrix 3d um einen Vektor
+  matrix(c(c(x[1]^2*(1-cos(angle))+cos(angle),
+             x[1]*x[2]*(1-cos(angle))-x[3]*sin(angle),
+             x[1]*x[3]*(1-cos(angle))+x[2]*sin(angle)),
+           c(x[2]*x[1]*(1-cos(angle))+x[3]*sin(angle),
+             x[2]^2*(1-cos(angle))+cos(angle),
+             x[2]*x[3]*(1-cos(angle))-x[1]*sin(angle)),
+           c(x[3]*x[1]*(1-cos(angle))-x[2]*sin(angle),
+             x[3]*x[2]*(1-cos(angle))+x[1]*sin(angle),
+             x[3]^2*(1-cos(angle))+cos(angle))),
+         ncol = 3)
+}
+
+
