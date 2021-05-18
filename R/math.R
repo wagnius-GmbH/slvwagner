@@ -316,18 +316,18 @@ math_rot_matrix2d <- function(x){
 #'
 #' @name math_rot_matrix3d
 #' @description
-#' calculates a 3D rotation matrix from axis and angle
+#' calculates a 3D rotation matrix from axis and angle. The axis is defined by \code{x}. The Rotation will be done around the axis defined by
+#' \code {x} and the root. The angle will be appied by the right hand rule.
 #' @details
 #' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
-#' @param  winkel vector of angel in rad
+#' @param  angle vector of angel in rad to rotate
 #' @param  x unit vector c(x1,x2,x3)
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
 #' Returns matrix for given angle
 #' @examples
-#' math_rot_matrix2d(c(pi))
-#' math_rot_matrix2d(c(-pi))
+#' math_rot_matrix3d(matrix(c(1,2,3)),c(-pi))
 #' @export
 
 math_rot_matrix3d <- function(x,angle){
