@@ -9,7 +9,7 @@ math_rot_matrix_basic(x, ax)
 \arguments{
 \item{x}{angel in radiant}
 
-\item{ax}{parameter to define which principle axis will be used to calculate the rotation}
+\item{ax}{parameter to define which principle axis will be used to calculate the rotation matrix}
 }
 \value{
 Returns 3D basic rotation matrix for given axis and angle.

@@ -334,7 +334,10 @@ math_rot_matrix2d <- function(x){
 #' @export
 
 math_rot_matrix_basic <- function(x,ax){
-  if(ax == "x" | ax == "x1" | ax == 1){
+  if(is.character(ax)){
+    ax <- tolower(ax)
+  }
+  if(ax == "x" | ax == "x1" | ax == 1 ){
     #Axis x or the fist axis x1
     matrix(c(1,0,0,0,cos(x),sin(x),0,-sin(x),cos(x)), ncol = 3)
   }else if(ax == "y" | ax == "x2" | ax == 2){
@@ -343,7 +346,8 @@ math_rot_matrix_basic <- function(x,ax){
   }else if(ax == "z" | ax == "x3" | ax == 3){
     #Axis x or the fist axis x1
     matrix(c(cos(x),-sin(x),0,sin(x),cos(x),0,0,0,1), ncol = 3)
-  }
+  }else{writeLines(paste0("Parameter ax has not one of the following fromats:",
+                          "\ncharacter x,y,z or x1,x2,x3 or integer 1,2,3"))}
 }
 
 #######################################
