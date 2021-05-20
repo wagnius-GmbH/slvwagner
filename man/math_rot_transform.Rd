@@ -22,7 +22,8 @@ transforms a given vecotr by a given rotation matrix using matirx multiplication
 \url{https://en.wikipedia.org/wiki/Rotation_matrix}
 }
 \examples{
-math_rot_transform(-pi,math_rot_matrix3d(c(1,1,1), 30/180*pi))
+rot_matrix <- math_rot_matrix3d(c(1,1,1), pi)
+math_rot_transform(c(1,1,1),rot_matrix)
 }
 \author{
 Florian Wagner

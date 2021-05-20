@@ -346,8 +346,9 @@ math_rot_matrix_basic <- function(x,ax){
   }else if(ax == "z" | ax == "x3" | ax == 3){
     #Axis x or the fist axis x1
     matrix(c(cos(x),-sin(x),0,sin(x),cos(x),0,0,0,1), ncol = 3)
-  }else{writeLines(paste0("Parameter ax has not one of the following fromats:",
-                          "\ncharacter x,y,z or x1,x2,x3 or integer 1,2,3"))}
+  }else{writeLines(paste0("Parameter ax is not according to following fromats:",
+                          "\ncharacter; c(\"x\",\"y\",\"z\") or c(\"x1\",\"x2\",\"x3\") nor integer; c(1,2,3) to specify the rotation axis.")
+                   )}
 }
 
 #######################################
@@ -398,7 +399,8 @@ math_rot_matrix3d <- function(x,angle){
 #' @returns
 #' Returns 3D rotation matrix for given axis and angle.
 #' @examples
-#' math_rot_transform(-pi,math_rot_matrix3d(c(1,1,1), 30/180*pi))
+#' rot_matrix <- math_rot_matrix3d(c(1,1,1), pi)
+#' math_rot_transform(c(1,1,1),rot_matrix)
 #' @export
 
 math_rot_transform <- function(x, rot_matrix){
