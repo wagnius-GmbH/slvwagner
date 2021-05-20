@@ -13,7 +13,7 @@ math_rot_matrix2d(x)
 Returns rotation matrix for given angle
 }
 \description{
-calculates a 2D rotation matrix with a given angle \code{x}
+Calculates a 2D rotation matrix with a given angle \code{x}
 }
 \details{
 \url{https://en.wikipedia.org/wiki/Rotation_matrix}

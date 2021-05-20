@@ -293,7 +293,7 @@ math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Rad
 #'
 #' @name math_rot_matrix2d
 #' @description
-#' calculates a 2D rotation matrix with a given angle \code{x}
+#' Calculates a 2D rotation matrix with a given angle \code{x}
 #' @details
 #' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
 #' @param  x vector of an angel in radiant
@@ -311,12 +311,47 @@ math_rot_matrix2d <- function(x){
   matrix(c(cos(x),sin(x),-sin(x),cos(x)), ncol = 2)
 }
 
+
+#######################################
+#' Basic rotation matrix
+#'
+#' @name math_rot_matrix_basic
+#' @description
+#' Calculates a 3D rotation matrix from a given principle axis and a given angle. The axis is defined by \code{ax}. The Rotation will be done around the axis defined by
+#' \code{ax} and the root.
+#' @details
+#' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
+#' @param x angel in radiant
+#' @param ax parameter to define which principle axis will be used to calculate the rotation matrix
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Returns 3D basic rotation matrix for given axis and angle.
+#' @examples
+#' math_rot_matrix_basic(pi, "x")
+#' math_rot_matrix_basic(pi, "x2")
+#' math_rot_matrix_basic(pi, 3)
+#' @export
+
+math_rot_matrix_basic <- function(x,ax){
+  if(ax == "x" | ax == "x1" | ax == 1){
+    #Axis x or the fist axis x1
+    matrix(c(1,0,0,0,cos(x),sin(x),0,-sin(x),cos(x)), ncol = 3)
+  }else if(ax == "y" | ax == "x2" | ax == 2){
+    #Axis x or the fist axis x1
+    matrix(c(cos(x),0,sin(x),0,1,0,-sin(x),0,cos(x)), ncol = 3)
+  }else if(ax == "z" | ax == "x3" | ax == 3){
+    #Axis x or the fist axis x1
+    matrix(c(cos(x),-sin(x),0,sin(x),cos(x),0,0,0,1), ncol = 3)
+  }
+}
+
 #######################################
 #' 3d rotation matrix
 #'
 #' @name math_rot_matrix3d
 #' @description
-#' calculates a 3D rotation matrix from a given axis and angle. The axis is defined by \code{x}. The Rotation will be done around the axis defined by
+#' Calculates a 3D rotation matrix from a given axis and angle. The axis is defined by \code{x}. The Rotation will be done around the axis defined by
 #' \code{angle} and the root. The angle will be appied by the right hand rule.
 #' @details
 #' \url{https://en.wikipedia.org/wiki/Rotation_matrix}

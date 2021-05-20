@@ -15,7 +15,7 @@ math_rot_matrix3d(x, angle)
 Returns 3D rotation matrix for given axis and angle.
 }
 \description{
-calculates a 3D rotation matrix from a given axis and angle. The axis is defined by \code{x}. The Rotation will be done around the axis defined by
+Calculates a 3D rotation matrix from a given axis and angle. The axis is defined by \code{x}. The Rotation will be done around the axis defined by
 \code{angle} and the root. The angle will be appied by the right hand rule.
 }
 \details{
