@@ -359,8 +359,8 @@ math_rot_matrix_basic <- function(x,ax){
 #' \code{angle} and the root. The angle will be appied by the right hand rule.
 #' @details
 #' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
-#' @param  angle vector of angel in radiant
 #' @param  x unit vector c(x1,x2,x3)
+#' @param  angle vector of angel in radiant
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
@@ -383,4 +383,24 @@ math_rot_matrix3d <- function(x,angle){
          ncol = 3)
 }
 
+#######################################
+#' Transform vector by a rotation matrix
+#'
+#' @name math_rot_transform
+#' @description transforms a given vecotr by a given rotation matrix using matirx multiplication
+#' @details
+#' \code{rot_matrix}%*%\code{x}
+#' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
+#' @param x vector or matrix containing the koordinates
+#' @param rot_matrix 2D or 3D rotation matrix
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Returns 3D rotation matrix for given axis and angle.
+#' @examples
+#' math_rot_transform(-pi,math_rot_matrix3d(c(1,1,1), 30/180*pi))
+#' @export
 
+math_rot_transform <- function(x, rot_matrix){
+  rot_matrix%*%x
+}
