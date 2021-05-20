@@ -7,10 +7,10 @@
 math_rot_matrix2d(x)
 }
 \arguments{
-\item{x}{vector of angel in rad}
+\item{x}{vector of an angel in radiant}
 }
 \value{
-Returns matrix for given angle
+Returns rotation matrix for given angle
 }
 \description{
 calculates a 2D rotation matrix with a given angle \code{x}

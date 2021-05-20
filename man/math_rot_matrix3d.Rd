@@ -2,21 +2,21 @@
 % Please edit documentation in R/math.R
 \name{math_rot_matrix3d}
 \alias{math_rot_matrix3d}
-\title{2d rotation matrix}
+\title{3d rotation matrix}
 \usage{
 math_rot_matrix3d(x, angle)
 }
 \arguments{
 \item{x}{unit vector c(x1,x2,x3)}
 
-\item{angle}{vector of angel in rad to rotate}
+\item{angle}{vector of angel in radiant}
 }
 \value{
-Returns matrix for given angle
+Returns 3D rotation matrix for given axis and angle.
 }
 \description{
-calculates a 3D rotation matrix from axis and angle. The axis is defined by \code{x}. The Rotation will be done around the axis defined by
-\code {x} and the root. The angle will be appied by the right hand rule.
+calculates a 3D rotation matrix from a given axis and angle. The axis is defined by \code{x}. The Rotation will be done around the axis defined by
+\code{angle} and the root. The angle will be appied by the right hand rule.
 }
 \details{
 \url{https://en.wikipedia.org/wiki/Rotation_matrix}
