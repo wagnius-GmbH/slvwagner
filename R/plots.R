@@ -50,7 +50,7 @@
 #' @export
 
 plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
-  # check data
+  # check data type
   if(is.data.frame(features)|| is.list(features) & !is.null(features)){
     # change df to list
     if(is.data.frame(features)){
@@ -68,7 +68,7 @@ plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
       if(hist$equidist == TRUE){
         multiplier <- hist$counts / hist$density
         multiplier <- mean(multiplier, na.rm = TRUE)*ratio
-      }else{writeLines("Error: \ncan not overlay a histogram with non equal bin distance with normal distribution")}
+      }else{writeLines("Error: \ncan not overlay a histogram with non equal bin distance")}
       gaus <- multiplier*dnorm(hist$breaks,mean = mean(features[[i]]), sd = sd(features[[i]]))
       l_gaus[[i]] <- data.frame(x= hist$breaks,
                                 y = gaus,
