@@ -17,6 +17,5 @@ Copy the file path from windows explorer to your clipboard and call the function
 The R compatible file Path will be returned
 }
 \examples{
-Importend: Copy file path first to the cliboard before calling the function.
-r_path()
+# Importend => Copy file path first to the cliboard before calling the function.
 }

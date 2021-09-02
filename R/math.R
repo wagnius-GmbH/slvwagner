@@ -32,15 +32,12 @@ math_betrag <- function(x) {
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
 #' data frame, matrix or vector
-#' \code{x}
-#' @examples
 #' x <- matrix(c(c(-2.23 , 4.389 ),
 #'               c( 1.001,-3.23  ),
 #'               c(  15.5,-7.2365)),
 #'               ncol = 3, byrow = FALSE)
-#' colnames(x) <- paste0("x",1:3)
+#' colnames(x)<- paste0("x",1:3)
 #' rownames(x)<- c("x","y")
-#'
 #' math_circle_from3points(x)
 #' math_circle_from3points(x, type = "v")
 #' result <- math_circle_from3points(x, type = "df")
@@ -101,12 +98,12 @@ math_circle_from3points<-function(x,type = "m"){
 #' Returns the smallest Angle between 2 vectors (scalar) in radiant.
 #' \code{x}
 #' @examples
-#' 2D
+#' #2D
 #' u <- c(-0,1)
 #' v <- c( 1,0)
 #' math_inbetweenAngle(u,v)
 #'
-#'3D
+#' #3D
 #' u <- c(-12, 13,   -2.56)
 #' v <- c(  3,  5, -100   )
 #' math_inbetweenAngle(u,v)
@@ -189,9 +186,7 @@ math_lf_perpendicular <- function(point,lf){ #point c(x,y) lf(intercept, slope)
 #' @name math_lf_rev_slope
 #' @description
 #' find perpendicular slope to linear function
-#' @param lf data.frame(slope     = c(  0.12, 0.78),
-#'                      intercept = c(-25   ,13   ))
-#' @param point vector
+#' @param slope The slop or m of linear function f(x)= mx+b
 #' @return data.frame(x,y) \code{x}
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}

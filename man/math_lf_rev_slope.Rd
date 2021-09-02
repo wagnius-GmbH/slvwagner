@@ -7,10 +7,7 @@
 math_lf_rev_slope(slope)
 }
 \arguments{
-\item{lf}{data.frame(slope     = c(  0.12, 0.78),
-intercept = c(-25   ,13   ))}
-
-\item{point}{vector}
+\item{slope}{The slop or m of linear function f(x)= mx+b}
 }
 \value{
 data.frame(x,y) \code{x}

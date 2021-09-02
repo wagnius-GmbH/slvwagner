@@ -19,12 +19,12 @@ Returns the smallest Angle between 2 vectors (scalar) in radiant.
 Get the angle between 2 vectors. Returns the smallest Angle between 2 vectors in radiant.
 }
 \examples{
-2D
+#2D
 u <- c(-0,1)
 v <- c( 1,0)
 math_inbetweenAngle(u,v)
 
-3D
+#3D
 u <- c(-12, 13,   -2.56)
 v <- c(  3,  5, -100   )
 math_inbetweenAngle(u,v)

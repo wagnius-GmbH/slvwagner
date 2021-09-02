@@ -1,14 +1,11 @@
 #' Convert Windows file path to R compatible file path
 #'
 #' @name r_path
-#' @description
-#' Copy the file path from windows explorer to your clipboard and call the function with no argument.
+#' @description Copy the file path from windows explorer to your clipboard and call the function with no argument.
 #' The R compatible file Path will be returned
 #' @param  path
 #' @return Character vector of R compatible file path
-#' @examples
-#' Importend: Copy file path first to the cliboard before calling the function.
-#' r_path()
+#' @examples # Importend => Copy file path first to the cliboard before calling the function.
 #' @export
 
 r_path <- function(path = "clipboard") {
