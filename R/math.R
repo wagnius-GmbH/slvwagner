@@ -392,7 +392,7 @@ math_rot_matrix3d <- function(x,angle){
 #' @details
 #' \code{rot_matrix}%*%\code{x}
 #' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
-#' @param x vector or matrix containing the koordinates
+#' @param x vector or matrix containing the coordinates
 #' @param rot_matrix 2D or 3D rotation matrix
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
@@ -405,4 +405,97 @@ math_rot_matrix3d <- function(x,angle){
 
 math_rot_transform <- function(x, rot_matrix){
   rot_matrix%*%x
+}
+
+#######################################
+#' Find quadrant of single vector
+#'
+#' @name math_quadrant_vector
+#' @description find the
+#' @details
+#' Find the quadrant of vecotr. If it is on principle it returns the axis First: 5, Second: 6
+#' @param x vector containing the coordinates. e.g.first x, second y.
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Returns Quadrant of vector(s)
+#' @examples math_quadrant(c(1,1))
+#' @examples math_quadrant(c(-1,1))
+#' @examples math_quadrant(c(-1,-1))
+#' @examples math_quadrant(c(1,-1))
+#' @examples math_quadrant(c(0,1))
+#' @examples math_quadrant(c(1,0))
+#' @export
+
+math_quadrant_vector  <- function(x){
+  if(class(x)=="numeric"){
+    if (x[1]== 0 || x[2]== 0){
+      if(x[1]== 0)return(5)
+      else  return(6)
+    }
+    else if (x[1]>0 & x[2]>0)return(1)
+    else if (x[1]<0 & x[2]>0)return(2)
+    else if (x[1]<0 & x[2]<0)return(3)
+    else if (x[1]>0 & x[2]<0)return(4)
+
+  }
+}
+
+#######################################
+#' Find quadrant of matrix or data frame
+#'
+#' @name math_quadrant
+#' @description find the
+#' @details
+#' Find the quadrant of vecotr(s). If it is on principle it returns the axis First: 5, Second: 6
+#' @param x vector or matrix containing the coordinates. First x, second y.
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Returns Quadrant(s) of vector(s)
+#' @examples
+#' m <- matrix(c(c(1,1),
+#'         c(-1,1),
+#'         c(-1,-1),
+#'         c(1,-1),
+#'         c(0,1),
+#'         c(1,0)),
+#'       ncol = 2)
+#' math_quadrant(m)
+#' data.frame(x = c(1,-1),y = c(1,-1))|>math_quadrant()
+#' math_quadrant(c(1,0))
+#' @export
+
+math_quadrant  <- function(x){
+
+  if(is.null(dim(x))){
+    math_quadrant_vector(x)
+  }else if("matrix" %in% class(x) & typeof(x) %in%c("double","integer")){ # check if matrix and numerical values
+    apply(x, 1, math_quadrant_vector)
+  }else if("data.frame"%in%class(x) & ncol(x) == 2){
+    x|>
+      as.matrix()|>
+      apply(1, math_quadrant_vector)
+  }else{
+    print("Data not compatible")
+  }
+}
+
+#######################################
+#' Find the angle of a vector
+#'
+#' @name math_angle_vector
+#' @description find the
+#' @details
+#' Find the angle of a vector takeing into account the quadrant.
+#' @param x vector containing the coordinates. e.g. First x, second y.
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Returns Quadrant(s) of vector(s)
+#' @examples gfhfgh
+#' @export
+
+math_angle_vector  <- function(x){
+
 }

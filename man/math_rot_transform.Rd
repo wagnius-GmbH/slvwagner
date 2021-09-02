@@ -7,7 +7,7 @@
 math_rot_transform(x, rot_matrix)
 }
 \arguments{
-\item{x}{vector or matrix containing the koordinates}
+\item{x}{vector or matrix containing the coordinates}
 
 \item{rot_matrix}{2D or 3D rotation matrix}
 }
