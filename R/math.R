@@ -62,7 +62,7 @@ math_circle_from3points<-function(x,type = "m"){
 
     c_result <- solve(A,b)
   }else{
-    return(writeLines(past("only point matrix can be calculated => matrix[3][2] 3points and 2 coordinates")))
+    return(writeLines(past("only point matrix can be calculated => matrix[3][2] 3 points and 2 coordinates")))
   }
   if(type == "m"){
     return(as.matrix(data.frame(x_center = -c_result[2]/2,
@@ -167,8 +167,7 @@ math_lf_df_mb <- function(x,df_mb){
 #' @name math_lf_perpendicular
 #' @description
 #' Find linear function perpendicular to linear function through given point.
-#' @param lf data.frame(slope = c(0.12,0.78),
-#'                                  intercept = c(-25, 13))
+#' @param lf data.frame(slope = c(0.12,0.78), intercept = c(-25, 13))
 #' @param point vector
 #' @return data.frame(x,y) \code{x}
 #' @author Florian Wagner
@@ -177,6 +176,7 @@ math_lf_df_mb <- function(x,df_mb){
 #' math_lf_perpendicular(point = c(2,-9),
 #'                       data.frame(slope =c(-2,5),intercept = c(3,5)))
 #' @export
+
 math_lf_perpendicular <- function(point,lf){ #point c(x,y) lf(intercept, slope)
   s=-1/lf$slope
   i =point[2]-(math_lf_rev_slope(lf$slope)*point[1])
@@ -533,7 +533,6 @@ math_quadrant  <- function(x){
 #' @examples math_angle_quadrant_vector(c( 0,-1))/pi*180
 #' @examples math_angle_quadrant_vector(c( 1, 0))/pi*180
 #' @examples math_angle_quadrant_vector(c(-1, 0))/pi*180
-#' @examples math_angle_quadrant_vector(c( 0, 0))/pi*180
 #' @export
 
 math_angle_quadrant_vector  <- function(x){

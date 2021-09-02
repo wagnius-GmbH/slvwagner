@@ -9,8 +9,7 @@ math_lf_perpendicular(point, lf)
 \arguments{
 \item{point}{vector}
 
-\item{lf}{data.frame(slope = c(0.12,0.78),
-intercept = c(-25, 13))}
+\item{lf}{data.frame(slope = c(0.12,0.78), intercept = c(-25, 13))}
 }
 \value{
 data.frame(x,y) \code{x}

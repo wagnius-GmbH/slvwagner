@@ -27,7 +27,6 @@ math_angle_quadrant_vector(c( 0, 1))/pi*180
 math_angle_quadrant_vector(c( 0,-1))/pi*180
 math_angle_quadrant_vector(c( 1, 0))/pi*180
 math_angle_quadrant_vector(c(-1, 0))/pi*180
-math_angle_quadrant_vector(c( 0, 0))/pi*180
 }
 \author{
 Florian Wagner
