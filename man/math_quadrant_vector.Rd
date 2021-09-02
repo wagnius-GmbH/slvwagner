@@ -16,15 +16,19 @@ Returns Quadrant of vector(s)
 find the
 }
 \details{
-Find the quadrant of vecotr. If it is on principle it returns the axis First: 5, Second: 6
+Finds the quadrant of vecotr. If it is on principle axi it returns the angle.
 }
 \examples{
-math_quadrant(c(1,1))
-math_quadrant(c(-1,1))
-math_quadrant(c(-1,-1))
-math_quadrant(c(1,-1))
-math_quadrant(c(0,1))
-math_quadrant(c(1,0))
+math_quadrant_vector(c(1,1))
+math_quadrant_vector(c(-1,1))
+math_quadrant_vector(c(-1,-1))
+math_quadrant_vector(c(1,-1))
+math_quadrant_vector(c(0,1))
+math_quadrant_vector(c(0, -1))
+math_quadrant_vector(c( 1, 0))
+math_quadrant_vector(c(-1, 0))
+math_quadrant_vector(c( 0, 0))
+math_quadrant_vector(c("12","sdf"))
 }
 \author{
 Florian Wagner
