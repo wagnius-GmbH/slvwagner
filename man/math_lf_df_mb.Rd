@@ -2,7 +2,7 @@
 % Please edit documentation in R/math.R
 \name{math_lf_df_mb}
 \alias{math_lf_df_mb}
-\title{linear function}
+\title{linear function but with data frame instead of single parameters}
 \usage{
 math_lf_df_mb(x, df_mb)
 }

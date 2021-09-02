@@ -118,7 +118,7 @@ math_inbetweenAngle <- function(u,v){
 }
 
 #######################################
-#' linear function
+#' linear function with parameter mx+b
 #'
 #' @name math_lf
 #' @description
@@ -140,7 +140,7 @@ math_lf <- function(x,m,b){
 }
 
 #######################################
-#' linear function
+#' linear function but with data frame instead of single parameters
 #'
 #' @name math_lf_df_mb
 #' @description

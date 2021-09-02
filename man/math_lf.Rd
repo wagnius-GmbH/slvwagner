@@ -2,7 +2,7 @@
 % Please edit documentation in R/math.R
 \name{math_lf}
 \alias{math_lf}
-\title{linear function}
+\title{linear function with parameter mx+b}
 \usage{
 math_lf(x, m, b)
 }

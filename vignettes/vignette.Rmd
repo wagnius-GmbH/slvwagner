@@ -17,3 +17,9 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(slvwagner)
 ```
+# library slvwagner 
+This is my library where I have coded all the missing functions I need. 
+
+## math_lf(x,m,b)
+Simple linear function with parameter $m$ slope, $b$ intercept.
+$f(x)=m_{slope}\cdot x+b_{intercept}$
