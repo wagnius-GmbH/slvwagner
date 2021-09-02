@@ -17,7 +17,7 @@ math_lf(x, m, b)
 vector \code{x}
 }
 \description{
-linear function with parameter slope and intercept given by data frame.
+linear function with parameter slope and intercept.
 }
 \details{
 \eqn{f(x)=mx+b}

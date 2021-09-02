@@ -122,7 +122,7 @@ math_inbetweenAngle <- function(u,v){
 #'
 #' @name math_lf
 #' @description
-#' linear function with parameter slope and intercept given by data frame.
+#' linear function with parameter slope and intercept.
 #' @details \eqn{f(x)=mx+b}
 #' @param x vector
 #' @param m slope
@@ -139,6 +139,27 @@ math_lf <- function(x,m,b){
   return(m*x+b)
 }
 
+#######################################
+#' linear function
+#'
+#' @name math_lf_df_mb
+#' @description
+#' linear function with parameter slope and intercept provided by data frame.
+#' @details
+#' \eqn{f\left(x\right)=m_{slope}\cdot x + b_{intercept}}
+#' @param x vector
+#' @param df_mb data frame with "slope" and "intercept"
+#' @return vector \code{x}
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @examples df <- data.frame(slope = 0.5, intercept = 1)
+#' math_lf_df_mb(0:10,df)|>plot()
+#' @export
+
+
+math_lf_df_mb <- function(x,df_mb){
+  return(x*df_mb[,"slope"]+df_mb[,"intercept"])
+}
 
 #######################################
 #' Find linear function perpendicular to linear function through given point
