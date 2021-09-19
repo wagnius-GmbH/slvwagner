@@ -1,0 +1,23 @@
+---
+title: "slvwagner"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{slvwagner}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(slvwagner)
+```
+
+## hello 
+
+This is my first vignette
