@@ -17,5 +17,7 @@ Copy the file path from windows explorer to your clipboard and call the function
 The R compatible file Path will be returned
 }
 \examples{
-# Importend => Copy file path first to the cliboard before calling the function.
+# Copy file path to the cliboard and call the function.
+utils::writeClipboard("C:\\\\Windows")
+r_path()
 }

@@ -5,7 +5,9 @@
 #' The R compatible file Path will be returned
 #' @param  path
 #' @return Character vector of R compatible file path
-#' @examples # Importend => Copy file path first to the cliboard before calling the function.
+#' @examples # Copy file path to the cliboard and call the function.
+#' utils::writeClipboard("C:\\Windows")
+#' r_path()
 #' @export
 
 r_path <- function(path = "clipboard") {
