@@ -1,8 +1,10 @@
 ---
-title: "vignette"
+title: "slvwagner"
+author: "Florian Wagner"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{vignette}
+  %\VignetteIndexEntry{slvwagner}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
