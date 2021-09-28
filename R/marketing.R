@@ -1,23 +1,70 @@
 ####################################
+#' Get NPS type
+#'
+#' @name get_NPS_type
+#' @examples
+#' @param df_data data frame with data
+#' @param rating string identifying the column of the rating
+#' @param df_levels data frame containing range for each type (Promoters, Passives, Detractors)
+#' df_levels <- tibble(Detractors = c(1,6),
+#'                     Passives   = c(7,8),
+#'                     Promoters  = c(9,10))
+#' @return data frame \code{df_data} with new feature (column = typ_nps)
+#' @examples
+#' library(tidyverse)
+#' # Test data
+#' df_data <- tibble( rating = c(1:10,rep(10,5)),
+#'                    c_group = c(rep("A",10),rep("B",5)))
+#' df_levels <- tibble(Detractors= c(1,6),Passives= c(7,8), Promoters= c(9,10))
+#' get_NPS_type(df_data, df_levels = df_levels)
+#'
+#' df_data <- tibble(c_group  = c(letters[1:10],rep("a",5)),
+#'                   rating = c(1:5,rep(5,10)))
+#' df_levels <- tibble(Detractors= c(1,3),Passives= c(4,4.5), Promoters= c(4.5,5))
+#' get_NPS_type(df_data, df_levels = df_levels)
+#' @export
+
+get_NPS_type <- function(df_data, rating = "rating", df_levels) {
+  # Create feature Promoters, Passives and Detractors
+  df_data <- df_data%>%
+    mutate(Detractors = between(rating, df_levels$Detractors[1], df_levels$Detractors[2])%>%
+             if_else("Detractors","x_x")%>%na_if("x_x"),
+           Passives   = between(rating, df_levels$Passives[1], df_levels$Passives[2])%>%
+             if_else("Passives"  ,"x_x")%>%na_if("x_x"),
+           Promoters  = between(rating, df_levels$Promoters[1],df_levels$Promoters[2])%>%
+             if_else("Promoters" ,"x_x")%>%na_if("x_x")
+    )
+  # Merge to single feature
+  df_data <- df_data%>%
+    pivot_longer(c("Detractors","Passives","Promoters"), values_drop_na = TRUE, names_to = "typ_nps")%>%
+    mutate(value = NULL)
+  return(df_data)
+}
+
+
+####################################
 #' Get Net Promoter Score
 #'
 #' @name get_NPS
-#' @description Calculates the Net Promoter Score.
+#' @description Calculates the Net Promoter Score for single grouped data or not grouped data.
 #' @details NPS = Ratio Promoters - Ratio Detractors,
 #' whereas the Ratio of Promoters is calculated by count of Promoters / count total
 #' and the the Ratio of Detractors is calculated by count of Detractors / count total.
 #' If the \code{c_group} parameter is available the NPS score will be calculated for each group.
 #' If the \code{df_levels} parameter is provided the level to find Promoters, Passives and Detractors can be defined by this definition.
-#' @param rating string with column name of the rating.
+#' The parameter \code{df_levels} is by standard: Detractors (1...6), Passives (7,8), Promoters (9,10) whereas the number shall be be integers only.
+#' @param rating string identifying the column of the rating
 #' @param c_group string with the column name to group the data frame.
-#' @param df_levels data frame containing the rating range for each type (Promoters, Passives, Detractors).
+#' @param df_levels data frame containing range for each type (Promoters, Passives, Detractors)
+#' df_levels <- tibble(Detractors = c(1,6),
+#'                     Passives   = c(7,8),
+#'                     Promoters  = c(9,10))
 #' @examples
 #' library(tidyverse)
 #' # Test data
 #' df_data <- tibble(user   = c(letters[1:10],rep("a",5)),
 #'                    Feedback = c(1:10,rep(10,5)),
-#'                    Gruppe = c(rep("A",10),rep("B",5)))%>%
-#'   mutate(user = factor(user))
+#'                    Gruppe = c(rep("A",10),rep("B",5)))
 #'
 #' get_NPS(df_data, "Feedback", "Gruppe")
 #' get_NPS(df_data, "Feedback")
@@ -51,20 +98,9 @@ get_NPS <- function(x, rating , c_group , df_levels) {
         mutate(name_converted = if_else(name==rating,"rating", name))%>%
         select(name_converted)%>%
         pull()
-
-      # Create feature Promoters, Passives and Detractors
+      # crate NPS_type
       df_data <- df_data%>%
-        mutate(Detractors = between(paste(rating), df_levels$Detractors[1], df_levels$Detractors[2])%>%
-                 if_else("Detractors","x_x")%>%na_if("x_x"),
-               Passives   = between(paste(rating), df_levels$Passives[1], df_levels$Passives[2])%>%
-                 if_else("Passives"  ,"x_x")%>%na_if("x_x"),
-               Promoters  = between(paste(rating), df_levels$Promoters[1],df_levels$Promoters[2])%>%
-                 if_else("Promoters" ,"x_x")%>%na_if("x_x")
-        )
-      # Merge to single feature
-      df_data <- df_data%>%
-        pivot_longer(c("Detractors","Passives","Promoters"), values_drop_na = TRUE, names_to = "typ_nps")%>%
-        mutate(value = NULL)
+        get_NPS_type(df_data,df_levels = df_levels)
       #calculate NPS for not grouped data frames
       df_data <- df_data%>%
         filter(typ_nps == "Promoters")%>%
@@ -86,35 +122,19 @@ get_NPS <- function(x, rating , c_group , df_levels) {
                name_converted1 = if_else(name==c_group, "c_group" , name_converted))%>%
         select(name_converted1)%>%
         pull()
-      # Create feature Promoters, Passives and Detractors
+      # crate NPS_type
       df_data <- df_data%>%
-        mutate(Detractors = between(paste(rating), df_levels$Detractors[1], df_levels$Detractors[2])%>%
-                 if_else("Detractors","x_x")%>%na_if("x_x"),
-               Passives   = between(paste(rating), df_levels$Passives[1], df_levels$Passives[2])%>%
-                 if_else("Passives"  ,"x_x")%>%na_if("x_x"),
-               Promoters  = between(paste(rating), df_levels$Promoters[1],df_levels$Promoters[2])%>%
-                 if_else("Promoters" ,"x_x")%>%na_if("x_x")
-        )
-      # Merge to single feature
-      df_data <- df_data%>%
-        pivot_longer(c("Detractors","Passives","Promoters"), values_drop_na = TRUE, names_to = "typ_nps")%>%
-        mutate(value = NULL)
-
+        get_NPS_type(df_data,df_levels = df_levels)
       # calculate NPS Score for grouped Variable
       c_Gruppe <- df_data[,"c_group"]%>%
         distinct()%>%
         pull()
-
       l_NPS <- list()
       for (i in 1:length(c_Gruppe)) {
         m <- df_data[,"c_group"] == c_Gruppe[i]
         m <- m[,1]
-
         df_temp <- df_data%>%
           subset.data.frame(m)
-
-        df_temp
-
         l_NPS[[i]] <- df_temp%>%
           filter(typ_nps == "Promoters")%>%
           summarise(n_Promoters = n())%>%
