@@ -4,17 +4,24 @@
 \alias{get_NPS}
 \title{Get Net Promoter Score}
 \usage{
-get_NPS(x, rating, c_group)
+get_NPS(x, rating, c_group, df_levels)
 }
 \arguments{
-\item{rating}{string with column name of data frame containing the vector of the ratings}
+\item{rating}{string with column name of the rating.}
 
-\item{c_group}{string with column name to group the data frame and calcultae NPS for each group}
+\item{c_group}{string with the column name to group the data frame.}
+
+\item{df_levels}{data frame containing the rating range for each type (Promoters, Passives, Detractors).}
 }
 \description{
-Get Net Promoter Score of rating 1...10. NPS = Ratio Promoters - Ratio Detractors,
+Calculates the Net Promoter Score.
+}
+\details{
+NPS = Ratio Promoters - Ratio Detractors,
 whereas the Ratio of Promoters is calculated by count of Promoters / count total
 and the the Ratio of Detractors is calculated by count of Detractors / count total.
+  If the \code{c_group} parameter is available the NPS score will be calculated for each group.
+If the \code{df_levels} parameter is provided the level to find Promoters, Passives and Detractors can be defined by this definition.
 }
 \examples{
 library(tidyverse)
@@ -26,4 +33,11 @@ df_data <- tibble(user   = c(letters[1:10],rep("a",5)),
 
 get_NPS(df_data, "Feedback", "Gruppe")
 get_NPS(df_data, "Feedback")
+
+df_levels <- tibble(Detractors= c(1,3),Passives= c(4,4), Promoters= c(5,5))
+df_data <- tibble(user   = c(letters[1:10],rep("a",5)),
+                  Feedback = c(1:5,rep(5,10)),
+                  Gruppe = c(rep("A",10),rep("B",5)))
+get_NPS(df_data, "Feedback", "Gruppe",df_levels)
+get_NPS(df_data, "Feedback",df_levels = df_levels)
 }
