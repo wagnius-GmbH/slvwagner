@@ -1,3 +1,4 @@
+###################################################################
 #' Convert Windows file path to R compatible file path
 #'
 #' @name r_path
@@ -22,3 +23,19 @@ r_path <- function(path = "clipboard") {
   return(x)
 }
 
+
+
+
+###################################################################
+#' function to check if variable is defined
+#'
+#' @name r_is.defined
+#' @param  sym variable or function name
+#' @return TRUE or FALSE
+#' @export
+
+r_is.defined <- function(sym) {
+  sym <- deparse(substitute(sym))
+  env <- parent.frame()
+  exists(sym, env)
+}
