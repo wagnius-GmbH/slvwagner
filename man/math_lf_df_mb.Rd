@@ -22,7 +22,9 @@ linear function with parameter slope and intercept provided by data frame.
 }
 \examples{
 df <- data.frame(slope = 0.5, intercept = 1)
-math_lf_df_mb(0:10,df)|>plot()
+math_lf_df_mb(0:10,df)
+df <- data.frame(slope = c(0.5,1,-0.5), intercept = c(1,-10,0))
+math_lf_df_mb(10,df)
 }
 \author{
 Florian Wagner

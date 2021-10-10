@@ -150,7 +150,9 @@ math_lf <- function(x,m,b){
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples df <- data.frame(slope = 0.5, intercept = 1)
-#' math_lf_df_mb(0:10,df)|>plot()
+#' math_lf_df_mb(0:10,df)
+#' df <- data.frame(slope = c(0.5,1,-0.5), intercept = c(1,-10,0))
+#' math_lf_df_mb(10,df)
 #' @export
 
 
@@ -585,3 +587,6 @@ math_angle_quadrant  <- function(x){
     print("data not compatible")
   }
 }
+
+
+

@@ -1,7 +1,7 @@
 ####################################
 #' Get NPS type
 #'
-#' @name get_NPS_type
+#' @name NPS_type
 #' @examples
 #' @param df_data data frame with data
 #' @param rating string identifying the column of the rating
@@ -16,15 +16,15 @@
 #' df_data <- tibble( rating = c(1:10,rep(10,5)),
 #'                    c_group = c(rep("A",10),rep("B",5)))
 #' df_levels <- tibble(Detractors= c(1,6),Passives= c(7,8), Promoters= c(9,10))
-#' get_NPS_type(df_data, df_levels = df_levels)
+#' NPS_type(df_data, df_levels = df_levels)
 #'
 #' df_data <- tibble(c_group  = c(letters[1:10],rep("a",5)),
 #'                   rating = c(1:5,rep(5,10)))
 #' df_levels <- tibble(Detractors= c(1,3),Passives= c(4,4.5), Promoters= c(4.5,5))
-#' get_NPS_type(df_data, df_levels = df_levels)
+#' NPS_type(df_data, df_levels = df_levels)
 #' @export
 
-get_NPS_type <- function(df_data, rating = "rating", df_levels) {
+NPS_type <- function(df_data, rating = "rating", df_levels) {
   # Create feature Promoters, Passives and Detractors
   df_data <- df_data%>%
     mutate(Detractors = between(rating, df_levels$Detractors[1], df_levels$Detractors[2])%>%
@@ -45,7 +45,7 @@ get_NPS_type <- function(df_data, rating = "rating", df_levels) {
 ####################################
 #' Get Net Promoter Score
 #'
-#' @name get_NPS
+#' @name NPS
 #' @description Calculates the Net Promoter Score for single grouped data or not grouped data.
 #' @details NPS = Ratio Promoters - Ratio Detractors,
 #' whereas the Ratio of Promoters is calculated by count of Promoters / count total
@@ -66,18 +66,18 @@ get_NPS_type <- function(df_data, rating = "rating", df_levels) {
 #'                    Feedback = c(1:10,rep(10,5)),
 #'                    Gruppe = c(rep("A",10),rep("B",5)))
 #'
-#' get_NPS(df_data, "Feedback", "Gruppe")
-#' get_NPS(df_data, "Feedback")
+#' NPS(df_data, "Feedback", "Gruppe")
+#' NPS(df_data, "Feedback")
 #'
 #' df_levels <- tibble(Detractors= c(1,3),Passives= c(4,4), Promoters= c(5,5))
 #' df_data <- tibble(user   = c(letters[1:10],rep("a",5)),
 #'                   Feedback = c(1:5,rep(5,10)),
 #'                   Gruppe = c(rep("A",10),rep("B",5)))
-#' get_NPS(df_data, "Feedback", "Gruppe",df_levels)
-#' get_NPS(df_data, "Feedback",df_levels = df_levels)
+#' NPS(df_data, "Feedback", "Gruppe",df_levels)
+#' NPS(df_data, "Feedback",df_levels = df_levels)
 #' @export
 
-get_NPS <- function(x, rating , c_group , df_levels) {
+NPS <- function(x, rating , c_group , df_levels) {
   # Levels NPS
   if(missing(df_levels)) {
     df_levels <- tibble(Detractors = c(1,6),
@@ -86,7 +86,7 @@ get_NPS <- function(x, rating , c_group , df_levels) {
   }
   # exit function call if rating is not defined
   if(missing(rating)){
-    message("function error get_NPS(): \nrating argument is missing")
+    message("function error NPS(): \nrating argument is missing")
   }else{
     #copy data
     df_data <- x
@@ -100,7 +100,7 @@ get_NPS <- function(x, rating , c_group , df_levels) {
         pull()
       # crate NPS_type
       df_data <- df_data%>%
-        get_NPS_type(df_data,df_levels = df_levels)
+        NPS_type(df_data,df_levels = df_levels)
       #calculate NPS for not grouped data frames
       df_data <- df_data%>%
         filter(typ_nps == "Promoters")%>%
@@ -124,7 +124,7 @@ get_NPS <- function(x, rating , c_group , df_levels) {
         pull()
       # crate NPS_type
       df_data <- df_data%>%
-        get_NPS_type(df_data,df_levels = df_levels)
+        NPS_type(df_data,df_levels = df_levels)
       # calculate NPS Score for grouped Variable
       c_Gruppe <- df_data[,"c_group"]%>%
         distinct()%>%
