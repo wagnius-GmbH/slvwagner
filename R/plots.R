@@ -60,7 +60,7 @@ plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
         names(features) <- paste("list_element",1:length(features))
     }
     data <- unlist(features)
-    bins <- seq(floor(min(data)),ceiling(max(data)),binwidth/ratio)
+    bins <- seq(floor(min(data,na.rm=T)),ceiling(max(data,na.rm=T)),binwidth/ratio)
     l_gaus <- list()
     for(i in 1:length(features)){
       hist <- hist(features[[i]], breaks = bins, plot = FALSE)#, main = paste(levels(df$Messungen)[i]))
