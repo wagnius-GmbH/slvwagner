@@ -63,6 +63,10 @@ plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
     bins <- seq(floor(min(data,na.rm=T)),ceiling(max(data,na.rm=T)),binwidth/ratio)
     l_gaus <- list()
     for(i in 1:length(features)){
+      if(sum(is.na(features[[i]]))>0) {
+        writeLines(paste("Feature",names(features)[i],"contains:",
+                         sum(is.na(features[[i]]))),"NA`s. The overlay calculation may therefore be incorrect!")
+        }
       hist <- hist(features[[i]], breaks = bins, plot = FALSE)#, main = paste(levels(df$Messungen)[i]))
       #Normalverteilung
       if(hist$equidist == TRUE){
@@ -83,7 +87,7 @@ plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
     }
     return(df_temp)
   }else{
-    print("You need to supply a list or a data frame with the first argument wich is not NULL")
+    print("You need to supply a list or a data frame with the first argument")
     }
 }
 
