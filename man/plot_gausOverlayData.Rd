@@ -49,7 +49,7 @@ group_by(feature)
 # find the min and max values of all data an create a vector with defined bin size
 binwidth = 1
 c_bins <- seq(floor(min(df_transformed$value)),ceiling(max(df_transformed$value)),binwidth)
-df_gaus <- plot_gausOverlayData(df_data\%>\%as.list(),binwidth = binwidth, 10)
+df_gaus <- plot_gausOverlayData(df_data,binwidth = binwidth, 10)
 
 # facetted histogramms with normal distributed line overlay
 df_transformed\%>\%

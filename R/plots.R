@@ -37,7 +37,7 @@
 #' # find the min and max values of all data an create a vector with defined bin size
 #' binwidth = 1
 #' c_bins <- seq(floor(min(df_transformed$value)),ceiling(max(df_transformed$value)),binwidth)
-#' df_gaus <- plot_gausOverlayData(df_data%>%as.list(),binwidth = binwidth, 10)
+#' df_gaus <- plot_gausOverlayData(df_data,binwidth = binwidth, 10)
 #'
 #' # facetted histogramms with normal distributed line overlay
 #' df_transformed%>%
@@ -73,7 +73,7 @@ plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
         multiplier <- hist$counts / hist$density
         multiplier <- mean(multiplier, na.rm = TRUE)*ratio
       }else{writeLines("Error: \ncan not overlay a histogram with non equal bin distance")}
-      gaus <- multiplier*dnorm(hist$breaks,mean = mean(features[[i]]), sd = sd(features[[i]]))
+      gaus <- multiplier*dnorm(hist$breaks,mean = mean(features[[i]],na.rm = TRUE), sd = sd(features[[i]],na.rm = TRUE))
       l_gaus[[i]] <- data.frame(x= hist$breaks,
                                 y = gaus,
                                 feature = factor(rep(names(features)[i],length(gaus))))
