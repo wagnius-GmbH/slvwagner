@@ -3,15 +3,17 @@
 #' @name plot_gausOverlayData
 #' @description
 #' To compare histograms, it is best practice to facet each (diagram) feature using ggplot.
-#' To know whether the distribution is similar to the normal gaussian distribution, an overlay with the gaussian distribution can help.
+#' To know whether the distribution is similar to the normal gaussian distribution,
+#' an overlay with the gaussian distribution can help.
 #' Of corse the Q-Q Plot is a more appropriated tool to compare normal distribution and sample distribution.
 #'
 #' @details
 #' The first argument is a (named) list of vectors or a (named) data frame to calculate the normal distribution for each vector,
-#' where as the name is representing the feature name or the facet in the histogram. If no names are provided the function
+#' where as the name is representing the feature name and the facet in the histogram. If no names are provided the function
 #' paste("list_element",1:length(features)) will name the features.
-#' The second argument is the number of bins to be used in the histogram.
-#' The third argument is the ration or multiplier of, how many more data points are generated than bins are ploted in the histogram.
+#' The second argument is the  bin width in the histogram.
+#' The third argument is the multiplier of data points.
+#' How many more data points are generated than bins are ploted in the histogram.
 #' This ensures that for small bin count enough data points are available.
 #' To be able to generate a faceted plot the bin width is important to set equal in the ggplot call
 #' ggplot()+geom_histogram(aes(...),binwidth = 1). Check the examples for further information.
@@ -63,10 +65,6 @@ plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
     bins <- seq(floor(min(data,na.rm=T)),ceiling(max(data,na.rm=T)),binwidth/ratio)
     l_gaus <- list()
     for(i in 1:length(features)){
-      if(sum(is.na(features[[i]]))>0) {
-        writeLines(paste("Feature",names(features)[i],"contains:",
-                         sum(is.na(features[[i]]))),"NA`s. The overlay calculation may therefore be incorrect!")
-        }
       hist <- hist(features[[i]], breaks = bins, plot = FALSE)#, main = paste(levels(df$Messungen)[i]))
       #Normalverteilung
       if(hist$equidist == TRUE){
