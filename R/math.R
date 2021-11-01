@@ -167,20 +167,20 @@ math_lf_df_mb <- function(x,df_mb){
 #'
 #' @name math_lf_perpendicular
 #' @description
-#' Find linear function perpendicular to linear function through given point.
-#' @param lf data.frame(slope = c(0.12,0.78), intercept = c(-25, 13))
-#' @param point vector
-#' @return data.frame(x,y) \code{x}
+#' Find linear function`s perpendicular to supplied linear function through given point \code{x}.
+#' @param x point vector
+#' @param lf data.frame with the definiton of the given linear function containing the column slope and intercept
+#' @return data.frame with the slope and intercept
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
-#' math_lf_perpendicular(point = c(2,-9),
-#'                       data.frame(slope =c(-2,5),intercept = c(3,5)))
+#' math_lf_perpendicular(x = c(2,-9),
+#'                       data.frame(slope = -3,intercept = 5))
 #' @export
 
-math_lf_perpendicular <- function(point,lf){ #point c(x,y) lf(intercept, slope)
+math_lf_perpendicular <- function(x,lf){ #x point(s) lf(intercept, slope)
   s=-1/lf$slope
-  i =point[2]-(math_lf_rev_slope(lf$slope)*point[1])
+  i =x[2]-(math_lf_rev_slope(lf$slope)*x[1])
   return(data.frame(slope = s,intercept = i))
 }
 
@@ -227,13 +227,43 @@ math_lf_rev_slope <- function(slope){#
 #' ggplot(as_tibble(t(y)),aes(x,y))+
 #' geom_point()+
 #' geom_abline(data = result,aes(slope = slope, intercept =intercept))
-
 #' @export
+
 math_lf_fromPoints <- function (x){
   delta <- x[,1]-x[,2]
   s <- delta[2]/delta[1]
   i <- x[1,2]-x[1,2]*delta[2]/delta[1]
   return(data.frame(slope = s,intercept = i))
+}
+
+#######################################
+#' Intersection point from two linear functions
+#'
+#' @name math_lf_intercet
+#' @description
+#' Calculate the intercection point from two linear functions.
+#' @param x matrix or data frame with columns "slope" and "intersect"
+#' @param y matrix or data frame with columns "slope" and "intersect"
+#' @return vector of intersect point
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @examples
+#' x <- data.frame(slope = 2.3, intercept = -2)
+#' y <- data.frame(slope = 2.3, intercept = -2)
+#' math_lf_intercet(x,y)
+#' y <- data.frame(slope = 1.25, intercept = 2)
+#' math_lf_intercet(x,y)
+#' @export
+
+math_lf_intercet <- function(x,y){
+  if(setequal(x,y)){
+    print("x and y are identical: cannot calculate interception point")
+    return(NULL)
+  }else{
+    result_x = (y[,"intercept"]-x[,"intercept"])/(x[,"slope"]-y[,"slope"])
+    result_y = y[,"slope"]*result_x+y[,"intercept"]
+    return(c(result_x,result_y))
+  }
 }
 
 
