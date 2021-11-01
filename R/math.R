@@ -239,7 +239,7 @@ math_lf_fromPoints <- function (x){
 #######################################
 #' Intersection point from two linear functions
 #'
-#' @name math_lf_intercet
+#' @name math_lf_intersect
 #' @description
 #' Calculate the intercection point from two linear functions.
 #' @param x matrix or data frame with columns "slope" and "intersect"
@@ -250,12 +250,12 @@ math_lf_fromPoints <- function (x){
 #' @examples
 #' x <- data.frame(slope = 2.3, intercept = -2)
 #' y <- data.frame(slope = 2.3, intercept = -2)
-#' math_lf_intercet(x,y)
+#' math_lf_intersect(x,y)
 #' y <- data.frame(slope = 1.25, intercept = 2)
-#' math_lf_intercet(x,y)
+#' math_lf_intersect(x,y)
 #' @export
 
-math_lf_intercet <- function(x,y){
+math_lf_intersect <- function(x,y){
   if(setequal(x,y)){
     print("x and y are identical: cannot calculate interception point")
     return(NULL)
