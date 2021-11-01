@@ -141,12 +141,14 @@ math_lf <- function(x,m,b){
 #'
 #' @name math_lf_df_mb
 #' @description
-#' linear function with parameter slope and intercept provided by data frame.
+#' Calculate y for different linear functions.
+#' The parameters slope and intercept shall be provided by data frame with columns "slope" and "intercept".
 #' @details
-#' \eqn{f\left(x\right)=m_{slope}\cdot x + b_{intercept}}
+#' f(x)=m_{slopes}* x + b_{intercepts}
+#' The return value can be either
 #' @param x vector
-#' @param df_mb data frame with "slope" and "intercept"
-#' @return vector \code{x}
+#' @param df_mb data frame with "slopes" and "intercepts"
+#' @return vector \code{y}
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples df <- data.frame(slope = 0.5, intercept = 1)
@@ -157,7 +159,7 @@ math_lf <- function(x,m,b){
 
 
 math_lf_df_mb <- function(x,df_mb){
-  return(x*df_mb[,"slope"]+df_mb[,"intercept"])
+  x*df_mb[,"slope"]+df_mb[,"intercept"]
 }
 
 #######################################

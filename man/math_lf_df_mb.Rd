@@ -9,16 +9,18 @@ math_lf_df_mb(x, df_mb)
 \arguments{
 \item{x}{vector}
 
-\item{df_mb}{data frame with "slope" and "intercept"}
+\item{df_mb}{data frame with "slopes" and "intercepts"}
 }
 \value{
-vector \code{x}
+vector \code{y}
 }
 \description{
-linear function with parameter slope and intercept provided by data frame.
+Calculate y for different linear functions.
+The parameters slope and intercept shall be provided by data frame with columns "slope" and "intercept".
 }
 \details{
-\eqn{f\left(x\right)=m_{slope}\cdot x + b_{intercept}}
+f(x)=m_{slopes}* x + b_{intercepts}
+The return value can be either
 }
 \examples{
 df <- data.frame(slope = 0.5, intercept = 1)
