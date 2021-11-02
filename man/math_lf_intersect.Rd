@@ -12,7 +12,7 @@ math_lf_intersect(x, y)
 \item{y}{matrix or data frame with columns "slope" and "intersect"}
 }
 \value{
-vector of intersect point
+matrix with intersecting point
 }
 \description{
 Calculate the intercection point from two linear functions.
