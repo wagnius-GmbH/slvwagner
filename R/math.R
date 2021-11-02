@@ -241,17 +241,18 @@ math_lf_fromPoints <- function (x){
 #'
 #' @name math_lf_intersect
 #' @description
-#' Calculate the intercection point from two linear functions.
+#' Calculate the intersecting point(s) from different linear function(s).
 #' @param x matrix or data frame with columns "slope" and "intersect"
 #' @param y matrix or data frame with columns "slope" and "intersect"
-#' @return matrix with intersecting point
+#' @return data frame with intersecting point(s)
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
 #' x <- data.frame(slope = 2.3, intercept = -2)
 #' y <- data.frame(slope = 2.3, intercept = -2)
 #' math_lf_intersect(x,y)
-#' y <- data.frame(slope = 1.25, intercept = 2)
+#' y <- y|>
+#'   rbind(data.frame(slope = 1.25, intercept = 2))
 #' math_lf_intersect(x,y)
 #' @export
 
@@ -262,10 +263,9 @@ math_lf_intersect <- function(x,y){
   }else{
     result_x = (y[,"intercept"]-x[,"intercept"])/(x[,"slope"]-y[,"slope"])
     result_y = y[,"slope"]*result_x+y[,"intercept"]
-    return(data.frame(x = result_x, y = result_y)|>as.matrix())
+    return(data.frame(x = result_x, y = result_y))
   }
 }
-
 
 #######################################
 #' slerp  by 3 points and a given radius.

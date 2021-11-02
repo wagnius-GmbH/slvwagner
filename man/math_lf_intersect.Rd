@@ -12,16 +12,17 @@ math_lf_intersect(x, y)
 \item{y}{matrix or data frame with columns "slope" and "intersect"}
 }
 \value{
-matrix with intersecting point
+data frame with intersecting point(s)
 }
 \description{
-Calculate the intercection point from two linear functions.
+Calculate the intersecting point(s) from different linear function(s).
 }
 \examples{
 x <- data.frame(slope = 2.3, intercept = -2)
 y <- data.frame(slope = 2.3, intercept = -2)
 math_lf_intersect(x,y)
-y <- data.frame(slope = 1.25, intercept = 2)
+y <- y|>
+  rbind(data.frame(slope = 1.25, intercept = 2))
 math_lf_intersect(x,y)
 }
 \author{
