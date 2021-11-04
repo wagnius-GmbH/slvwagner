@@ -2,7 +2,6 @@
 #' Get NPS type
 #'
 #' @name NPS_type
-#' @examples
 #' @param df_data data frame with data
 #' @param rating string identifying the column of the rating
 #' @param df_levels data frame containing range for each type (Promoters, Passives, Detractors)
