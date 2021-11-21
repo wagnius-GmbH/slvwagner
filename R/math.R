@@ -78,7 +78,7 @@ math_circle_from3points<-function(x,type = "m"){
                    r  = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1]))
       }else{
         writeLines(paste("math_circle_from3points:\nunknown type argument type:",type))
-        }
+      }
     }
   }
 }
@@ -241,7 +241,7 @@ math_lf_fromPoints <- function (x){
 #'
 #' @name math_lf_intersect
 #' @description
-#' Calculate the intersecting point(s) from different linear function(s).
+#' Calculate intersecting point(s) from linear function \code{x} and linear function \code{y}.
 #' @param x matrix or data frame with columns "slope" and "intersect"
 #' @param y matrix or data frame with columns "slope" and "intersect"
 #' @return data frame with intersecting point(s)
@@ -273,7 +273,8 @@ math_lf_intersect <- function(x,y){
 #' @name math_slerp
 #' @description
 #' Radius interpolation by 3 points and a given radius.
-#' The Radius interpolation will be calculated using the cp = conmen or centrer point and the lines defined by x1,x2 and the comon center point cp
+#' The Radius interpolation will be calculated using the cp = common or center point and the lines defined by x1,x2
+#' and the common center point cp.
 #' The common point therefore is cp and will be used as position vector.
 #' @details
 #' \deqn{sin[(1-t)*phi] / sin(phi) * x1   +  sin(t*phi/sin(phi)  *  x2)}
@@ -321,7 +322,7 @@ math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Rad
   #Stuetzvektoren gleich gross machen
   s1 <- s1l*math_betrag(s2l)
   s2 <- s2l*math_betrag(s1l)
-  #Skallierung der Stuetzvektoren auf Betrag = 1 =>Einheisvektoren
+  #Skallierung der Stuetzvektoren auf Betrag = 1 => Einheisvektoren
   skalierung <- math_betrag(s1)
   s1 <- s1/skalierung
   s2 <- s2/skalierung
@@ -398,7 +399,7 @@ math_rot_matrix_basic <- function(x,ax){
     matrix(c(cos(x),-sin(x),0,sin(x),cos(x),0,0,0,1), ncol = 3)
   }else{writeLines(paste0("Parameter ax is not according to following fromats:",
                           "\ncharacter; c(\"x\",\"y\",\"z\") or c(\"x1\",\"x2\",\"x3\") nor integer; c(1,2,3) to specify the rotation axis.")
-                   )}
+  )}
 }
 
 #######################################
