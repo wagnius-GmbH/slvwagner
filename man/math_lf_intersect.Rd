@@ -15,7 +15,7 @@ math_lf_intersect(x, y)
 data frame with intersecting point(s)
 }
 \description{
-Calculate the intersecting point(s) from different linear function(s).
+Calculate intersecting point(s) from linear function \code{x} and linear function \code{y}.
 }
 \examples{
 x <- data.frame(slope = 2.3, intercept = -2)

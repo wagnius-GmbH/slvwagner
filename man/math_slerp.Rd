@@ -22,7 +22,8 @@ Returns point matrix with the calculated coordinates \code{x}
 }
 \description{
 Radius interpolation by 3 points and a given radius.
-The Radius interpolation will be calculated using the cp = conmen or centrer point and the lines defined by x1,x2 and the comon center point cp
+The Radius interpolation will be calculated using the cp = common or center point and the lines defined by x1,x2
+and the common center point cp.
 The common point therefore is cp and will be used as position vector.
 }
 \details{
