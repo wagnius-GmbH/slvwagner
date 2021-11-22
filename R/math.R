@@ -232,10 +232,10 @@ math_lf_rev_slope <- function(slope){#
 #' @export
 
 math_lf_fromPoints <- function (x){
-  delta <- x[,1]-x[,2]
-  s <- delta[2]/delta[1]
-  i <- x[1,2]-x[1,2]*delta[2]/delta[1]
-  return(data.frame(slope = s,intercept = i))
+  delta <- (x[,1]-x[,2])
+  m <- delta[2]/delta[1]
+  b <- x[2,1]-m*x[1,1]
+  return(data.frame(slope = m,intercept = b))
 }
 
 #######################################
