@@ -19,8 +19,8 @@ get linear fuction from 2 points x1 and x2
 x <- matrix(c(c(-2,5),
               c( 3,3)), nrow = 2, byrow = FALSE)
 
-y <- data.frame(x1 = c(x = -1, y = -5),
-                x2 = c(x =  3, y =  3))
+y <- data.frame(p1 = c(x = -1, y = -5),
+                p2 = c(x =  3, y =  3))
 
 math_lf_fromPoints(x)
 
@@ -28,8 +28,10 @@ result <- math_lf_fromPoints(y)
 
 library(tidyverse)
 ggplot(as_tibble(t(y)),aes(x,y))+
-geom_point()+
-geom_abline(data = result,aes(slope = slope, intercept =intercept))
+geom_abline(data = result,aes(slope = slope, intercept =intercept), size = 1.5)+
+geom_point(shape = 10, size = 10,color = "blue")+
+geom_hline(yintercept = 0)+
+geom_vline(xintercept = 0)
 }
 \author{
 Florian Wagner
