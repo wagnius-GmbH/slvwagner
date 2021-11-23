@@ -147,7 +147,7 @@ math_lf <- function(x,m,b){
 #' f(x)=m_{slopes}* x + b_{intercepts}
 #' The return value can be either
 #' @param x vector
-#' @param df_mb data frame with "slopes" and "intercepts"
+#' @param df_mb data frame with "slope(s)" and "intercept(s)"
 #' @return vector \code{y}
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
@@ -159,7 +159,10 @@ math_lf <- function(x,m,b){
 
 
 math_lf_df_mb <- function(x,df_mb){
-  x*df_mb[,"slope"]+df_mb[,"intercept"]
+  temp <- -x*l_lm[,"slope"]+l_lm[,"intercept"]
+  temp <- cbind(matrix(c(x)),temp)
+  colnames(temp) <- c("x","y")
+  return(temp)
 }
 
 #######################################

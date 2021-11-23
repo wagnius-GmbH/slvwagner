@@ -9,7 +9,7 @@ math_lf_df_mb(x, df_mb)
 \arguments{
 \item{x}{vector}
 
-\item{df_mb}{data frame with "slopes" and "intercepts"}
+\item{df_mb}{data frame with "slope(s)" and "intercept(s)"}
 }
 \value{
 vector \code{y}
