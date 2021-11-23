@@ -19,8 +19,7 @@ Calculate y for different linear functions.
 The parameters slope and intercept shall be provided by data frame with columns "slope" and "intercept".
 }
 \details{
-f(x)=m_{slopes}* x + b_{intercepts}
-The return value can be either
+f(x)= y = m_{slopes}* x + b_{intercepts}
 }
 \examples{
 df <- data.frame(slope = 0.5, intercept = 1)
