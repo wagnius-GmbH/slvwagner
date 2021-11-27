@@ -57,7 +57,7 @@ math_circle_from3points<-function(x){
     result <- solve(A,b)
     return(c(x_center = -c_result[2]/2,
              y_center = -c_result[3]/2,
-             r  = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1]))
+             radius  = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1]))
            )
   }else{
     return(writeLines(past("only matrix[3][2] (3 points with 2 coordinates) can be calculated")))
