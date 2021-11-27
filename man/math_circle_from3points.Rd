@@ -7,10 +7,10 @@
 math_circle_from3points(x)
 }
 \arguments{
-\item{x}{matrix with 3 rows of coordinates}
+\item{x}{matrix with 3 rows of points and 2 colums with the coordinates.}
 }
 \value{
-Returns named vector with center coordinates and Radius.
+Returns data frame with center coordinates and Radius.
 }
 \description{
 calculate circle using 3 points.The function returns a tibble (dataframe) or
@@ -18,19 +18,24 @@ a named vector with the center point and the radius.
 }
 \examples{
 x <- matrix(c(c(-2.23 , 4.389 ),
-              c( 1.001,-3.23  ),
+              c(-1.001,-3.23  ),
               c(  15.5,-7.2365)),
-              ncol = 3, byrow = FALSE)
-colnames(x)<- paste0("x",1:3)
-rownames(x)<- c("x","y")
+              dimnames = list(c("x","y"),paste0("x",1:3)),
+              ncol = 3)|>t()
 math_circle_from3points(x)
 
 library(tidyverse)
 library(ggforce)
 ggplot()+
-geom_point(data = as.data.frame(t(x)),aes(x,y))+
-geom_circle(data = math_circle_from3points(x), aes(x0 = x_center , y0 = y_center,r = r))+
-coord_fixed()
+  geom_point(data = as.data.frame(x),aes(x,y), color = "blue", size = 1.5)+
+  geom_point(data = math_circle_from3points(x),aes(x_center,y_center))+
+  geom_label(data = math_circle_from3points(x),aes(x_center,y_center,label = "center"), nudge_y = 1.5)+
+  geom_circle(data = math_circle_from3points(x), aes(x0 = x_center , y0 = y_center,r = radius))+
+  geom_label(data = as.data.frame(x),aes(x,y,label = paste("input:",row.names(as.data.frame(x)))), nudge_y = 1.5)+
+  geom_hline(yintercept = 0)+
+  geom_vline(xintercept = 0)+
+  scale_x_continuous(limits = c(-5,22))+
+  coord_fixed()
 }
 \author{
 Florian Wagner
