@@ -25,13 +25,12 @@ math_betrag <- function(x) {
 #' @description
 #' calculate circle using 3 points.The function returns a tibble (dataframe) or
 #' a named vector with the center point and the radius.
-#' @param x numerical point matrix
-#' @param x numerical vector
-#' @param type c("df,"m","v"), df = data.frame(), m = matrix(), v = c()
+#' @param x matrix with 3 rows of coordinates
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' data frame, matrix or vector
+#' Returns named vector with center coordinates and Radius.
+#' @examples
 #' x <- matrix(c(c(-2.23 , 4.389 ),
 #'               c( 1.001,-3.23  ),
 #'               c(  15.5,-7.2365)),
@@ -39,47 +38,29 @@ math_betrag <- function(x) {
 #' colnames(x)<- paste0("x",1:3)
 #' rownames(x)<- c("x","y")
 #' math_circle_from3points(x)
-#' math_circle_from3points(x, type = "v")
-#' result <- math_circle_from3points(x, type = "df")
 #'
 #' library(tidyverse)
 #' library(ggforce)
 #' ggplot()+
 #' geom_point(data = as.data.frame(t(x)),aes(x,y))+
-#' geom_circle(data = result, aes(x0 = x_center , y0 = y_center,r = r))+
+#' geom_circle(data = math_circle_from3points(x), aes(x0 = x_center , y0 = y_center,r = r))+
 #' coord_fixed()
 #' @export
 
-math_circle_from3points<-function(x,type = "m"){
+math_circle_from3points<-function(x){
   if(sum(class(x)==c("matrix","array"))==2){
     A <- cbind(c(1,1,1), t(x))
     b <- c(-(A[1,2]^2+A[1,3]^2),
            -(A[2,2]^2+A[2,3]^2),
            -(A[3,2]^2+A[3,3]^2))
 
-    c_result <- solve(A,b)
+    result <- solve(A,b)
+    return(c(x_center = -c_result[2]/2,
+             y_center = -c_result[3]/2,
+             r  = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1]))
+           )
   }else{
-    return(writeLines(past("only point matrix can be calculated => matrix[3][2] 3 points and 2 coordinates")))
-  }
-  if(type == "m"){
-    return(as.matrix(data.frame(x_center = -c_result[2]/2,
-                                y_center = -c_result[3]/2,
-                                r  = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1])))
-    )
-  }else{
-    if(type == "v"){
-      c(x_center = -c_result[2]/2,
-        y_center = -c_result[3]/2,
-        r = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1]))
-    }else{
-      if(type == "df"){
-        data.frame(x_center = -c_result[2]/2,
-                   y_center = -c_result[3]/2,
-                   r  = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1]))
-      }else{
-        writeLines(paste("math_circle_from3points:\nunknown type argument type:",type))
-      }
-    }
+    return(writeLines(past("only point matrix can be calculated => matrix[3][2] 3 points with 2 coordinates")))
   }
 }
 

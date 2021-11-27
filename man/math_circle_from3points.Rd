@@ -4,15 +4,19 @@
 \alias{math_circle_from3points}
 \title{Circle from 3 points}
 \usage{
-math_circle_from3points(x, type = "m")
+math_circle_from3points(x)
 }
 \arguments{
-\item{x}{numerical vector}
-
-\item{type}{c("df,"m","v"), df = data.frame(), m = matrix(), v = c()}
+\item{x}{matrix with 3 rows of coordinates}
 }
 \value{
-data frame, matrix or vector
+Returns named vector with center coordinates and Radius.
+}
+\description{
+calculate circle using 3 points.The function returns a tibble (dataframe) or
+a named vector with the center point and the radius.
+}
+\examples{
 x <- matrix(c(c(-2.23 , 4.389 ),
               c( 1.001,-3.23  ),
               c(  15.5,-7.2365)),
@@ -20,19 +24,13 @@ x <- matrix(c(c(-2.23 , 4.389 ),
 colnames(x)<- paste0("x",1:3)
 rownames(x)<- c("x","y")
 math_circle_from3points(x)
-math_circle_from3points(x, type = "v")
-result <- math_circle_from3points(x, type = "df")
 
 library(tidyverse)
 library(ggforce)
 ggplot()+
 geom_point(data = as.data.frame(t(x)),aes(x,y))+
-geom_circle(data = result, aes(x0 = x_center , y0 = y_center,r = r))+
+geom_circle(data = math_circle_from3points(x), aes(x0 = x_center , y0 = y_center,r = r))+
 coord_fixed()
-}
-\description{
-calculate circle using 3 points.The function returns a tibble (dataframe) or
-a named vector with the center point and the radius.
 }
 \author{
 Florian Wagner

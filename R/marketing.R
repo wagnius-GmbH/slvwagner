@@ -80,8 +80,8 @@ NPS <- function(x, rating , c_group , df_levels) {
   # Levels NPS
   if(missing(df_levels)) {
     df_levels <- tibble(Detractors = c(1,6),
-                       Passives   = c(7,8),
-                       Promoters  = c(9,10))
+                        Passives   = c(7,8),
+                        Promoters  = c(9,10))
   }
   # exit function call if rating is not defined
   if(missing(rating)){
