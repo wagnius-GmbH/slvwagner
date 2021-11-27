@@ -60,7 +60,7 @@ math_circle_from3points<-function(x){
              r  = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1]))
            )
   }else{
-    return(writeLines(past("only point matrix can be calculated => matrix[3][2] 3 points with 2 coordinates")))
+    return(writeLines(past("only matrix[3][2] (3 points with 2 coordinates) can be calculated")))
   }
 }
 
