@@ -536,12 +536,12 @@ math_quadrant  <- function(x){
 #' @name math_angle_quadrant_vector
 #' @description find the
 #' @details
-#' Find the angle of a vector using the quadrant information.
+#' Find the angle to the first axis "x" for given vector of coordinates.
 #' @param x vector containing the coordinates. e.g. First x, second y.
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' Returns Quadrant(s) of vector(s)
+#' Returns Quadrant(s) of given vector
 #' @examples math_angle_quadrant_vector(c( 1, 1))/pi*180
 #' @examples math_angle_quadrant_vector(c(-1, 1))/pi*180
 #' @examples math_angle_quadrant_vector(c(-1,-1))/pi*180
