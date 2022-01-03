@@ -7,15 +7,19 @@
 math_lf_intersect(x, y)
 }
 \arguments{
-\item{x}{matrix or data frame with columns "slope" and "intersect"}
+\item{x}{matrix or data frame (column names (slope,intercept))}
 
-\item{y}{matrix or data frame with columns "slope" and "intersect"}
+\item{y}{matrix or data frame (column names (slope,intercept))}
 }
 \value{
-data frame with intersecting point(s)
+vector
 }
 \description{
-Calculate intersecting point(s) from linear function \code{x} and linear function \code{y}.
+Calculate intersecting point(s) from two linear function \code{x} and linear function \code{y}.
+}
+\details{
+Get the intersecting point of two linear Functions. If only \code{x} is supplied, \code{x} needs to be a matrix or data.frame containing both
+linear functions. If \code{x} and or \code{y} have names you shall use the names (slope, intercept).
 }
 \examples{
 x <- data.frame(slope = 2.3, intercept = -2)
@@ -24,6 +28,7 @@ math_lf_intersect(x,y)
 y <- y|>
   rbind(data.frame(slope = 1.25, intercept = 2))
 math_lf_intersect(x,y)
+math_lf_intersect(tibble(slope = c(0.2,-1),intercept = c(2,3)))
 }
 \author{
 Florian Wagner

@@ -228,10 +228,14 @@ math_lf_fromPoints <- function (x){
 #'
 #' @name math_lf_intersect
 #' @description
-#' Calculate intersecting point(s) from linear function \code{x} and linear function \code{y}.
-#' @param x matrix or data frame with columns "slope" and "intersect"
-#' @param y matrix or data frame with columns "slope" and "intersect"
-#' @return data frame with intersecting point(s)
+#' Calculate intersecting point(s) from two linear function \code{x} and linear function \code{y}.
+#'
+#' @details
+#' Get the intersecting point of two linear Functions. If only \code{x} is supplied, \code{x} needs to be a matrix or data.frame containing both
+#' linear functions. If \code{x} and or \code{y} have names you shall use the names (slope, intercept).
+#' @param x matrix or data frame (column names (slope,intercept))
+#' @param y matrix or data frame (column names (slope,intercept))
+#' @return vector
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
@@ -241,18 +245,43 @@ math_lf_fromPoints <- function (x){
 #' y <- y|>
 #'   rbind(data.frame(slope = 1.25, intercept = 2))
 #' math_lf_intersect(x,y)
+#' math_lf_intersect(tibble(slope = c(0.2,-1),intercept = c(2,3)))
 #' @export
 
 math_lf_intersect <- function(x,y){
-  if(setequal(x,y)){
-    print("x and y are identical: cannot calculate interception point")
-    return(NULL)
+  if(nrow(x)>1){
+    if(is.matrix(x)){
+      result_x = (x[2,2]-x[1,2])/(x[1,1]-x[2,1])
+      result_y = x[2,1]*result_x+x[2,2]
+      return(c(x = result_x, y = result_y))
+    }else{
+      result_x = (x[2,2]-x[1,2])/(x[1,1]-x[2,1])
+      result_y = x[2,1]*result_x+x[2,2]
+      return(c(x = pull(result_x), y = pull(result_y)))
+    }
   }else{
-    result_x = (y[,"intercept"]-x[,"intercept"])/(x[,"slope"]-y[,"slope"])
-    result_y = y[,"slope"]*result_x+y[,"intercept"]
-    return(data.frame(x = result_x, y = result_y))
+    if(is.null(names(x))){
+      if(setequal(x,y)){
+        print("x and y are identical: cannot calculate interception point")
+        return(NULL)
+      }else{
+        result_x = (y[,2]-x[,2])/(x[,1]-y[,1])
+        result_y = y[,1]*result_x+y[,2]
+        return(c(x = result_x, y = result_y))
+      }
+    }else{
+      if(setequal(x,y)){
+        print("x and y are identical: cannot calculate interception point")
+        return(NULL)
+      }else{
+        result_x = (y[,"intercept"]-x[,"intercept"])/(x[,"slope"]-y[,"slope"])
+        result_y = y[,"slope"]*result_x+y[,"intercept"]
+        return(c(x = pull(result_x), y = pull(result_y)))
+      }
+    }
   }
 }
+
 
 #######################################
 #' slerp  by 3 points and a given radius.
