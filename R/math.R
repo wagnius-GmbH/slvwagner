@@ -244,38 +244,48 @@ math_lf_fromPoints <- function (x){
 #' math_lf_intersect(x,y)
 #' y <- y|>
 #'   rbind(data.frame(slope = 1.25, intercept = 2))
-#' math_lf_intersect(x,y)
-#' math_lf_intersect(tibble(slope = c(0.2,-1),intercept = c(2,3)))
+#' math_lf_intersect(y)
+#' names(y)<-c("slope","intercept")
+#' math_lf_intersect(y)
+#' math_lf_intersect(data.frame(slope = c(0.2,-1),intercept = c(2,3)))
+#' math_lf_intersect(matrix(c(0.2,-1,2,3),ncol = 2))
+#' y <- matrix(c(0.2,-1,2,3),ncol = 2)
+#' math_lf_intersect(y)
 #' @export
 
-math_lf_intersect <- function(x,y){
-  if(nrow(x)>1){
-    if(is.matrix(x)){
-      result_x = (x[2,2]-x[1,2])/(x[1,1]-x[2,1])
-      result_y = x[2,1]*result_x+x[2,2]
-      return(c(x = result_x, y = result_y))
-    }else{
-      result_x = (x[2,2]-x[1,2])/(x[1,1]-x[2,1])
-      result_y = x[2,1]*result_x+x[2,2]
-      return(c(x = pull(result_x), y = pull(result_y)))
-    }
-  }else{
-    if(is.null(names(x))){
-      if(setequal(x,y)){
-        print("x and y are identical: cannot calculate interception point")
-        return(NULL)
+math_lf_intersect <- function(x,...){
+  if(missing(...)){
+    if(nrow(x)>1){
+      if(is.null(names(x))){
+        result_x = (x[2,2]-x[1,2])/(x[1,1]-x[2,1])
+        result_y = x[2,1]*result_x+x[2,2]
+        return(c(x = result_x, y = result_y))
       }else{
-        result_x = (y[,2]-x[,2])/(x[,1]-y[,1])
-        result_y = y[,1]*result_x+y[,2]
+        result_x = (x[2,"intercept"]-x[1,"intercept"])/(x[1,"slope"]-x[2,"slope"])
+        result_y = x[2,"slope"]*result_x+x[2,"intercept"]
         return(c(x = result_x, y = result_y))
       }
     }else{
-      if(setequal(x,y)){
+      print("x contains only a singl function")
+      return(NULL)
+    }
+  }else{
+    if(is.null(names(x))){
+      if(setequal(x,...)){
         print("x and y are identical: cannot calculate interception point")
         return(NULL)
       }else{
-        result_x = (y[,"intercept"]-x[,"intercept"])/(x[,"slope"]-y[,"slope"])
-        result_y = y[,"slope"]*result_x+y[,"intercept"]
+        result_x = (...[,2]-x[,2])/(x[,1]-y[,1])
+        result_y = ...[,1]*result_x+...[,2]
+        return(c(x = pull(result_x), y = pull(result_y)))
+      }
+    }else{
+      if(setequal(x,...)){
+        print("x and y are identical: cannot calculate interception point")
+        return(NULL)
+      }else{
+        result_x = (...[,"intercept"]-x[,"intercept"])/(x[,"slope"]-...[,"slope"])
+        result_y = ...[,"slope"]*result_x+...[,"intercept"]
         return(c(x = pull(result_x), y = pull(result_y)))
       }
     }
@@ -448,7 +458,7 @@ math_rot_matrix3d <- function(x,angle){
            c(x[3]*x[1]*(1-cos(angle))-x[2]*sin(angle),
              x[3]*x[2]*(1-cos(angle))+x[1]*sin(angle),
              x[3]^2*(1-cos(angle))+cos(angle))),
-         ncol = 3)
+         ncol = 3, byrow = TRUE)
 }
 
 #######################################

@@ -4,7 +4,7 @@
 \alias{math_lf_intersect}
 \title{Intersection point from two linear functions}
 \usage{
-math_lf_intersect(x, y)
+math_lf_intersect(x, ...)
 }
 \arguments{
 \item{x}{matrix or data frame (column names (slope,intercept))}
@@ -27,8 +27,13 @@ y <- data.frame(slope = 2.3, intercept = -2)
 math_lf_intersect(x,y)
 y <- y|>
   rbind(data.frame(slope = 1.25, intercept = 2))
-math_lf_intersect(x,y)
-math_lf_intersect(tibble(slope = c(0.2,-1),intercept = c(2,3)))
+math_lf_intersect(y)
+names(y)<-c("slope","intercept")
+math_lf_intersect(y)
+math_lf_intersect(data.frame(slope = c(0.2,-1),intercept = c(2,3)))
+math_lf_intersect(matrix(c(0.2,-1,2,3),ncol = 2))
+y <- matrix(c(0.2,-1,2,3),ncol = 2)
+math_lf_intersect(y)
 }
 \author{
 Florian Wagner
