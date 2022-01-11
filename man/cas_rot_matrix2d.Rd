@@ -22,7 +22,8 @@ needs to be installed.
 \examples{
 library(Ryacas)
 cas_rot_matrix2d(c(pi))
-cas_rot_matrix2d(c(-pi)|>ysym())
+rot_matrix <- cas_rot_matrix2d(c(-pi)|>ysym())
+rot_matrix
 }
 \author{
 Florian Wagner

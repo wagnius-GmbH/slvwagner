@@ -25,7 +25,8 @@ needs to be installed.
 \examples{
 library(Ryacas)
 cas_rot_matrix3d(matrix(c(1,2,3)),c(-pi))
-cas_rot_matrix3d(matrix(c(1,2,3))|>ysym(),c(-pi)|>ysym())
+rot_matrix <- cas_rot_matrix3d(matrix(c(1,2,3))|>ysym(),c(-pi)|>ysym())
+rot_matrix
 }
 \author{
 Florian Wagner

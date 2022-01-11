@@ -383,7 +383,7 @@ math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Rad
 #' math_rot_matrix2d(c(-pi))
 #' @export
 
-cas_rot_matrix2d <- function(x){
+math_rot_matrix2d <- function(x){
   #Drehmatrix 2D
   matrix(c(cos(x),sin(x),-sin(x),cos(x)), ncol = 2)
 }
@@ -406,14 +406,16 @@ cas_rot_matrix2d <- function(x){
 #' @examples
 #' library(Ryacas)
 #' cas_rot_matrix2d(c(pi))
-#' cas_rot_matrix2d(c(-pi)|>ysym())
+#' rot_matrix <- cas_rot_matrix2d(c(-pi)|>ysym())
+#' rot_matrix
 #' @export
 
 cas_rot_matrix2d <- function(x){
   if(is.list(x)){
     y_cos <- cos(x)
     y_sin <- sin(x)
-    yac_str(paste0("{{",y_cos,",",-y_sin,"},{",y_sin,",",y_cos,"}}"))
+    yac_str(paste0("{{",y_cos,",",-y_sin,"},{",y_sin,",",y_cos,"}}"))|>
+      ysym()
   }else print("No yacs object supplied")
 }
 
@@ -471,7 +473,8 @@ math_rot_matrix3d <- function(x,angle){
 #' @examples
 #' library(Ryacas)
 #' cas_rot_matrix3d(matrix(c(1,2,3)),c(-pi))
-#' cas_rot_matrix3d(matrix(c(1,2,3))|>ysym(),c(-pi)|>ysym())
+#' rot_matrix <- cas_rot_matrix3d(matrix(c(1,2,3))|>ysym(),c(-pi)|>ysym())
+#' rot_matrix
 #' @export
 
 cas_rot_matrix3d <- function(x,angle){
@@ -490,7 +493,8 @@ cas_rot_matrix3d <- function(x,angle){
 
    {",x[3],"*",x[1],"*(",1,"-",y_cos ,")-",x[2],"*",y_sin,",
     ",x[3],"*",x[2],"*(",1,"-",y_cos ,")+",x[1],"*",y_sin,",
-    ",x[3],"^2       *(",1,"-",y_cos ,")+",y_cos,"}}"))
+    ",x[3],"^2       *(",1,"-",y_cos ,")+",y_cos,"}}"))|>
+      ysym()
   }else print("No yacs object supplied")
 }
 

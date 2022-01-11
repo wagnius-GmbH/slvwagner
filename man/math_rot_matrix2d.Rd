@@ -2,10 +2,9 @@
 % Please edit documentation in R/math.R
 \name{math_rot_matrix2d}
 \alias{math_rot_matrix2d}
-\alias{cas_rot_matrix2d}
 \title{CAS 2d rotation matrix}
 \usage{
-cas_rot_matrix2d(x)
+math_rot_matrix2d(x)
 }
 \arguments{
 \item{x}{vector of an angel in radiant}
