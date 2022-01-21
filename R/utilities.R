@@ -24,7 +24,7 @@ r_path <- function(path = "clipboard",...) {
 }
 
 ###################################################################
-#' Function to convert R path to windows compatible path
+#' Convert R path to windows compatible path
 #'
 #' @name r_win_path
 #' @description Function to convert R path to windows compatible path.
@@ -42,10 +42,10 @@ r_win_path <- function(x){
 
 
 ###################################################################
-#' Function to check if variable is defined
+#' Check if variable is defined in R`s global environment.
 #'
 #' @name r_is.defined
-#' @description Function to convert windows path to R compatible path.
+#' @description Function to Check if variable is defined in R`s global environment.
 #' @param  sym variable or function name
 #' @return TRUE or FALSE
 #' @export

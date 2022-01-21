@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities.R
 \name{r_is.defined}
 \alias{r_is.defined}
-\title{Function to check if variable is defined}
+\title{Check if variable is defined in R`s global environment.}
 \usage{
 r_is.defined(sym)
 }
@@ -13,5 +13,5 @@ r_is.defined(sym)
 TRUE or FALSE
 }
 \description{
-Function to convert windows path to R compatible path.
+Function to Check if variable is defined in R`s global environment.
 }

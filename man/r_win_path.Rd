@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities.R
 \name{r_win_path}
 \alias{r_win_path}
-\title{Function to convert R path to windows compatible path}
+\title{Convert R path to windows compatible path}
 \usage{
 r_win_path(x)
 }
