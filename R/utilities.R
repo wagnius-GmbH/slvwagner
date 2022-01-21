@@ -11,7 +11,7 @@
 #' r_path()
 #' @export
 
-r_path <- function(path = "clipboard") {
+r_path <- function(path = "clipboard",...) {
   y <- if (path == "clipboard") {
     utils::readClipboard()
   } else {
@@ -23,13 +23,29 @@ r_path <- function(path = "clipboard") {
   return(x)
 }
 
+###################################################################
+#' Function to convert R path to windows compatible path
+#'
+#' @name r_win_path
+#' @description Function to convert R path to windows compatible path.
+#' @param  x R path character vector
+#' @return Windows compatible character vector
+#' @examples
+#' r_win_path(tempdir())
+#' @export
 
+r_win_path <- function(x){
+   x <- chartr("\\", "/", x)
+   utils::writeClipboard(x)
+   return(x)
+}
 
 
 ###################################################################
-#' function to check if variable is defined
+#' Function to check if variable is defined
 #'
 #' @name r_is.defined
+#' @description Function to convert windows path to R compatible path.
 #' @param  sym variable or function name
 #' @return TRUE or FALSE
 #' @export
@@ -39,3 +55,7 @@ r_is.defined <- function(sym) {
   env <- parent.frame()
   exists(sym, env)
 }
+
+
+
+

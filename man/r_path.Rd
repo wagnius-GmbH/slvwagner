@@ -4,7 +4,7 @@
 \alias{r_path}
 \title{Convert Windows file path to R compatible file path}
 \usage{
-r_path(path = "clipboard")
+r_path(path = "clipboard", ...)
 }
 \arguments{
 \item{path}{}
