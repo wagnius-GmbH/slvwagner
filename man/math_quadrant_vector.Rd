@@ -16,18 +16,12 @@ Returns Quadrant of vector(s)
 find the
 }
 \details{
-Finds the quadrant of vecotr. If it is on principle axi it returns the angle.
+Finds the quadrant of vecotr. If it is on principle axis it returns the angle.
 }
 \examples{
-math_quadrant_vector(c(1,1))
-math_quadrant_vector(c(-1,1))
-math_quadrant_vector(c(-1,-1))
-math_quadrant_vector(c(1,-1))
-math_quadrant_vector(c(0,1))
-math_quadrant_vector(c(0, -1))
-math_quadrant_vector(c( 1, 0))
-math_quadrant_vector(c(-1, 0))
-math_quadrant_vector(c( 0, 0))
+x <- expand.grid(-1:1,-1:1)
+x
+x|>apply(1,math_quadrant_vector)
 math_quadrant_vector(c("12","sdf"))
 }
 \author{

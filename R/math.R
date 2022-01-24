@@ -529,22 +529,17 @@ math_rot_transform <- function(x, rot_matrix){
 #' @name math_quadrant_vector
 #' @description find the
 #' @details
-#' Finds the quadrant of vecotr. If it is on principle axi it returns the angle.
+#' Finds the quadrant of vecotr. If it is on principle axis it returns the angle.
 #' @param x vector containing the coordinates. e.g.first x, second y.
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
 #' Returns Quadrant of vector(s)
-#' @examples math_quadrant_vector(c(1,1))
-#' @examples math_quadrant_vector(c(-1,1))
-#' @examples math_quadrant_vector(c(-1,-1))
-#' @examples math_quadrant_vector(c(1,-1))
-#' @examples math_quadrant_vector(c(0,1))
-#' @examples math_quadrant_vector(c(0, -1))
-#' @examples math_quadrant_vector(c( 1, 0))
-#' @examples math_quadrant_vector(c(-1, 0))
-#' @examples math_quadrant_vector(c( 0, 0))
-#' @examples math_quadrant_vector(c("12","sdf"))
+#' @examples x <- expand.grid(-1:1,-1:1)
+#' x
+#' x|>apply(1,math_quadrant_vector)
+#' math_quadrant_vector(c("12","sdf"))
+#' @examples
 #' @export
 
 math_quadrant_vector  <- function(x){
@@ -554,15 +549,23 @@ math_quadrant_vector  <- function(x){
       else if(x[2] > 0 & x[1] == 0) return(90)
       else if(x[1] < 0 & x[2] == 0) return(180)
       else if(x[2] < 0 & x[1] == 0) return(-90)
-      else if(x[1]== 0 & x[2] == 0) print("Zero coordinates supplied")
-      else print("math_quadrant_vector function error")
-    }else if(x[1]== 0 & x[2] == 0) print("Zero coordinates supplied")
+      else if(x[1]== 0 & x[2] == 0) {
+        cat(r_colourise("Zero coordinates supplied", "red"), "\n")
+        return(NA)}
+      else {
+        cat(r_colourise("math_quadrant_vector function error", "red"), "\n")
+        return(NA)}
+    }else if(x[1]== 0 & x[2] == 0) {
+      cat(r_colourise("Zero coordinates supplied", "red"), "\n")
+      return(NA)}
     else if (x[1] > 0 & x[2]  > 0) return(1)
     else if (x[1] < 0 & x[2]  > 0) return(2)
     else if (x[1] < 0 & x[2]  < 0) return(3)
     else if (x[1] > 0 & x[2]  < 0) return(4)
 
-  }else print("data not compatible")
+  }else {
+    cat(r_colourise("data not compatible", "red"), "\n")
+    return(NA)}
 }
 
 #######################################
