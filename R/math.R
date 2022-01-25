@@ -574,7 +574,7 @@ math_quadrant_vector  <- function(x){
 #' @name math_quadrant
 #' @description find the
 #' @details
-#' Find the quadrant(s) of vecotr(s). If it is on principle axis it returns the angel.
+#' Find the quadrant(s) of vector(s). If it is on principle axis it returns the angel.
 #' @param x vector or matrix containing the coordinates. First x, second y.
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}

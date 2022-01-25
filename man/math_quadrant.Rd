@@ -16,7 +16,7 @@ Returns Quadrant(s) of vector(s)
 find the
 }
 \details{
-Find the quadrant(s) of vecotr(s). If it is on principle axis it returns the angel.
+Find the quadrant(s) of vector(s). If it is on principle axis it returns the angel.
 }
 \examples{
 m <- matrix(c(c(1,-1,-1, 1,0,1),
