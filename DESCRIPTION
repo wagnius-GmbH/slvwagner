@@ -1,7 +1,7 @@
 Package: slvwagner
 Type: Package
 Title: All stuff that I`m missing
-Version: 0.4.0
+Version: 0.4.1
 Author: Florian Wagner
 Depends: R (>= 4.1.0)
 Maintainer: Florian Wagner <florian.wagner@wagnius.ch>

@@ -7,6 +7,6 @@ my R library include all function I have been using over and over again.
 -   Slerp 
 -   Linear function helpers 
 -   R utility functions
--   Quadrant finder x/y
+-   Quadrant and angle finder for vector
 
 
