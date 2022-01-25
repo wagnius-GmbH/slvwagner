@@ -2,12 +2,12 @@
 % Please edit documentation in R/math.R
 \name{math_quadrant_vector}
 \alias{math_quadrant_vector}
-\title{Find quadrant of single vector}
+\title{Find quadrant of vector}
 \usage{
 math_quadrant_vector(x)
 }
 \arguments{
-\item{x}{vector containing the coordinates. e.g.first x, second y.}
+\item{x}{vector containing the coordinates}
 }
 \value{
 Returns Quadrant of vector(s)
@@ -16,13 +16,12 @@ Returns Quadrant of vector(s)
 find the
 }
 \details{
-Finds the quadrant of vecotr. If it is on principle axis it returns the angle.
+Finds the quadrant of vector. If the vector lies on  a principle axis, it returns the angle in degrees.
 }
 \examples{
-x <- expand.grid(-1:1,-1:1)
-x
-x|>apply(1,math_quadrant_vector)
-math_quadrant_vector(c("12","sdf"))
+math_quadrant_vector(c(1,1))
+x <- expand.grid(x = -1:1, y = -1:1)
+cbind(x, result = x|>apply(1,math_quadrant_vector))
 }
 \author{
 Florian Wagner

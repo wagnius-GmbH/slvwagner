@@ -528,21 +528,20 @@ math_rot_transform <- function(x, rot_matrix){
 }
 
 #######################################
-#' Find quadrant of single vector
+#' Find quadrant of vector
 #'
 #' @name math_quadrant_vector
 #' @description find the
 #' @details
-#' Finds the quadrant of vecotr. If it is on principle axis it returns the angle.
-#' @param x vector containing the coordinates. e.g.first x, second y.
+#' Finds the quadrant of vector. If the vector lies on  a principle axis, it returns the angle in degrees.
+#' @param x vector containing the coordinates
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
 #' Returns Quadrant of vector(s)
-#' @examples x <- expand.grid(-1:1,-1:1)
-#' x
-#' x|>apply(1,math_quadrant_vector)
-#' math_quadrant_vector(c("12","sdf"))
+#' @examples math_quadrant_vector(c(1,1))
+#' x <- expand.grid(x = -1:1, y = -1:1)
+#' cbind(x, result = x|>apply(1,math_quadrant_vector))
 #' @export
 
 math_quadrant_vector  <- function(x){
