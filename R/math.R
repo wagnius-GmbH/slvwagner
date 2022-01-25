@@ -531,9 +531,7 @@ math_rot_transform <- function(x, rot_matrix){
 #' Find quadrant of vector
 #'
 #' @name math_quadrant_vector
-#' @description find the
-#' @details
-#' Finds the quadrant of vector. If the vector lies on  a principle axis, it returns the angle in degrees.
+#' @description Finds the quadrant of vector. If the vector is a principle axis, it returns the angle in degrees.
 #' @param x vector containing the coordinates
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
@@ -571,25 +569,22 @@ math_quadrant_vector  <- function(x){
 }
 
 #######################################
-#' Find quadrant of matrix or data frame
+#' Find quadrant(s) of vector(s)
 #'
 #' @name math_quadrant
-#' @description find the
-#' @details
-#' Find the quadrant(s) of vector(s). If it is on principle axis it returns the angel.
-#' @param x vector or matrix containing the coordinates. First x, second y.
+#' @description Find the quadrant(s) of vector(s).
+#' If the vector(s) is a principle axis, it returns the angle(s) in degrees.
+#' @param x dataframe or matrix containing the coordinates.
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
 #' Returns Quadrant(s) of vector(s)
 #' @examples
-#' m <- matrix(c(c(1,-1,-1, 1,0,1),
-#'             c(1, 1,-1,-1,1,0)),
-#'             ncol = 2, byrow = FALSE)
-#' math_quadrant(m)
 #' data.frame(x = c(1,-1),y = c(1,-1))|>math_quadrant()
 #' math_quadrant(c(1,0))
 #' math_quadrant(c(1,0,12))
+#' m <- expand.grid(x = -1:1, y = -1:1)
+#' cbind(x, result = math_quadrant(m))
 #' @export
 
 math_quadrant  <- function(x){

@@ -13,10 +13,7 @@ math_quadrant_vector(x)
 Returns Quadrant of vector(s)
 }
 \description{
-find the
-}
-\details{
-Finds the quadrant of vector. If the vector lies on  a principle axis, it returns the angle in degrees.
+Finds the quadrant of vector. If the vector is a principle axis, it returns the angle in degrees.
 }
 \examples{
 math_quadrant_vector(c(1,1))

@@ -2,30 +2,26 @@
 % Please edit documentation in R/math.R
 \name{math_quadrant}
 \alias{math_quadrant}
-\title{Find quadrant of matrix or data frame}
+\title{Find quadrant(s) of vector(s)}
 \usage{
 math_quadrant(x)
 }
 \arguments{
-\item{x}{vector or matrix containing the coordinates. First x, second y.}
+\item{x}{dataframe or matrix containing the coordinates.}
 }
 \value{
 Returns Quadrant(s) of vector(s)
 }
 \description{
-find the
-}
-\details{
-Find the quadrant(s) of vector(s). If it is on principle axis it returns the angel.
+Find the quadrant(s) of vector(s).
+If the vector(s) is a principle axis, it returns the angle(s) in degrees.
 }
 \examples{
-m <- matrix(c(c(1,-1,-1, 1,0,1),
-            c(1, 1,-1,-1,1,0)),
-            ncol = 2, byrow = FALSE)
-math_quadrant(m)
 data.frame(x = c(1,-1),y = c(1,-1))|>math_quadrant()
 math_quadrant(c(1,0))
 math_quadrant(c(1,0,12))
+m <- expand.grid(x = -1:1, y = -1:1)
+cbind(x, result = math_quadrant(m))
 }
 \author{
 Florian Wagner
