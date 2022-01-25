@@ -43,9 +43,12 @@ math_betrag <- function(x) {
 #' ggplot()+
 #'   geom_point(data = as.data.frame(x),aes(x,y), color = "blue", size = 1.5)+
 #'   geom_point(data = math_circle_from3points(x),aes(x_center,y_center))+
-#'   geom_label(data = math_circle_from3points(x),aes(x_center,y_center,label = "center"), nudge_y = 1.5)+
-#'   geom_circle(data = math_circle_from3points(x), aes(x0 = x_center , y0 = y_center,r = radius))+
-#'   geom_label(data = as.data.frame(x),aes(x,y,label = paste("input:",row.names(as.data.frame(x)))), nudge_y = 1.5)+
+#'   geom_label(data = math_circle_from3points(x),
+#'     aes(x_center,y_center,label = "center"), nudge_y = 1.5)+
+#'   geom_circle(data = math_circle_from3points(x),
+#'     aes(x0 = x_center , y0 = y_center,r = radius))+
+#'   geom_label(data = as.data.frame(x),
+#'     aes(x,y,label = paste("input:",row.names(as.data.frame(x)))), nudge_y = 1.5)+
 #'   geom_hline(yintercept = 0)+
 #'   geom_vline(xintercept = 0)+
 #'   scale_x_continuous(limits = c(-5,22))+

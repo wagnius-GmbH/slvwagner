@@ -17,6 +17,5 @@ Suggests:
     rgl,
     ggforce,
     Ryacas,
-    tidyverse,
-    rgl
+    tidyverse
 
