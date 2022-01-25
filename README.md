@@ -1,5 +1,5 @@
 # slvwagner
-my R library inclued all function I have been using over and over again.
+my R library include all function I have been using over and over again.
 
 ## Content
 
