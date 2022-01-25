@@ -14,7 +14,7 @@ standard_norm_dist(x, mu, sd)
 \item{sd}{standard deviation}
 }
 \value{
-density
+vector
 }
 \description{
 Probability density function with parameter sigma(sd,Standard deviation) and mu(mean)

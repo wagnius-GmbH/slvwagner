@@ -610,6 +610,7 @@ math_angle_quadrant  <- function(x){
   }
 }
 
+
 #######################################
 #' Probability density function
 #'
@@ -620,13 +621,69 @@ math_angle_quadrant  <- function(x){
 #' @param sd standard deviation
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
-#' @returns
-#' density
-#' @examples
-#' c_seq <- seq(-6,6,0.1)
+#' @returns vector
+#' @examples c_seq <- seq(-6,6,0.1)
 #' plot(x = c_seq, standard_norm_dist(c_seq,mu = 0, sd = 1), type = "l")
 #' @export
+
 standard_norm_dist <- function(x,mu,sd){
   1/sqrt(2*pi*sd)*exp(-(x-mu)^2/2*sd)
+}
+
+
+#######################################
+#' Polar to cartesian coordinates
+#'
+#' @name math_polar_to_cartesian
+#' @description Polar to cartesion coordinate system transformation
+#' @param theta frist angle
+#' @param phi second angle
+#' @param r radius (distance from origin)
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' vector
+#' @examples
+#' math_polar_to_cartesian(1,pi/3,-pi/12)
+#' m <- expand.grid(r = 1, theta = -1:1,phi = -1:1)|>as.matrix()
+#' apply(m, 1, function(x){
+#'     math_polar_to_cartesian(r = x[1], theta = x[2], phi = x[2])
+#'   })|>t()
+#' @export
+
+math_polar_to_cartesian <- function(r,theta,phi){
+  c(x = r*cos(theta)*cos(phi),
+    y = r*cos(theta)*sin(phi),
+    z = sin(theta))
+}
+
+
+
+#######################################
+#' Cartesian to polar coordinates
+#'
+#' @name math_cartesian_to_polar
+#' @description Polar to Cartesian coordinate system transformation
+#' @param x vector
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' named vector with r (radius) , theta (angle to x-axis in x/y plane), phi(angle to z in x/z plane)
+#' @examples
+#' math_cartesian_to_polar(c(1,1,1))
+#' m <- expand.grid(x = -1:1, y = -1:1, z = -1:1)|>as.matrix()
+#' apply(m, 1, math_cartesian_to_polar)|>t()
+#' @export
+
+math_cartesian_to_polar <- function(x){
+  if(math_betrag(x)!=0){
+    phi <- math_angle_quadrant_vector(x)
+    return(c(r = math_betrag(x),
+                      theta = acos(x[3]/math_betrag(x)),
+                      phi = phi )
+           )
+  }else{
+    return(rep(NA,3))
+  }
 }
 
