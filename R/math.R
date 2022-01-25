@@ -234,7 +234,8 @@ math_lf_fromPoints <- function (x){
 #' Get the intersecting point of two linear Functions. If only \code{x} is supplied, \code{x} needs to be a matrix or data.frame containing both
 #' linear functions. If \code{x} and or \code{y} have names you shall use the names (slope, intercept).
 #' @param x matrix or data frame (column names (slope,intercept))
-#' @param y matrix or data frame (column names (slope,intercept))
+#' @param ... matrix or data frame (column names (slope,intercept))
+#'
 #' @return vector
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
@@ -539,7 +540,6 @@ math_rot_transform <- function(x, rot_matrix){
 #' x
 #' x|>apply(1,math_quadrant_vector)
 #' math_quadrant_vector(c("12","sdf"))
-#' @examples
 #' @export
 
 math_quadrant_vector  <- function(x){
@@ -634,18 +634,18 @@ math_quadrant  <- function(x){
 #' @export
 
 math_angle_quadrant_vector  <- function(x){
-  type <- math_quadrant_vector(x)
-  if      (type == 1) atan(x[2]/x[1])
-  else if (type == 2) atan(x[2]/x[1])+pi
-  else if (type == 3) atan(x[2]/x[1])-pi
-  else if (type == 4) atan(x[2]/x[1])
-  else if (type ==   0)   0
-  else if (type ==  90)  90/180*pi
-  else if (type == 180) 180/180*pi
-  else if (type == -90) -90/180*pi
-  else{
-    print(type)
-    print("function error: math_angle_quadrant_vector")
+  if(!is.null(x)&is.numeric(x)){
+    type <- math_quadrant_vector(x)
+    if      (type == 1) atan(x[2]/x[1])
+    else if (type == 2) atan(x[2]/x[1])+pi
+    else if (type == 3) atan(x[2]/x[1])-pi
+    else if (type == 4) atan(x[2]/x[1])
+    else if (type ==   0)   0
+    else if (type ==  90)  90/180*pi
+    else if (type == 180) 180/180*pi
+    else if (type == -90) -90/180*pi
+  }else{
+    print("Bad argument(s)")
   }
 }
 

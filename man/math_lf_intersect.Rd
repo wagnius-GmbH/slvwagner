@@ -9,7 +9,7 @@ math_lf_intersect(x, ...)
 \arguments{
 \item{x}{matrix or data frame (column names (slope,intercept))}
 
-\item{y}{matrix or data frame (column names (slope,intercept))}
+\item{...}{matrix or data frame (column names (slope,intercept))}
 }
 \value{
 vector

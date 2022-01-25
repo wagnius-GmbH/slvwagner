@@ -38,14 +38,14 @@ library(tidyverse)
 # create some data to Test
 x <- 1:1000
 df_data <- tibble(y1 = rnorm(x, mean = 7.8, sd = 2.1),
-                  y2 = rnorm(x, mean = -3, sd = 1.2))\%>\%
-                  bind_cols(tibble(y3 = rnorm(1:(length(x)-200), mean = 8, sd = 1.2))\%>\%
+                  y2 = rnorm(x, mean = -3, sd = 1.2))|>
+                  bind_cols(tibble(y3 = rnorm(1:(length(x)-200), mean = 8, sd = 1.2))|>
                   bind_rows(tibble(y3 = rnorm(1:200,             mean = 0, sd = 0.8))))
 # create transformed version of data to plot
-df_transformed <- df_data\%>\%
-pivot_longer(cols = starts_with("y"))\%>\%
-rename(feature = name)\%>\%
-mutate(feature = factor(feature))\%>\%
+df_transformed <- df_data|>
+pivot_longer(cols = starts_with("y"))|>
+rename(feature = name)|>
+mutate(feature = factor(feature))|>
 group_by(feature)
 
 # find the min and max values of all data an create a vector with defined bin size
@@ -54,7 +54,7 @@ c_bins <- seq(floor(min(df_transformed$value)),ceiling(max(df_transformed$value)
 df_gaus <- plot_gausOverlayData(df_data,binwidth = binwidth, 10)
 
 # facetted histogramms with normal distributed line overlay
-df_transformed\%>\%
+df_transformed|>
 ggplot()+
    geom_histogram(aes(value), binwidth = binwidth,fill = "lightgreen", color = "black")+
    geom_line(data = df_gaus, aes(x,y), color = "blue", size = 1.2)+

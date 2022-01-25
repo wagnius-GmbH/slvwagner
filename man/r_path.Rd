@@ -4,10 +4,10 @@
 \alias{r_path}
 \title{Convert Windows file path to R compatible file path}
 \usage{
-r_path(path = "clipboard", ...)
+r_path(path = "clipboard")
 }
 \arguments{
-\item{path}{}
+\item{path}{Path can be copied to clipboard}
 }
 \value{
 Character vector of R compatible file path

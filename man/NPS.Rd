@@ -7,6 +7,8 @@
 NPS(x, rating, c_group, df_levels)
 }
 \arguments{
+\item{x}{dataframe}
+
 \item{rating}{string identifying the column of the rating}
 
 \item{c_group}{string with the column name to group the data frame.}
@@ -17,7 +19,7 @@ df_levels <- tibble(Detractors = c(1,6),
                     Promoters  = c(9,10))}
 }
 \description{
-Calculates the Net Promoter Score for single grouped data or not grouped data.
+Calculates the Net Promoter Score for grouped or ungrouped data.
 }
 \details{
 NPS = Ratio Promoters - Ratio Detractors,
