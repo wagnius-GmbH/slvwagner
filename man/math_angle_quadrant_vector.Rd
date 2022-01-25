@@ -10,12 +10,9 @@ math_angle_quadrant_vector(x)
 \item{x}{vector containing the coordinates. e.g. First x, second y.}
 }
 \value{
-Returns Quadrant(s) of given vector
+Returns Quadrant of vector \code{x} in radiants.
 }
 \description{
-find the
-}
-\details{
 Find the angle to the first axis "x" for given vector of coordinates.
 }
 \examples{

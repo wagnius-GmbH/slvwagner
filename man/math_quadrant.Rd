@@ -21,7 +21,7 @@ data.frame(x = c(1,-1),y = c(1,-1))|>math_quadrant()
 math_quadrant(c(1,0))
 math_quadrant(c(1,0,12))
 m <- expand.grid(x = -1:1, y = -1:1)
-cbind(x, result = math_quadrant(m))
+cbind(m, result = math_quadrant(m))
 }
 \author{
 Florian Wagner

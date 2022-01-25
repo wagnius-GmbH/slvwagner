@@ -369,59 +369,9 @@ math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Rad
   return(t(apply(slerp, 1, function(i) i + cp)))
 }
 
-#######################################
-#' CAS 2d rotation matrix
-#'
-#' @name math_rot_matrix2d
-#' @description
-#' Calculates a 2D rotation matrix with a given angle \code{x}
-#' @details
-#' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
-#' @param  x vector of an angel in radiant
-#' @author Florian Wagner
-#' \email{florian.wagner@wagnius.ch}
-#' @returns
-#' Returns rotation matrix for given angle
-#' @examples
-#' math_rot_matrix2d(c(pi))
-#' math_rot_matrix2d(c(-pi))
-#' @export
 
-math_rot_matrix2d <- function(x){
-  #Drehmatrix 2D
-  matrix(c(cos(x),sin(x),-sin(x),cos(x)), ncol = 2)
-}
 
-#######################################
-#' 2d rotation matrix
-#'
-#' @name cas_rot_matrix2d
-#' @description
-#' Calculates a 2D rotation matrix with a given angle \code{x}
-#' @details
-#' The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS \url{http://www.yacas.org/}
-#' needs to be installed.
-#'
-#' @param  x vector of an angel in radiant
-#' @author Florian Wagner
-#' \email{florian.wagner@wagnius.ch}
-#' @returns
-#' Returns rotation matrix for given angle
-#' @examples
-#' library(Ryacas)
-#' cas_rot_matrix2d(c(pi))
-#' rot_matrix <- cas_rot_matrix2d(c(-pi)|>ysym())
-#' rot_matrix
-#' @export
 
-cas_rot_matrix2d <- function(x){
-  if(is.list(x)){
-    y_cos <- cos(x)
-    y_sin <- sin(x)
-    yac_str(paste0("{{",y_cos,",",-y_sin,"},{",y_sin,",",y_cos,"}}"))|>
-      ysym()
-  }else print("No yacs object supplied")
-}
 
 
 #######################################
@@ -564,8 +514,9 @@ math_quadrant_vector  <- function(x){
     else if (x[1] > 0 & x[2]  < 0) return(4)
 
   }else {
-    cat(r_colourise("data not compatible", "red"), "\n")
-    return(NA)}
+    cat(r_colourise("vector is not numerical", "red"), "\n")
+    return(NA)
+    }
 }
 
 #######################################
@@ -584,26 +535,15 @@ math_quadrant_vector  <- function(x){
 #' math_quadrant(c(1,0))
 #' math_quadrant(c(1,0,12))
 #' m <- expand.grid(x = -1:1, y = -1:1)
-#' cbind(x, result = math_quadrant(m))
+#' cbind(m, result = math_quadrant(m))
 #' @export
 
 math_quadrant  <- function(x){
   if(is.null(dim(x))){ # check if only single vector
-    if (is.character(x)){
-      print("character not compatible")
-    }else{
-      math_quadrant_vector(x)
-    }
     math_quadrant_vector(x)
-  }else if("matrix" %in% class(x) & typeof(x) %in%c("double","integer")){ # check if matrix and numerical values
+  }else { # check if matrix and numerical values
     apply(x, 1, math_quadrant_vector)
-  }else if("data.frame"%in%class(x) & ncol(x) == 2){
-    x|>
-      as.matrix()|>
-      apply(1, math_quadrant_vector)
-  }else{
-    print("data not compatible")
-  }
+    }
 }
 
 
@@ -612,77 +552,61 @@ math_quadrant  <- function(x){
 #' Find the angle of a vector
 #'
 #' @name math_angle_quadrant_vector
-#' @description find the
-#' @details
+#' @description
 #' Find the angle to the first axis "x" for given vector of coordinates.
 #' @param x vector containing the coordinates. e.g. First x, second y.
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' Returns Quadrant(s) of given vector
-#' @examples math_angle_quadrant_vector(c( 1, 1))/pi*180
-#' @examples math_angle_quadrant_vector(c(-1, 1))/pi*180
-#' @examples math_angle_quadrant_vector(c(-1,-1))/pi*180
-#' @examples math_angle_quadrant_vector(c( 1,-1))/pi*180
-#' @examples math_angle_quadrant_vector(c( 0, 1))/pi*180
-#' @examples math_angle_quadrant_vector(c( 0,-1))/pi*180
-#' @examples math_angle_quadrant_vector(c( 1, 0))/pi*180
-#' @examples math_angle_quadrant_vector(c(-1, 0))/pi*180
+#' Returns Quadrant of vector \code{x} in radiants.
+#' @examples
+#' math_angle_quadrant_vector(c( 1, 1))/pi*180
+#' math_angle_quadrant_vector(c(-1, 1))/pi*180
+#' math_angle_quadrant_vector(c(-1,-1))/pi*180
+#' math_angle_quadrant_vector(c( 1,-1))/pi*180
+#' math_angle_quadrant_vector(c( 0, 1))/pi*180
+#' math_angle_quadrant_vector(c( 0,-1))/pi*180
+#' math_angle_quadrant_vector(c( 1, 0))/pi*180
+#' math_angle_quadrant_vector(c(-1, 0))/pi*180
 #' @export
 
 math_angle_quadrant_vector  <- function(x){
-  if(!is.null(x)&is.numeric(x)){
+  if(!(x[1]== 0 & x[2]==0)){
     type <- math_quadrant_vector(x)
-    if      (type == 1) atan(x[2]/x[1])
+    if      (type %in% c(1,4)) atan(x[2]/x[1])
     else if (type == 2) atan(x[2]/x[1])+pi
     else if (type == 3) atan(x[2]/x[1])-pi
-    else if (type == 4) atan(x[2]/x[1])
     else if (type ==   0)   0
     else if (type ==  90)  90/180*pi
     else if (type == 180) 180/180*pi
     else if (type == -90) -90/180*pi
-  }else{
-    print("Bad argument(s)")
+  }else{ # if the coordinates are c(0,0) the angle cannot be calculated, therefore return NA
+    return(NA)
   }
 }
 
 
 #######################################
-#' Find quadrant of matrix or data frame
+#' Find quadrant(s) of vector(s)
 #'
 #' @name math_angle_quadrant
 #' @description Find the angle(s) of vector(s) using the quadrant information.
-#' @param x vector or matrix containing the coordinates. First x, second y.
+#' @param x data.frame or matrix containing the coordinates.
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' Returns Quadrant(s) of vector(s)
+#' matrix of angle(s)
 #' @examples
-#' m <- matrix(c(c(1,-1,-1, 1,0,1),
-#'             c(1, 1,-1,-1,1,0)),
-#'             ncol = 2, byrow = FALSE)
-#' math_angle_quadrant(m)/pi*180
-#' data.frame(x = c(1,-1),y = c(1,-1))|>math_angle_quadrant()
-#' math_angle_quadrant(c(1,0))
-#' math_angle_quadrant(c("1.25","test"))
+#' math_angle_quadrant(c(1,1))/pi*180
+#' x <- expand.grid(x = -1:1, y = -1:1)
+#' cbind(x, result = math_angle_quadrant(x))
 #' @export
 
 math_angle_quadrant  <- function(x){
   if(is.null(dim(x))){ # check if only single vector
-    if (is.character(x)){
-      print("character not compatible")
-    }else{
-      math_angle_quadrant_vector(x)
-    }
     math_angle_quadrant_vector(x)
-  }else if("matrix" %in% class(x) & typeof(x) %in%c("double","integer")){ # check if matrix and numerical values
+  }else { # check if matrix and numerical values
     apply(x, 1, math_angle_quadrant_vector)
-  }else if("data.frame"%in%class(x) & ncol(x) == 2){
-    x|>
-      as.matrix()|>
-      apply(1, math_angle_quadrant)
-  }else{
-    print("data not compatible")
   }
 }
 
