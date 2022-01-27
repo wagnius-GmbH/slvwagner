@@ -641,7 +641,6 @@ math_polar_cartesian3D <- function(r,theta,phi){
 #' @name math_cartesian_polar3D
 #' @description Polar to Cartesian coordinate system transformation
 #' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
-#' @details ![](man/figures/Kugelkoord-def.svg.png, "Spherical coordinate system")
 #' @param x vector of cartesian coordinates
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
