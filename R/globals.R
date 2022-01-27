@@ -1,0 +1,32 @@
+utils::globalVariables(c("tibble",
+                         "pull",
+                         "select",
+                         "mutate",
+                         "if_else",
+                         "name",
+                         "name_converted",
+                         "bind_cols",
+                         "summarise",
+                         "filter",
+                         "typ_nps",
+                         "n",
+                         "n_Promoters",
+                         "n_total",
+                         "n_Detractors",
+                         "ratio_Promoters",
+                         "name_converted1",
+                         "distinct",
+                         "bind_rows",
+                         "na_if",
+                         "between",
+                         "ratio_Detractors",
+                         "pivot_longer",
+
+                         "ysym",
+                         "yac_str",
+
+                         "y",
+
+                         "dnorm",
+                         "sd"
+                         ))

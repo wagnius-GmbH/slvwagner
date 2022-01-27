@@ -17,8 +17,6 @@ Polar to Cartesian coordinate system transformation
 }
 \details{
 \url{https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen}
-
-\figure{man/figures/Kugelkoord-def.svg.png,}{Spherical coordinate system}
 }
 \examples{
 math_cartesian_polar3D(c(1,1,1))
