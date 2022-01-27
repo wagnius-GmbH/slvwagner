@@ -7,7 +7,7 @@
 math_cartesian_polar3D(x)
 }
 \arguments{
-\item{x}{vector}
+\item{x}{vector of cartesian coordinates}
 }
 \value{
 named vector with r (radius) , theta (angle to z-axis), phi(angle to x-axis)
@@ -17,6 +17,8 @@ Polar to Cartesian coordinate system transformation
 }
 \details{
 \url{https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen}
+
+\figure{man/figures/Kugelkoord-def.svg.png,}{Spherical coordinate system}
 }
 \examples{
 math_cartesian_polar3D(c(1,1,1))

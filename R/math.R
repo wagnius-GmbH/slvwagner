@@ -622,7 +622,7 @@ math_angle_quadrant  <- function(x){
 #' vector
 #' @examples
 #' math_polar_cartesian3D(1,pi/3,-pi/12)
-#' m <- expand.grid(r = 1, theta = -1:1,phi = -1:1)|>as.matrix()
+#' m <- expand.grid(r = 1, theta = seq(-pi,pi,len=4),phi = seq(-pi,pi,len=4))|>as.matrix()
 #' apply(m, 1, function(x){
 #'     math_polar_cartesian3D(r = x[1], theta = x[2], phi = x[2])
 #'   })|>t()
@@ -641,7 +641,8 @@ math_polar_cartesian3D <- function(r,theta,phi){
 #' @name math_cartesian_polar3D
 #' @description Polar to Cartesian coordinate system transformation
 #' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
-#' @param x vector
+#' @details ![](man/figures/Kugelkoord-def.svg.png, "Spherical coordinate system")
+#' @param x vector of cartesian coordinates
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns

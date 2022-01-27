@@ -24,7 +24,7 @@ Polar to cartesion coordinate system transformation
 }
 \examples{
 math_polar_cartesian3D(1,pi/3,-pi/12)
-m <- expand.grid(r = 1, theta = -1:1,phi = -1:1)|>as.matrix()
+m <- expand.grid(r = 1, theta = seq(-pi,pi,len=4),phi = seq(-pi,pi,len=4))|>as.matrix()
 apply(m, 1, function(x){
     math_polar_cartesian3D(r = x[1], theta = x[2], phi = x[2])
   })|>t()
