@@ -15,8 +15,8 @@ NPS(x, rating, c_group, df_levels)
 
 \item{df_levels}{data frame containing range for each type (Promoters, Passives, Detractors)
 df_levels <- tibble(Detractors = c(1,6),
-                    Passives   = c(7,8),
-                    Promoters  = c(9,10))}
+Passives   = c(7,8),
+Promoters  = c(9,10))}
 }
 \description{
 Calculates the Net Promoter Score for grouped or ungrouped data.

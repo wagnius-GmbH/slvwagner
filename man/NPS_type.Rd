@@ -13,8 +13,8 @@ NPS_type(df_data, rating = "rating", df_levels)
 
 \item{df_levels}{data frame containing range for each type (Promoters, Passives, Detractors)
 df_levels <- tibble(Detractors = c(1,6),
-                    Passives   = c(7,8),
-                    Promoters  = c(9,10))}
+Passives   = c(7,8),
+Promoters  = c(9,10))}
 }
 \value{
 data frame \code{df_data} with new feature (column = typ_nps)

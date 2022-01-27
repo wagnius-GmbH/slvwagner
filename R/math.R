@@ -370,10 +370,6 @@ math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Rad
 }
 
 
-
-
-
-
 #######################################
 #' 3d rotation matrix
 #'
@@ -612,30 +608,11 @@ math_angle_quadrant  <- function(x){
 
 
 #######################################
-#' Probability density function
+#' Polar to cartesian coordinates 3D
 #'
-#' @name standard_norm_dist
-#' @description Probability density function with parameter sigma(sd,Standard deviation) and mu(mean)
-#' @param x data
-#' @param mu mean
-#' @param sd standard deviation
-#' @author Florian Wagner
-#' \email{florian.wagner@wagnius.ch}
-#' @returns vector
-#' @examples c_seq <- seq(-6,6,0.1)
-#' plot(x = c_seq, standard_norm_dist(c_seq,mu = 0, sd = 1), type = "l")
-#' @export
-
-standard_norm_dist <- function(x,mu,sd){
-  1/sqrt(2*pi*sd)*exp(-(x-mu)^2/2*sd)
-}
-
-
-#######################################
-#' Polar to cartesian coordinates
-#'
-#' @name math_polar_to_cartesian
+#' @name math_polar_cartesian3D
 #' @description Polar to cartesion coordinate system transformation
+#' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
 #' @param theta frist angle
 #' @param phi second angle
 #' @param r radius (distance from origin)
@@ -644,46 +621,43 @@ standard_norm_dist <- function(x,mu,sd){
 #' @returns
 #' vector
 #' @examples
-#' math_polar_to_cartesian(1,pi/3,-pi/12)
+#' math_polar_cartesian3D(1,pi/3,-pi/12)
 #' m <- expand.grid(r = 1, theta = -1:1,phi = -1:1)|>as.matrix()
 #' apply(m, 1, function(x){
-#'     math_polar_to_cartesian(r = x[1], theta = x[2], phi = x[2])
+#'     math_polar_cartesian3D(r = x[1], theta = x[2], phi = x[2])
 #'   })|>t()
 #' @export
 
-math_polar_to_cartesian <- function(r,theta,phi){
+math_polar_cartesian3D <- function(r,theta,phi){
   c(x = r*cos(theta)*cos(phi),
     y = r*cos(theta)*sin(phi),
     z = sin(theta))
 }
 
 
-
 #######################################
-#' Cartesian to polar coordinates
+#' Cartesian to polar coordinates 3D
 #'
-#' @name math_cartesian_to_polar
+#' @name math_cartesian_polar3D
 #' @description Polar to Cartesian coordinate system transformation
+#' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
 #' @param x vector
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' named vector with r (radius) , theta (angle to x-axis in x/y plane), phi(angle to z in x/z plane)
+#' named vector with r (radius) , theta (angle to z-axis), phi(angle to x-axis)
 #' @examples
-#' math_cartesian_to_polar(c(1,1,1))
+#' math_cartesian_polar3D(c(1,1,1))
 #' m <- expand.grid(x = -1:1, y = -1:1, z = -1:1)|>as.matrix()
-#' apply(m, 1, math_cartesian_to_polar)|>t()
+#' result <- apply(m, 1, math_cartesian_polar3D)|>t()
+#' colnames(result)<-c("r","theta","phi")
+#' cbind(m, result)
 #' @export
 
-math_cartesian_to_polar <- function(x){
-  if(math_betrag(x)!=0){
-    phi <- math_angle_quadrant_vector(x)
-    return(c(r = math_betrag(x),
-                      theta = acos(x[3]/math_betrag(x)),
-                      phi = phi )
-           )
-  }else{
-    return(rep(NA,3))
-  }
+math_cartesian_polar3D <- function(x){
+  c(r = math_betrag(x),
+    theta = acos(x[3]/math_betrag(x)),
+    phi = atan2(x[2],x[1])
+    )
 }
 

@@ -18,7 +18,7 @@ Returns 3D rotation matrix for given axis and angle.
 transforms a given vecotr by a given rotation matrix using matirx multiplication
 }
 \details{
-\code{rot_matrix}%*%\code{x}
+\code{rot_matrix}\%*\%\code{x}
 \url{https://en.wikipedia.org/wiki/Rotation_matrix}
 }
 \examples{
