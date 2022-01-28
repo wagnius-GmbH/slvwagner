@@ -13,10 +13,11 @@ LazyData: true
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
+    slvwagner,
     knitr,
     rmarkdown,
     rgl,
     ggforce,
     Ryacas,
     tidyverse
-
+VignetteBuilder: knitr

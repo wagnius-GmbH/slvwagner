@@ -1,0 +1,21 @@
+---
+title: "slvwagner"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{slvwagner}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(slvwagner)
+```
+# Package slvwagner
+This inclueds all stuff that I am missing an uns many times

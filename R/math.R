@@ -629,9 +629,9 @@ math_angle_quadrant  <- function(x){
 #' @export
 
 math_polar_cartesian3D <- function(r,theta,phi){
-  c(x = r*cos(theta)*cos(phi),
-    y = r*cos(theta)*sin(phi),
-    z = sin(theta))
+  c(x = r*sin(theta)*cos(phi),
+    y = r*sin(theta)*sin(phi),
+    z = r*cos(theta))
 }
 
 
@@ -655,9 +655,9 @@ math_polar_cartesian3D <- function(r,theta,phi){
 #' @export
 
 math_cartesian_polar3D <- function(x){
-  c(r = math_betrag(x),
+  c(r =     math_betrag(x),
     theta = acos(x[3]/math_betrag(x)),
-    phi = atan2(x[2],x[1])
+    phi =   atan2(x[2],x[1])
     )
 }
 
