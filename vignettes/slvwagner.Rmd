@@ -18,4 +18,4 @@ knitr::opts_chunk$set(
 library(slvwagner)
 ```
 # Package slvwagner
-This inclueds all stuff that I am missing an uns many times
+This inclueds all stuff that I am missing.
