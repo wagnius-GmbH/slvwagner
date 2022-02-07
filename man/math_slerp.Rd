@@ -25,7 +25,7 @@ Radius interpolation by 3 points and a given radius.
 The Radius interpolation will be calculated using the \code{cp} = common center point and the vector \code{x1} and \code{x2}.
 }
 \details{
-\deqn{sin[(1-t)*phi] / sin(phi) * x1   +  sin(t*phi/sin(phi)  *  x2)}
+\deqn{sin((1 - t) * phi) / sin(phi) * x1   +  sin(t * phi / sin(phi)  *  x2)}
 \url{https://en.wikipedia.org/wiki/Slerp}
 }
 \examples{
