@@ -303,22 +303,19 @@ math_lf_intersect <- function(x,...){
 #' @name math_slerp
 #' @description
 #' Radius interpolation by 3 points and a given radius.
-#' The Radius interpolation will be calculated using the cp = common or center point and the lines defined by x1,x2
-#' and the common center point cp.
-#' The common point therefore is cp and will be used as position vector.
+#' The Radius interpolation will be calculated using the \code{cp} = common center point and the vector \code{x1} and \code{x2}.
 #' @details
 #' \deqn{sin[(1-t)*phi] / sin(phi) * x1   +  sin(t*phi/sin(phi)  *  x2)}
-#' phi ==> smallest angel between vector x1 and x2
 #' \url{https://en.wikipedia.org/wiki/Slerp}
 #' @param  R radius
-#' @param  x1 first point vector
-#' @param  x2 second point vector
-#' @param  cp position vector, common centrer
-#' @param  nb_points count of points to generate for the radius interpolation
+#' @param  x1 vector
+#' @param  x2 vector
+#' @param  cp vector
+#' @param  nb_points count of points to be generate by the function.
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' Returns point matrix with the calculated coordinates \code{x}
+#' Matrix with \code{nrow(nb_points)}
 #' @examples
 #' p <- t(as.matrix(data.frame(x1 = c(-10,-5,50),
 #'                             x2 = c(-20,10,2),
@@ -347,12 +344,12 @@ math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Rad
   ep <- x2-cp #Stützvektor
 
   #Stuetzvektoren
-  s1l   <- sp-c(0,0,0) #Stuetzvektor aus Ortsvektor und Startpunkt
-  s2l   <- ep-c(0,0,0) #Stuetzvektor aus Ortsvektor und Endpunkt
+  s1l   <- sp-c(0,0,0) #Stützvektor aus Ortsvektor und Startpunkt
+  s2l   <- ep-c(0,0,0) #Stützvektor aus Ortsvektor und Endpunkt
   #Stuetzvektoren gleich gross machen
   s1 <- s1l*math_betrag(s2l)
   s2 <- s2l*math_betrag(s1l)
-  #Skallierung der Stuetzvektoren auf Betrag = 1 => Einheisvektoren
+  #Skallierung der Stuetzvektoren auf Betrag = 1 => Einheitsvektoren
   skalierung <- math_betrag(s1)
   s1 <- s1/skalierung
   s2 <- s2/skalierung

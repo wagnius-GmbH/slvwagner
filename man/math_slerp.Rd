@@ -9,26 +9,23 @@ math_slerp(R, x1, x2, cp, nb_points = 10)
 \arguments{
 \item{R}{radius}
 
-\item{x1}{first point vector}
+\item{x1}{vector}
 
-\item{x2}{second point vector}
+\item{x2}{vector}
 
-\item{cp}{position vector, common centrer}
+\item{cp}{vector}
 
-\item{nb_points}{count of points to generate for the radius interpolation}
+\item{nb_points}{count of points to be generate by the function.}
 }
 \value{
-Returns point matrix with the calculated coordinates \code{x}
+Matrix with \code{nrow(nb_points)}
 }
 \description{
 Radius interpolation by 3 points and a given radius.
-The Radius interpolation will be calculated using the cp = common or center point and the lines defined by x1,x2
-and the common center point cp.
-The common point therefore is cp and will be used as position vector.
+The Radius interpolation will be calculated using the \code{cp} = common center point and the vector \code{x1} and \code{x2}.
 }
 \details{
 \deqn{sin[(1-t)*phi] / sin(phi) * x1   +  sin(t*phi/sin(phi)  *  x2)}
-phi ==> smallest angel between vector x1 and x2
 \url{https://en.wikipedia.org/wiki/Slerp}
 }
 \examples{
