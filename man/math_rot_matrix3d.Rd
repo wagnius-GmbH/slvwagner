@@ -9,7 +9,7 @@ math_rot_matrix3d(x, angle)
 \arguments{
 \item{x}{unit vector c(x1,x2,x3) defining the rotation axis}
 
-\item{angle}{vector of angel in radiant}
+\item{angle}{angel in radiant}
 }
 \value{
 Returns 3D rotation matrix for given axis and angle.

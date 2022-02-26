@@ -378,7 +378,7 @@ math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Rad
 #' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
 #' \url{https://de.wikipedia.org/wiki/Drehmatrix#Drehmatrizen_des_Raumes_%E2%84%9D%C2%B3}
 #' @param  x unit vector c(x1,x2,x3) defining the rotation axis
-#' @param  angle vector of angel in radiant
+#' @param  angle angel in radiant
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
