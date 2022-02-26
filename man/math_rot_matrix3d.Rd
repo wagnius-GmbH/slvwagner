@@ -15,15 +15,15 @@ math_rot_matrix3d(x, angle)
 Returns 3D rotation matrix for given axis and angle.
 }
 \description{
-Calculates a 3D rotation matrix from a given axis and angle. The axis is defined by \code{x}. The Rotation will be done around the axis defined by
-\code{angle} and the root. The angle will be appied by the right hand rule.
+Calculates a 3D rotation matrix for a given rotation axis \code{x} and an angle  \code{angle}. The rotation will be appied by the right hand rule.
 }
 \details{
 \url{https://en.wikipedia.org/wiki/Rotation_matrix}
 \url{https://de.wikipedia.org/wiki/Drehmatrix#Drehmatrizen_des_Raumes_\%E2\%84\%9D\%C2\%B3}
 }
 \examples{
-math_rot_matrix3d(matrix(c(1,2,3)),c(-pi))
+math_rot_matrix3d(matrix(c(0,0,1)),0.5)
+math_rot_matrix3d(matrix(c(1,2,3)),-pi)
 }
 \author{
 Florian Wagner
