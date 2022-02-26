@@ -7,7 +7,7 @@
 math_rot_matrix3d(x, angle)
 }
 \arguments{
-\item{x}{unit vector c(x1,x2,x3)}
+\item{x}{unit vector c(x1,x2,x3) defining the rotation axis}
 
 \item{angle}{vector of angel in radiant}
 }
@@ -20,6 +20,7 @@ Calculates a 3D rotation matrix from a given axis and angle. The axis is defined
 }
 \details{
 \url{https://en.wikipedia.org/wiki/Rotation_matrix}
+\url{https://de.wikipedia.org/wiki/Drehmatrix#Drehmatrizen_des_Raumes_\%E2\%84\%9D\%C2\%B3}
 }
 \examples{
 math_rot_matrix3d(matrix(c(1,2,3)),c(-pi))
