@@ -468,7 +468,8 @@ cas_rot_matrix3d <- function(x,angle){
 #' @export
 
 math_rot_transform <- function(x, rot_matrix){
-  rot_matrix%*%x
+  rot_matrix%*%x|>
+    t()
 }
 
 #######################################
