@@ -12,10 +12,10 @@ math_rot_matrix3d(x, angle)
 \item{angle}{angel in radiant}
 }
 \value{
-Returns 3D rotation matrix for given axis and angle.
+Returns 3D rotation matrix for given axis (unit vector) and angle.
 }
 \description{
-Calculates a 3D rotation matrix for a given rotation axis \code{x} and an angle  \code{angle}. The rotation will be appied by the right hand rule.
+Calculates a 3D rotation matrix for a given rotation axis \code{x}(unitvector) and an angle  \code{angle}. The rotation will be appied by the right hand rule.
 }
 \details{
 \url{https://en.wikipedia.org/wiki/Rotation_matrix}
@@ -23,7 +23,11 @@ Calculates a 3D rotation matrix for a given rotation axis \code{x} and an angle 
 }
 \examples{
 math_rot_matrix3d(matrix(c(0,0,1)),0.5)
-math_rot_matrix3d(matrix(c(1,2,3)),-pi)
+matrix(c(1,2,3))|>
+  math_unit_vector()|>
+  math_rot_matrix3d(-pi)
+math_rot_matrix3d(matrix(c(0,0,1)),0.5)|>
+  det()
 }
 \author{
 Florian Wagner
