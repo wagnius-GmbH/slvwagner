@@ -639,6 +639,52 @@ math_polar_cartesian3D <- function(r,theta,phi){
 
 
 #######################################
+#' Sperical to cartesian coordinates
+#'
+#' @name sph2cart
+#' @description Transform sperical to cartesian coordinates according to international physics convention:
+#' \eqn{\theta} in range 0...pi and \eqn{\phi} in range 0...2*pi
+#' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
+#' @param tpr t \eqn{\theta}, p \eqn{\phi}, r radius as vector or matrix
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' vector
+#' @examples
+#' sph2cart(c(1,0.5,0.1))
+#' rbind(c(1,0.5,0.1),
+#'       c(1,0.2,0.6))|>
+#'       sph2cart()
+#' @export
+
+sph2cart <- function (tpr)
+{
+  stopifnot(is.numeric(tpr))
+  if (is.vector(tpr) && length(tpr) == 3) {
+    theta <- tpr[1]
+    phi <- tpr[2]
+    r <- tpr[3]
+    m <- 1
+  }
+  else if (is.matrix(tpr) && ncol(tpr) == 3) {
+    theta <- tpr[, 1]
+    phi <- tpr[, 2]
+    r <- tpr[, 3]
+    m <- nrow(tpr)
+  }
+  else stop("Input must be a vector of length 3 or a matrix with 3 columns.")
+  z <- r*cos(theta)
+  tmp <- r*sin(theta)
+  x <- tmp*cos(phi)
+  y <- tmp*sin(phi)
+  if (m == 1)
+    xyz <- c(x = x, y = y, z = z)
+  else xyz <- cbind(x, y, z)
+  return(xyz)
+}
+
+
+#######################################
 #' Cartesian to polar coordinates 3D
 #'
 #' @name math_cartesian_polar3D
