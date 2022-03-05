@@ -641,23 +641,23 @@ math_polar_cartesian3D <- function(r,theta,phi){
 #######################################
 #' Sperical to cartesian coordinates
 #'
-#' @name sph2cart
+#' @name math_sph2cart
 #' @description Transform sperical to cartesian coordinates according to international physics convention:
-#' \eqn{\theta} in range 0...pi and \eqn{\phi} in range 0...2*pi
+#' \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\phi} in range 0...2*pi (0...360Deg)
 #' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
-#' @param tpr t \eqn{\theta}, p \eqn{\phi}, r radius as vector or matrix
+#' @param tpr c(\eqn{t = \theta}, \eqn{p = \phi}, r=radius) as vector or matrix
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' vector
+#' named vector or matrix
 #' @examples
-#' sph2cart(c(1,0.5,0.1))
+#' math_sph2cart(c(1,0.5,0.1))
 #' rbind(c(1,0.5,0.1),
 #'       c(1,0.2,0.6))|>
-#'       sph2cart()
+#'       math_sph2cart()
 #' @export
 
-sph2cart <- function (tpr)
+math_sph2cart <- function (tpr)
 {
   stopifnot(is.numeric(tpr))
   if (is.vector(tpr) && length(tpr) == 3) {
@@ -708,6 +708,50 @@ math_cartesian_polar3D <- function(x){
     theta = acos(x[3]/math_betrag(x)),
     phi =   atan2(x[2],x[1])
     )
+}
+
+#######################################
+#' Cartesian to sperical coordinates
+#'
+#' @name math_cart2sph
+#' @description Transform cartesian to sperical coordinatem according to international physics convention:
+#' \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\phi} in range 0...2*pi (0...360Deg)
+#' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
+#' @param xyz cartesian coordinates as vector or matrix
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' named vector or matrix
+#' @examples
+#' math_cart2sph(c(1,1,1))
+#' rbind(c(1,0.5,0.1),
+#'       c(1,0.2,0.6))|>
+#'    math_cart2sph()
+#' @export
+
+math_cart2sph <- function (xyz)
+{
+  stopifnot(is.numeric(xyz))
+  if (is.vector(xyz) && length(xyz) == 3) {
+    x <- xyz[1]
+    y <- xyz[2]
+    z <- xyz[3]
+    m <- 1
+  }
+  else if (is.matrix(xyz) && ncol(xyz) == 3) {
+    x <- xyz[, 1]
+    y <- xyz[, 2]
+    z <- xyz[, 3]
+    m <- nrow(xyz)
+  }
+  else stop("Input must be a vector of length 3 or a matrix with 3 columns.")
+  r =     math_betrag(x)
+  theta = acos(z/math_betrag(xyz))
+  phi =   atan2(y,x)
+  if (m == 1)
+    tpr <- c(theta = theta, phi = phi ,r = r)
+  else tpr <- cbind(theta, phi, r)
+  return(tpr)
 }
 
 
