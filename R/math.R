@@ -704,8 +704,9 @@ math_sph2cart <- function (tpr)
 #' @export
 
 math_cartesian_polar3D <- function(x){
-  c(r =     math_betrag(x),
-    theta = acos(x[3]/math_betrag(x)),
+  r <- math_betrag(x)
+  c(r ,
+    theta = acos(x[3]/r),
     phi =   atan2(x[2],x[1])
     )
 }
@@ -736,22 +737,24 @@ math_cart2sph <- function (xyz)
     x <- xyz[1]
     y <- xyz[2]
     z <- xyz[3]
-    m <- 1
+    r     <- math_betrag(xyz)
+    theta <- acos(z/r)
+    phi   <- atan2(y,x)
+    return(c(theta = theta, phi = phi ,r = r))
   }
   else if (is.matrix(xyz) && ncol(xyz) == 3) {
     x <- xyz[, 1]
     y <- xyz[, 2]
     z <- xyz[, 3]
-    m <- nrow(xyz)
+    r     <- xyz|>
+      apply(1,math_betrag)|>
+      t()|>
+      as.vector()
+    theta <- acos(z/r)
+    phi   <- atan2(y,x)
+    return(cbind(theta, phi, r))
   }
   else stop("Input must be a vector of length 3 or a matrix with 3 columns.")
-  r =     math_betrag(xyz)
-  theta = acos(z/r)
-  phi =   atan2(y,x)
-  if (m == 1)
-    tpr <- c(theta = theta, phi = phi ,r = r)
-  else tpr <- cbind(theta, phi, r)
-  return(tpr)
 }
 
 
