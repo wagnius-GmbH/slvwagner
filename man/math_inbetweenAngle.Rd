@@ -2,7 +2,7 @@
 % Please edit documentation in R/math.R
 \name{math_inbetweenAngle}
 \alias{math_inbetweenAngle}
-\title{Angle between 2 vectors}
+\title{Angle between two vectors}
 \usage{
 math_inbetweenAngle(u, v)
 }
@@ -12,11 +12,14 @@ math_inbetweenAngle(u, v)
 \item{v}{second vector}
 }
 \value{
-Returns the smallest Angle between 2 vectors (scalar) in radiant.
+Returns the smallest angle between two vectors in radiant.
 \code{x}
 }
 \description{
-Get the angle between 2 vectors. Returns the smallest Angle between 2 vectors in radiant.
+Get the angle between 2 vectors. Returns the smallest Angle between two vectors in radiant.
+}
+\details{
+\url{https://de.wikipedia.org/wiki/Skalarprodukt}
 }
 \examples{
 #2D

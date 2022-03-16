@@ -74,17 +74,18 @@ math_circle_from3points<-function(x){
 
 
 #######################################
-#' Angle between 2 vectors
+#' Angle between two vectors
 #'
 #' @name math_inbetweenAngle
 #' @description
-#' Get the angle between 2 vectors. Returns the smallest Angle between 2 vectors in radiant.
+#' Get the angle between 2 vectors. Returns the smallest Angle between two vectors in radiant.
+#' @details <https://de.wikipedia.org/wiki/Skalarprodukt>
 #' @param u fist vector
 #' @param v second vector
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' Returns the smallest Angle between 2 vectors (scalar) in radiant.
+#' Returns the smallest angle between two vectors in radiant.
 #' \code{x}
 #' @examples
 #' #2D
