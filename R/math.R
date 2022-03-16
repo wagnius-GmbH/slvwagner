@@ -611,34 +611,6 @@ math_angle_quadrant  <- function(x){
 
 
 #######################################
-#' Polar to cartesian coordinates 3D
-#'
-#' @name math_polar_cartesian3D
-#' @description Polar to cartesion coordinate system transformation
-#' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
-#' @param theta frist angle
-#' @param phi second angle
-#' @param r radius (distance from origin)
-#' @author Florian Wagner
-#' \email{florian.wagner@wagnius.ch}
-#' @returns
-#' vector
-#' @examples
-#' math_polar_cartesian3D(1,pi/3,-pi/12)
-#' m <- expand.grid(r = 1, theta = seq(-pi,pi,len=4),phi = seq(-pi,pi,len=4))|>as.matrix()
-#' apply(m, 1, function(x){
-#'     math_polar_cartesian3D(r = x[1], theta = x[2], phi = x[2])
-#'   })|>t()
-#' @export
-
-math_polar_cartesian3D <- function(r,theta,phi){
-  c(x = r*sin(theta)*cos(phi),
-    y = r*sin(theta)*sin(phi),
-    z = r*cos(theta))
-}
-
-
-#######################################
 #' Sperical to cartesian coordinates
 #'
 #' @name math_sph2cart
@@ -683,33 +655,6 @@ math_sph2cart <- function (tpr)
   return(xyz)
 }
 
-
-#######################################
-#' Cartesian to polar coordinates 3D
-#'
-#' @name math_cartesian_polar3D
-#' @description Polar to Cartesian coordinate system transformation
-#' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
-#' @param x vector of cartesian coordinates
-#' @author Florian Wagner
-#' \email{florian.wagner@wagnius.ch}
-#' @returns
-#' named vector with r (radius) , theta (angle to z-axis), phi(angle to x-axis)
-#' @examples
-#' math_cartesian_polar3D(c(1,1,1))
-#' m <- expand.grid(x = -1:1, y = -1:1, z = -1:1)|>as.matrix()
-#' result <- apply(m, 1, math_cartesian_polar3D)|>t()
-#' colnames(result)<-c("r","theta","phi")
-#' cbind(m, result)
-#' @export
-
-math_cartesian_polar3D <- function(x){
-  r <- math_betrag(x)
-  c(r ,
-    theta = acos(x[3]/r),
-    phi =   atan2(x[2],x[1])
-    )
-}
 
 #######################################
 #' Cartesian to sperical coordinates
