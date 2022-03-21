@@ -1,7 +1,7 @@
 #######################################
 #' Probability density function
 #'
-#' @name standard_norm_dist
+#' @name stat_norm_dist
 #' @description Probability density function with parameter sigma(sd,Standard deviation) and mu(mean)
 #' @param x data
 #' @param mu mean
@@ -10,17 +10,17 @@
 #' \email{florian.wagner@wagnius.ch}
 #' @returns vector
 #' @examples c_seq <- seq(-6,6,0.1)
-#' plot(x = c_seq, standard_norm_dist(c_seq,mu = 0, sd = 1), type = "l")
+#' plot(x = c_seq, stat_norm_dist(c_seq,mu = 0, sd = 1), type = "l")
 #' @export
 
-standard_norm_dist <- function(x,mu,sd){
+stat_norm_dist <- function(x,mu,sd){
   1/sqrt(2*pi*sd)*exp(-(x-mu)^2/2*sd)
 }
 
 #######################################
 #' Process capability index
 #'
-#' @name calculate_cpk
+#' @name stat_cpk
 #' @description Calculation of Cpk Process capability index given parameter USL, LSL mean \eqn{\mu} and standard deviation \eqn{\sigma}.
 #' @details Estimates what the process is capable of producing, considering that the process mean may not be centered between the specification (Upper and Lower) limits.
 #' @details <https://en.wikipedia.org/wiki/Process_capability_index>
@@ -31,10 +31,10 @@ standard_norm_dist <- function(x,mu,sd){
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns vector
-#' @examples calculate_cpk(LSL = -0.03, USL = -0.01, mue = -0.02, sigma = 0.005)
-#' @examples calculate_cpk(LSL = -0.05, USL = 0.05, mue =c(-0.01, -0.015), sigma = c(0.001,0.015))
+#' @examples stat_cpk(LSL = -0.03, USL = -0.01, mue = -0.02, sigma = 0.005)
+#' @examples stat_cpk(LSL = -0.05, USL = 0.05, mue =c(-0.01, -0.015), sigma = c(0.001,0.015))
 #' @export
-calculate_cpk <- function(LSL, USL, mue, sigma){
+stat_cpk <- function(LSL, USL, mue, sigma){
   if(length(USL)==1 & is.numeric(USL) & length(LSL)==1 & is.numeric(LSL)){
     return(min(mue-LSL, USL-mue)/(3*sigma))
   }else{
