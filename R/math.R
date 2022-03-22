@@ -613,8 +613,8 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
   a <- sqrt(-det(M0)/(det(M)*lambda[1]))
   b <- sqrt(-det(M0)/(det(M)*lambda[2]))
 
-  xc <- (P["B",]*P["E",]-2*P["C",]*P["D",])/(4*P["A",]*P["C",]-P["B",]^2)
-  yc <- (P["B",]*P["D",]-2*P["A",]*P["E",])/(4*P["A",]*P["C",]-P["B",]^2)
+  # xc <- (P["B",]*P["E",]-2*P["C",]*P["D",])/(4*P["A",]*P["C",]-P["B",]^2)
+  # yc <- (P["B",]*P["D",]-2*P["A",]*P["E",])/(4*P["A",]*P["C",]-P["B",]^2)
 
   center <- solve(M,c(-P["D",]/2,-P["E",]/2))|>as.vector()
 
@@ -645,7 +645,6 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
     return(NULL)
   }else{
     return(list(df = df,
-                center1 = c(xc,xc),
                 center = center,
                 a = a,
                 b = b,
