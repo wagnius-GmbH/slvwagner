@@ -104,8 +104,6 @@ math_inbetweenAngle <- function(u,v){
   return(acos(sum(u*v)/(sqrt(sum(u^2))*sqrt(sum(v^2)))))
 }
 
-
-
 #######################################
 #' slerp  by 3 points and a given radius.
 #'
@@ -258,7 +256,6 @@ cas_rot_matrix3d <- function(x,angle){
       ysym()
   }else print("No yacs object supplied")
 }
-
 
 
 #######################################
@@ -529,4 +526,132 @@ math_cart2sph <- function (xyz)
 
 math_unit_vector <- function(x){
   x/math_betrag(x)
+}
+
+#######################################
+#' Calculate unit vector
+#'
+#' @name math_unit_vector
+#' @description calculate unite vector from \code{x}
+#' @param x vector of cartesian coordinates
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' unit vector
+#' @examples
+#' math_unit_vector(c(x = 1,y = 1,z = 1))
+#' math_unit_vector(c(1,2,3))
+#' @export
+
+math_unit_vector <- function(x){
+  x/math_betrag(x)
+}
+
+#######################################
+#' Conic section from five point
+#'
+#' @name math_conic_section_from_5points
+#' @description calculate conic section from five given points \code{section_points}
+#' @details \eqn{Ax^2+Bxy+Cy^2+Dx+Ey+F=0}
+#' @details <https://en.wikipedia.org/wiki/Conic_section>
+#' @param section_points matrix of section points, one point per row.
+#' @param nb number of points returned
+#' @author Florian Wagner \email{florian.wagner@wagnius.ch}
+#' @returns
+#' list containing: data frame of calculated points, center...
+#'
+#' @examples
+#' section_points <- matrix(c(-1,3,
+#'                           2,4,
+#'                           6,2,
+#'                           8,-5,
+#'                           1,-3),
+#'                           nrow = 5, byrow = T)
+#' l_list <- math_conic_section_from_5points(section_points)
+#' l_list
+#' l_list$df|>plot(asp = 1)
+#' abline(a = l_list$lf[1,2], b = l_list$lf[1,1])
+#' abline(a = l_list$lf[2,2], b = l_list$lf[2,1])
+#' points(x = l_list$center[1],y = l_list$center[2])
+#'
+#' section_points <- matrix(c(-2,1,
+#'                            0,2,
+#'                            2,3,
+#'                            0,-2,
+#'                            2,0),
+#'                            nrow = 5, byrow = T)
+#' math_conic_section_from_5points(section_points)
+#' @export
+
+
+math_conic_section_from_5points <- function(section_points, nb = 100){
+  A <- matrix(c(section_points[1,1]^2,section_points[1,1]*section_points[1,2],section_points[1,2]^2,section_points[1,1],section_points[1,2],
+                section_points[2,1]^2,section_points[2,1]*section_points[2,2],section_points[2,2]^2,section_points[2,1],section_points[2,2],
+                section_points[3,1]^2,section_points[3,1]*section_points[3,2],section_points[3,2]^2,section_points[3,1],section_points[3,2],
+                section_points[4,1]^2,section_points[4,1]*section_points[4,2],section_points[4,2]^2,section_points[4,1],section_points[4,2],
+                section_points[5,1]^2,section_points[5,1]*section_points[5,2],section_points[5,2]^2,section_points[5,1],section_points[5,2]),
+              nrow = 5, byrow = T)
+
+  b <- matrix(rep(-1,5))
+
+  P <- solve(A,b)
+  P <- rbind(P,1)
+  rownames(P)<- LETTERS[1:6]
+
+  M0 <- matrix(c(P["F",]  , P["D",]/2, P["E",]/2,
+                 P["D",]/2, P["A",]  , P["B",]/2,
+                 P["E",]/2, P["B",]/2, P["C",]),
+               nrow=3, byrow=TRUE)
+
+  M <- matrix(c(P["A",],P["B",]/2,
+                P["B",]/2,P["C",]),nrow = 2 ,byrow = T)
+
+  lambda <- eigen(M)$values
+  if((lambda[1]-P["A",])<=(lambda[2]-P["C",])){
+    lambda <- c(lambda[2],lambda[1])
+  }
+  a <- sqrt(-det(M0)/(det(M)*lambda[1]))
+  b <- sqrt(-det(M0)/(det(M)*lambda[2]))
+
+  xc <- (P["B",]*P["E",]-2*P["C",]*P["D",])/(4*P["A",]*P["C",]-P["B",]^2)
+  yc <- (P["B",]*P["D",]-2*P["A",]*P["E",])/(4*P["A",]*P["C",]-P["B",]^2)
+
+  center <- solve(M,c(-P["D",]/2,-P["E",]/2))|>as.vector()
+
+  M_eigen <- eigen(M)
+  m <- M_eigen$vectors[2,]/M_eigen$vectors[1,]
+  lf <- matrix(c(m, yc-m*xc),nrow = 2, byrow = F)
+
+  phi <- ifelse((lambda[1]-P["A",])<=(lambda[2]-P["C",]),
+                atan(m[2]),
+                atan(m[1]))
+
+  t <- seq(0, 2*pi, len = nb)
+
+  if(det(M0) != 0){
+    if(det(M)<0) type <- "hyperbola"
+    else if (det(M)==0) type <- "parabola"
+    else if (det(M)>0) type <- "ellipse"
+    else if (A == C & B == 0)type <- "circle"
+  }else {
+    type <- "degenerate"
+  }
+
+  df <- data.frame(x = center[1] + a*cos(t)*cos(phi) - b*sin(t)*sin(phi),
+                   y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi))
+
+  if(type == "degenerate"){
+    writeLines("degenerate")
+    return(NULL)
+  }else{
+    return(list(df = df,
+                center1 = c(xc,xc),
+                center = center,
+                a = a,
+                b = b,
+                phi = phi,
+                lf = lf,
+                type = type)
+             )
+  }
 }
