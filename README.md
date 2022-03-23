@@ -1,5 +1,5 @@
 # slvwagner
-my R library include all function I have been using over and over again.
+My R library, including all functions I use very often.
 
 ## Content
 
@@ -8,6 +8,6 @@ my R library include all function I have been using over and over again.
 -   Linear function helpers 
 -   R utility functions
 -   Quadrant and angle finder for vector 2D
--   Transformation of spherical to cartesian coordinate system and back 
+-   Transformation from spherical to cartesian coordinate system and back. 
 -   conic section
 
