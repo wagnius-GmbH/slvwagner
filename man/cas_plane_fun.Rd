@@ -15,7 +15,7 @@ cas_plane_fun(p, n)
 Yacas function
 }
 \description{
-Function returning a cas function of a plane defined by postion vector \eqn{p} and the normal vector \eqn{n} of a plane.
+Function returning a cas function of a plane defined by position vector \eqn{p} and the normal vector \eqn{n} of a plane.
 }
 \details{
 The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS needs to be installed.
