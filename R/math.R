@@ -620,7 +620,7 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
 
   M_eigen <- eigen(M)
   m <- M_eigen$vectors[2,]/M_eigen$vectors[1,]
-  lf <- matrix(c(m, yc-m*xc),nrow = 2, byrow = F)
+  lf <- matrix(c(m, center[2]-m*center[1]),nrow = 2, byrow = F)
 
   phi <- ifelse((lambda[1]-P["A",])<=(lambda[2]-P["C",]),
                 atan(m[2]),
