@@ -2,6 +2,7 @@
 
 export(NPS)
 export(NPS_type)
+export(cas_intersection_plane_line)
 export(cas_plane_fun)
 export(cas_rot_matrix2d)
 export(cas_rot_matrix3d)

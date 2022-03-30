@@ -104,3 +104,46 @@ cas_plane_fun <- function(p,n){
   EQ_Ebene
 }
 
+#######################################
+#' CAS intersection of a plane and a line
+#'
+#' @name cas_intersection_plane_line
+#' @description
+#' Function returning intersecting point of a plane and a 3D-line.
+#' @details
+#' The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS needs to be installed.
+#' @details \url{http://www.yacas.org/}
+#' @param  p position vector for the plane
+#' @param  n normal vector of the plane
+#' @param  s position vector of the line
+#' @param  w direction vector of the line
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' vector of intersection point
+#'
+#' @examples
+#' library(Ryacas)
+#' cas_intersection_plane_line(p = c(2,3,5),n = c(1,-5,-8),s = c(1,1,1), w = c(1,1,1))
+#' @export
+
+cas_intersection_plane_line <- function(p,n,s,w){
+  x <- paste0("x",1:3)|>
+    Ryacas::ysym()
+
+  EQ_Ebene <- Ryacas::ysym(n)*(x-Ryacas::ysym(p))
+  EQ_Ebene <- EQ_Ebene[1]+EQ_Ebene[2]+EQ_Ebene[3]
+
+  r <- Ryacas::ysym("r")
+  Parameter_Ebene <- s+r*w
+  Ryacas::yac_assign(Parameter_Ebene[1],"x1")
+  Ryacas::yac_assign(Parameter_Ebene[2],"x2")
+  Ryacas::yac_assign(Parameter_Ebene[3],"x3")
+  r <- EQ_Ebene|>
+    Ryacas::y_fn("Solve","r")|>
+    Ryacas::y_rmvars()|>
+    Ryacas::as_r()
+  schnittpunkte <- s+r*w
+  names(schnittpunkte) <- c("x","y","z")
+  schnittpunkte
+}
