@@ -574,13 +574,32 @@ math_unit_vector <- function(x){
 #' abline(a = l_list$lf[2,2], b = l_list$lf[2,1])
 #' points(x = l_list$center[1],y = l_list$center[2])
 #'
-#' section_points <- matrix(c(-2,1,
-#'                            0,2,
-#'                            2,3,
-#'                            0,-2,
-#'                            2,0),
-#'                            nrow = 5, byrow = T)
-#' math_conic_section_from_5points(section_points)
+#' # hyperbola
+#' matrix(c(-2,1,
+#'          -1,3,
+#'          1,-1.5,
+#'          0.8,0.8,
+#'          2,2.8),
+#'          nrow = 5, byrow = T)|>
+#'    math_conic_section_from_5points()
+#'
+#' #circle
+#' matrix(c(-1,0,
+#'          0,1,
+#'          1,0,
+#'          0,-1,
+#'          cos(pi/4),sin(pi/4)),
+#'          nrow = 5, byrow = T)|>
+#'    math_conic_section_from_5points()
+#'
+#' #parabola
+#' matrix(c(-2,3,
+#'          -1,0,
+#'          0,-1,
+#'          1,0,
+#'          2,3),
+#'          nrow = 5, byrow = T)|>
+#'    math_conic_section_from_5points()
 #' @export
 
 
@@ -610,47 +629,65 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
   if((lambda[1]-P["A",])<=(lambda[2]-P["C",])){
     lambda <- c(lambda[2],lambda[1])
   }
-  a <- sqrt(-det(M0)/(det(M)*lambda[1]))
-  b <- sqrt(-det(M0)/(det(M)*lambda[2]))
-
-  # xc <- (P["B",]*P["E",]-2*P["C",]*P["D",])/(4*P["A",]*P["C",]-P["B",]^2)
-  # yc <- (P["B",]*P["D",]-2*P["A",]*P["E",])/(4*P["A",]*P["C",]-P["B",]^2)
-
-  center <- solve(M,c(-P["D",]/2,-P["E",]/2))|>as.vector()
-
   M_eigen <- eigen(M)
-  m <- M_eigen$vectors[2,]/M_eigen$vectors[1,]
-  lf <- matrix(c(m, center[2]-m*center[1]),nrow = 2, byrow = F)
-
-  phi <- ifelse((lambda[1]-P["A",])<=(lambda[2]-P["C",]),
-                atan(m[2]),
-                atan(m[1]))
-
-  t <- seq(0, 2*pi, len = nb)
 
   if(det(M0) != 0){
-    if(det(M)<0) type <- "hyperbola"
-    else if (det(M)==0) type <- "parabola"
-    else if (det(M)>0) type <- "ellipse"
-    else if (A == C & B == 0)type <- "circle"
+    if(det(M)<0) {
+      writeLines("hyperbola")
+      return(NULL)
+      }
+    else if (det(M)==0) {
+      writeLines("parabola")
+      return(NULL)
+      }
+    else if (det(M)>0) { #either ellipse or circle
+
+      a <- sqrt(-det(M0)/(det(M)*lambda[1]))
+      b <- sqrt(-det(M0)/(det(M)*lambda[2]))
+
+      center <- solve(M,c(-P["D",]/2,-P["E",]/2))|>as.vector()
+      t <- seq(0, 2*pi, len = nb)
+
+      if(a==b){
+        writeLines("circle")
+        df <- data.frame(x = center[1] + a*cos(t)*cos(phi) - b*sin(t)*sin(phi),
+                         y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi))
+        return(list(df = df,
+                    center = center)
+               )
+      }else{
+        writeLines("ellipse")
+        m <- M_eigen$vectors[2,]/M_eigen$vectors[1,]
+        lf <- matrix(c(m, center[2]-m*center[1]),nrow = 2, byrow = F)|>
+          as.data.frame()|>
+          setNames(c("intercept","slope"))
+
+        phi <- ifelse((lambda[1]-P["A",])<=(lambda[2]-P["C",]),
+                      atan(m[2]),
+                      atan(m[1]))
+        names(phi)<-NULL
+
+        df <- data.frame(x = center[1] + a*cos(t)*cos(phi) - b*sin(t)*sin(phi),
+                         y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi))
+
+        return(list(df = df,
+                    center = center,
+                    a = a,
+                    b = b,
+                    phi = phi,
+                    lf = lf)
+               )
+        }
+    }
+    else if (A == C & B == 0) {
+      writeLines("circle")
+      return(NULL)
+      }
   }else {
     type <- "degenerate"
-  }
-
-  df <- data.frame(x = center[1] + a*cos(t)*cos(phi) - b*sin(t)*sin(phi),
-                   y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi))
-
-  if(type == "degenerate"){
     writeLines("degenerate")
     return(NULL)
-  }else{
-    return(list(df = df,
-                center = center,
-                a = a,
-                b = b,
-                phi = phi,
-                lf = lf,
-                type = type)
-             )
   }
 }
+
+

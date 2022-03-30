@@ -36,13 +36,32 @@ abline(a = l_list$lf[1,2], b = l_list$lf[1,1])
 abline(a = l_list$lf[2,2], b = l_list$lf[2,1])
 points(x = l_list$center[1],y = l_list$center[2])
 
-section_points <- matrix(c(-2,1,
-                           0,2,
-                           2,3,
-                           0,-2,
-                           2,0),
-                           nrow = 5, byrow = T)
-math_conic_section_from_5points(section_points)
+# hyperbola
+matrix(c(-2,1,
+         -1,3,
+         1,-1.5,
+         0.8,0.8,
+         2,2.8),
+         nrow = 5, byrow = T)|>
+   math_conic_section_from_5points()
+
+#circle
+matrix(c(-1,0,
+         0,1,
+         1,0,
+         0,-1,
+         cos(pi/4),sin(pi/4)),
+         nrow = 5, byrow = T)|>
+   math_conic_section_from_5points()
+
+#parabola
+matrix(c(-2,3,
+         -1,0,
+         0,-1,
+         1,0,
+         2,3),
+         nrow = 5, byrow = T)|>
+   math_conic_section_from_5points()
 }
 \author{
 Florian Wagner \email{florian.wagner@wagnius.ch}
