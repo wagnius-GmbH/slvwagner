@@ -21,12 +21,13 @@ utils::globalVariables(c("tibble",
                          "between",
                          "ratio_Detractors",
                          "pivot_longer",
-
+                         "stats",
                          "ysym",
                          "yac_str",
-
+                         "setNames",
                          "y",
-
+                         "C",
                          "dnorm",
-                         "sd"
+                         "sd",
+                         "B"
                          ))
