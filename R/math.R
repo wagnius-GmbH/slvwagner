@@ -523,7 +523,7 @@ math_unit_vector <- function(x){
 #'                           6,2,
 #'                           8,-5,
 #'                           1,-3),
-#'                           nrow = 5, byrow = T)
+#'                           nrow = 5, byrow = TRUE)
 #' l_list <- math_conic_section_from_5points(section_points)
 #' l_list
 #' l_list$df|>plot(asp = 1)
@@ -537,7 +537,7 @@ math_unit_vector <- function(x){
 #'          1,-1.5,
 #'          0.8,0.8,
 #'          2,2.8),
-#'          nrow = 5, byrow = T)|>
+#'          nrow = 5, byrow = TRUE)|>
 #'    math_conic_section_from_5points()
 #'
 #' #circle
@@ -546,7 +546,7 @@ math_unit_vector <- function(x){
 #'          1,0,
 #'          0,-1,
 #'          cos(pi/4),sin(pi/4)),
-#'          nrow = 5, byrow = T)|>
+#'          nrow = 5, byrow = TRUE)|>
 #'    math_conic_section_from_5points()
 #'
 #' #parabola
@@ -555,7 +555,7 @@ math_unit_vector <- function(x){
 #'          0,-1,
 #'          1,0,
 #'          2,3),
-#'          nrow = 5, byrow = T)|>
+#'          nrow = 5, byrow = TRUE)|>
 #'    math_conic_section_from_5points()
 #' @export
 
