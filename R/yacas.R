@@ -4,11 +4,10 @@
 #' @name cas_rot_matrix3d
 #' @description
 #' Calculates a 3D rotation matrix from a given axis and angle. The axis is defined by \code{x|>ysym()}. The Rotation will be done around the axis defined by
-#' \code{angle|>ysym()} and the root. The angle will be appied by the right hand rule.
+#' \code{angle|>ysym()} and the root. The angle will be applied by the right hand rule.
 #' @details
-#' The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS \url{http://www.yacas.org/}
-#' needs to be installed.
-#'
+#' The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS needs to be installed.
+#' @details \url{http://www.yacas.org/}
 #' @param  x unit vector c(x1,x2,x3)|>ysym()
 #' @param  angle vector of angel in radiant c(angle)|>ysym()
 #' @author Florian Wagner
@@ -40,5 +39,37 @@ cas_rot_matrix3d <- function(x,angle){
     ",x[3],"*",x[2],"*(",1,"-",y_cos ,")+",x[1],"*",y_sin,",
     ",x[3],"^2       *(",1,"-",y_cos ,")+",y_cos,"}}"))|>
       ysym()
-  }else print("No yacs object supplied")
+  }else stop(print("No yacs object supplied"))
 }
+
+
+#######################################
+#' CAS coordinate function of a plane
+#'
+#' @name cas_plane_fun
+#' @description
+#' Function returning a cas function of a plane defined by postion vector \eqn{p} and the normal vector \eqn{n} of a plane.
+#' @details
+#' The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS needs to be installed.
+#' @details \url{http://www.yacas.org/}
+#' @param  p position vector
+#' @param  n normal vector of the plane
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Yacas function
+#'
+#' @examples
+#' library(Ryacas)
+#' cas_plane_fun(c(2,3,4), c(12,5,1)|>math_unit_vector())
+#' @export
+
+cas_plane_fun <- function(p,n){
+  x <- paste0("x",1:3)|>
+    Ryacas::ysym()
+
+  EQ_Ebene <- Ryacas::ysym(n)*(x-Ryacas::ysym(p))
+  EQ_Ebene <- EQ_Ebene[1]+EQ_Ebene[2]+EQ_Ebene[3]
+  EQ_Ebene
+}
+

@@ -16,11 +16,12 @@ Returns 3D rotation matrix for given axis and angle.
 }
 \description{
 Calculates a 3D rotation matrix from a given axis and angle. The axis is defined by \code{x|>ysym()}. The Rotation will be done around the axis defined by
-\code{angle|>ysym()} and the root. The angle will be appied by the right hand rule.
+\code{angle|>ysym()} and the root. The angle will be applied by the right hand rule.
 }
 \details{
-The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS \url{http://www.yacas.org/}
-needs to be installed.
+The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS needs to be installed.
+
+\url{http://www.yacas.org/}
 }
 \examples{
 library(Ryacas)

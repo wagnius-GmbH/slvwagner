@@ -213,7 +213,6 @@ math_rot_matrix3d <- function(x,angle){
 }
 
 
-
 #######################################
 #' Transform vector by a rotation matrix
 #'
