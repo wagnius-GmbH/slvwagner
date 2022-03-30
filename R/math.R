@@ -554,11 +554,13 @@ math_unit_vector <- function(x){
 #' @description calculate conic section from five given points \code{section_points}
 #' @details \eqn{Ax^2+Bxy+Cy^2+Dx+Ey+F=0}
 #' @details <https://en.wikipedia.org/wiki/Conic_section>
+#' @details The algorithme determins fist the type of conic section. If the concic section results in an ellipse or a circle the function returns useful values
+#' such as the center of and data frame of coordinates. For an ellipse the semi \eqn{b} and major axis \eqn{a} of the ellipse. F
 #' @param section_points matrix of section points, one point per row.
 #' @param nb number of points returned
 #' @author Florian Wagner \email{florian.wagner@wagnius.ch}
 #' @returns
-#' list containing: data frame of calculated points, center...
+#' list
 #'
 #' @examples
 #' section_points <- matrix(c(-1,3,
@@ -634,11 +636,11 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
   if(det(M0) != 0){
     if(det(M)<0) {
       writeLines("hyperbola")
-      return(NULL)
+      return(list(type = "hyperbola"))
       }
     else if (det(M)==0) {
       writeLines("parabola")
-      return(NULL)
+      return(list(type = "parabola"))
       }
     else if (det(M)>0) { #either ellipse or circle
 
@@ -650,9 +652,10 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
 
       if(a==b){
         writeLines("circle")
-        df <- data.frame(x = center[1] + a*cos(t)*cos(phi) - b*sin(t)*sin(phi),
-                         y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi))
-        return(list(df = df,
+        df <- data.frame(x = a*cos(t) - b*sin(t),
+                         y = a*cos(t) + b*sin(t))
+        return(list(type = "circle",
+                    df = df,
                     center = center)
                )
       }else{
@@ -670,7 +673,8 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
         df <- data.frame(x = center[1] + a*cos(t)*cos(phi) - b*sin(t)*sin(phi),
                          y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi))
 
-        return(list(df = df,
+        return(list(type = "ellipse",
+                    df = df,
                     center = center,
                     a = a,
                     b = b,
@@ -680,13 +684,10 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
         }
     }
     else if (A == C & B == 0) {
-      writeLines("circle")
-      return(NULL)
+      return(list(type = "circle"))
       }
   }else {
-    type <- "degenerate"
-    writeLines("degenerate")
-    return(NULL)
+    return(list(type = "degenerate"))
   }
 }
 

@@ -12,7 +12,7 @@ math_conic_section_from_5points(section_points, nb = 100)
 \item{nb}{number of points returned}
 }
 \value{
-list containing: data frame of calculated points, center...
+list
 }
 \description{
 calculate conic section from five given points \code{section_points}
@@ -21,6 +21,9 @@ calculate conic section from five given points \code{section_points}
 \eqn{Ax^2+Bxy+Cy^2+Dx+Ey+F=0}
 
 \url{https://en.wikipedia.org/wiki/Conic_section}
+
+The algorithme determins fist the type of conic section. If the concic section results in an ellipse or a circle the function returns useful values
+such as the center of and data frame of coordinates. For an ellipse the semi \eqn{b} and major axis \eqn{a} of the ellipse. F
 }
 \examples{
 section_points <- matrix(c(-1,3,
