@@ -25,7 +25,6 @@ The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ry
 }
 \examples{
 library(Ryacas)
-cas_rot_matrix3d(matrix(c(1,2,3)),c(-pi))
 rot_matrix <- cas_rot_matrix3d(matrix(c(1,2,3))|>ysym(),c(-pi)|>ysym())
 rot_matrix
 }
