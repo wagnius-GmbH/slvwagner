@@ -124,7 +124,7 @@ cas_plane_fun <- function(p,n){
 #'
 #' @examples
 #' library(Ryacas)
-#' cas_intersection_plane_line(p = c(2,3,5),n = c(1,-5,-8),s = c(1,1,1), w = c(1,1,1))
+#' cas_intersection_plane_line(p = c(2,3,5),n = c(1,-5,-8),s = c(1,1,1), w = c(5,10,10))
 #' @export
 
 cas_intersection_plane_line <- function(p,n,s,w){
@@ -133,6 +133,7 @@ cas_intersection_plane_line <- function(p,n,s,w){
 
   EQ_Ebene <- Ryacas::ysym(n)*(x-Ryacas::ysym(p))
   EQ_Ebene <- EQ_Ebene[1]+EQ_Ebene[2]+EQ_Ebene[3]
+  print(EQ_Ebene)
 
   r <- Ryacas::ysym("r")
   Parameter_Ebene <- s+r*w
