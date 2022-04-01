@@ -19,7 +19,7 @@ cas_intersection_plane_line(p, n, s, w)
 vector of intersection point
 }
 \description{
-Function returning intersecting point of a plane and a 3D-line.
+Function returning intersecting point of a plane and a 3D-line if it exists.
 }
 \details{
 The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS needs to be installed.

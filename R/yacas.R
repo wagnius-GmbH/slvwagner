@@ -109,7 +109,7 @@ cas_plane_fun <- function(p,n){
 #'
 #' @name cas_intersection_plane_line
 #' @description
-#' Function returning intersecting point of a plane and a 3D-line.
+#' Function returning intersecting point of a plane and a 3D-line if it exists.
 #' @details
 #' The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS needs to be installed.
 #' @details \url{http://www.yacas.org/}
@@ -130,11 +130,8 @@ cas_plane_fun <- function(p,n){
 cas_intersection_plane_line <- function(p,n,s,w){
   x <- paste0("x",1:3)|>
     Ryacas::ysym()
-
   EQ_Ebene <- Ryacas::ysym(n)*(x-Ryacas::ysym(p))
   EQ_Ebene <- EQ_Ebene[1]+EQ_Ebene[2]+EQ_Ebene[3]
-  print(EQ_Ebene)
-
   r <- Ryacas::ysym("r")
   Parameter_Ebene <- s+r*w
   Ryacas::yac_assign(Parameter_Ebene[1],"x1")
