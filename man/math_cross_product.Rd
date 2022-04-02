@@ -24,9 +24,8 @@ The cross product of two vectors is the perpendicular vector to the plane spanne
 \url{https://en.wikipedia.org/wiki/Cross_product}
 }
 \examples{
-math_dot_product(1:5, 1:5)  #=> 55
-# Length of space diagonal in 3-dim- cube:
-sqrt(math_cross_product(c(1,1,1), c(1,1,1)))  #=> 1.732051
+math_cross_product(c(1,0,0), c(0,1,0))
+
 }
 \seealso{
 <math_dot_product>

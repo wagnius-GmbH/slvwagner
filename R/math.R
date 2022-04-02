@@ -711,9 +711,8 @@ math_dot_product <- function (x, y, d = NULL)
 #' @returns
 #' A scalar or vector of length the number of columns of x and y.
 #' @examples
-#' math_dot_product(1:5, 1:5)  #=> 55
-#' # Length of space diagonal in 3-dim- cube:
-#' sqrt(math_cross_product(c(1,1,1), c(1,1,1)))  #=> 1.732051
+#' math_cross_product(c(1,0,0), c(0,1,0))
+#'
 #' @export
 
 math_cross_product <- function (x, y)
