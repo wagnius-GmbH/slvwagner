@@ -650,11 +650,12 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
 #' Compute the dot product of two vectors
 #'
 #' @name math_dot_product
-#' @description If \code{x} and \code{y} are matrices, calculate the dot-product along the first non-singleton dimension.
-#' If the optional argument d is given, calculate the dot-product along this dimension.
+#' @description 'dot' or 'scalar' product of vectors or pairwise columns of matrices.
+#' @details Returns the 'dot' or 'scalar' product of vectors or columns of matrices. Two vectors must be of same length, two matrices must be of the same size.
+#' If x and y are column or row vectors, their dot product will be computed as if they were simple vectors.
+#' @details
 #' @param x Vector or a Matrix of vectors
 #' @param y Vector or a Matrix of vectors
-#' @param d Dimension along which to calculate the dot product
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
@@ -662,38 +663,27 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
 #' @examples
 #' math_dot_product(c(1,0,0),c(0.1,5,0),d = NULL)
 #' math_dot_product(c(0.1,5,0),c(1,0,0),d = NULL)
+#' sqrt(math_dot_product(c(1,1,1), c(1,1,1)))  #=> 1.732051
 #' @export
 
-math_dot_product <- function (x, y, d = NULL)
+math_dot_product <- function (x, y)
 {
-  if (is.vector(x))
-    x <- matrix(x, ncol = 1)
-  if (is.vector(y))
-    y <- matrix(y, ncol = 1)
-  ndim <- length(dim(x))
-  if (is.null(d)) {
-    di <- which(dim(x) > 1)
-    if (length(di == 0)) {
-      d <- 1
-    }
-    else {
-      d <- di[1]
-    }
+  if (length(x) == 0 && length(y) == 0)
+    return(0)
+  if (!(is.numeric(x) || is.complex(x)) || !(is.numeric(y) ||
+                                             is.complex(y)))
+    stop("Arguments 'x' and 'y' must be real or complex.")
+  x <- drop(x)
+  y <- drop(y)
+  if (any(dim(x) != dim(y)))
+    stop("Matrices 'x' and 'y' must be of same size")
+  if (is.vector(x) && is.vector(y)) {
+    dim(x) <- c(length(x), 1)
+    dim(y) <- c(length(y), 1)
   }
-  if (d > ndim) {
-    stop("d is larger than the number of dimensions of the data")
-  }
-  if (ndim == 2) {
-    if (d == 2) {
-      return(rowSums(x * y))
-    }
-    if (d == 1) {
-      return(colSums(x * y))
-    }
-  }
-  return(apply(x * y, d, sum))
+  x.y <- apply(Conj(x) * y, 2, sum)
+  return(x.y)
 }
-
 
 #######################################
 #' Compute Vector Cross Product

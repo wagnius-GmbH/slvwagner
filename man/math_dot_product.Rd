@@ -4,25 +4,27 @@
 \alias{math_dot_product}
 \title{Compute the dot product of two vectors}
 \usage{
-math_dot_product(x, y, d = NULL)
+math_dot_product(x, y)
 }
 \arguments{
 \item{x}{Vector or a Matrix of vectors}
 
 \item{y}{Vector or a Matrix of vectors}
-
-\item{d}{Dimension along which to calculate the dot product}
 }
 \value{
 Vector with length of dth dimension
 }
 \description{
-If \code{x} and \code{y} are matrices, calculate the dot-product along the first non-singleton dimension.
-If the optional argument d is given, calculate the dot-product along this dimension.
+'dot' or 'scalar' product of vectors or pairwise columns of matrices.
+}
+\details{
+Returns the 'dot' or 'scalar' product of vectors or columns of matrices. Two vectors must be of same length, two matrices must be of the same size.
+If x and y are column or row vectors, their dot product will be computed as if they were simple vectors.
 }
 \examples{
 math_dot_product(c(1,0,0),c(0.1,5,0),d = NULL)
 math_dot_product(c(0.1,5,0),c(1,0,0),d = NULL)
+sqrt(math_dot_product(c(1,1,1), c(1,1,1)))  #=> 1.732051
 }
 \author{
 Florian Wagner
