@@ -646,4 +646,116 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
   }
 }
 
+#######################################
+#' Compute the dot product of two vectors
+#'
+#' @name math_dot_product
+#' @description If \code{x} and \code{y} are matrices, calculate the dot-product along the first non-singleton dimension.
+#' If the optional argument d is given, calculate the dot-product along this dimension.
+#' @param x Vector or a Matrix of vectors
+#' @param y Vector or a Matrix of vectors
+#' @param d Dimension along which to calculate the dot product
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Vector with length of dth dimension
+#' @examples
+#' math_dot_product(c(1,0,0),c(0.1,5,0),d = NULL)
+#' math_dot_product(c(0.1,5,0),c(1,0,0),d = NULL)
+#' @export
 
+math_dot_product <- function (x, y, d = NULL)
+{
+  if (is.vector(x))
+    x <- matrix(x, ncol = 1)
+  if (is.vector(y))
+    y <- matrix(y, ncol = 1)
+  ndim <- length(dim(x))
+  if (is.null(d)) {
+    di <- which(dim(x) > 1)
+    if (length(di == 0)) {
+      d <- 1
+    }
+    else {
+      d <- di[1]
+    }
+  }
+  if (d > ndim) {
+    stop("d is larger than the number of dimensions of the data")
+  }
+  if (ndim == 2) {
+    if (d == 2) {
+      return(rowSums(x * y))
+    }
+    if (d == 1) {
+      return(colSums(x * y))
+    }
+  }
+  return(apply(x * y, d, sum))
+}
+
+
+#######################################
+#' Compute Vector Cross Product
+#'
+#' @name math_cross_product
+#' @description Computes the cross (or: vector) product of vectors in 3 dimensions.
+#' In case of matrices it takes the first dimension of length 3 and computes the cross product between corresponding columns or rows.
+#' @details The cross product of two vectors is the perpendicular vector to the plane spanned by the given vectors \code{x} and \code{y}.
+#' @details <https://en.wikipedia.org/wiki/Cross_product>
+#' @param x numeric vector or matrix
+#' @param y numeric vector or matrix
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @seealso <math_dot_product>
+#' @returns
+#' A scalar or vector of length the number of columns of x and y.
+#' @examples
+#' math_dot_product(1:5, 1:5)  #=> 55
+#' # Length of space diagonal in 3-dim- cube:
+#' sqrt(math_cross_product(c(1,1,1), c(1,1,1)))  #=> 1.732051
+#' @export
+
+math_cross_product <- function (x, y)
+{
+  if (!is.numeric(x) || !is.numeric(y))
+    stop("Arguments 'x' and 'y' must be numeric vectors or matrices.")
+  if (is.vector(x) && is.vector(y)) {
+    if (length(x) == length(y) && length(x) == 3) {
+      xxy <- c(x[2] * y[3] - x[3] * y[2], x[3] * y[1] -
+                 x[1] * y[3], x[1] * y[2] - x[2] * y[1])
+    }
+    else {
+      stop("Vectors 'x' and 'y' must be both of length 3.")
+    }
+  }
+  else {
+    if (is.matrix(x) && is.matrix(y)) {
+      if (all(dim(x) == dim(y))) {
+        if (ncol(x) == 3) {
+          xxy <- cbind(x[,2] * y[,3] - x[,3] * y[,2], x[,3] * y[,1] - x[,1] * y[,3], x[,1] * y[,2] - x[,2] * y[,1])
+        }
+        else {
+          if (nrow(x) == 3) {
+            xxy <- rbind(x[2, ] * y[3, ] - x[3, ] * y[2,
+            ], x[3, ] * y[1, ] - x[1, ] * y[3, ], x[1,
+            ] * y[2, ] - x[2, ] * y[1, ])
+          }
+          else {
+            stop("'x', 'y' must have one dimension of length 3.")
+          }
+        }
+      }
+      else {
+        stop("Matrices 'x' and 'y' must be of same size.")
+      }
+    }
+    else {
+      if (is.vector(x) && is.matrix(y) || is.matrix(x) &&
+          is.vector(y)) {
+        stop("Arguments 'x', 'y' must be vectors/matrices of same size.")
+      }
+    }
+  }
+  return(xxy)
+}
