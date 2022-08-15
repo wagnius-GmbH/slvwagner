@@ -25,7 +25,8 @@ The cross product of two vectors is the perpendicular vector to the plane spanne
 }
 \examples{
 math_cross_product(c(1,0,0), c(0,1,0))
-
+math_dot_product(c(1,0),c(0,1))
+math_dot_product(c(1,0),c(-1,0))
 }
 \seealso{
 <math_dot_product>

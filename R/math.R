@@ -701,7 +701,8 @@ math_dot_product <- function (x, y)
 #' A scalar or vector of length the number of columns of x and y.
 #' @examples
 #' math_cross_product(c(1,0,0), c(0,1,0))
-#'
+#' math_dot_product(c(1,0),c(0,1))
+#' math_dot_product(c(1,0),c(-1,0))
 #' @export
 
 math_cross_product <- function (x, y)
