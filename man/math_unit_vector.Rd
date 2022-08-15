@@ -30,7 +30,4 @@ math_unit_vector(c(1,2,3))
 \author{
 Florian Wagner
 \email{florian.wagner@wagnius.ch}
-
-Florian Wagner
-\email{florian.wagner@wagnius.ch}
 }

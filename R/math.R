@@ -653,7 +653,6 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
 #' @description 'dot' or 'scalar' product of vectors or pairwise columns of matrices.
 #' @details Returns the 'dot' or 'scalar' product of vectors or columns of matrices. Two vectors must be of same length, two matrices must be of the same size.
 #' If x and y are column or row vectors, their dot product will be computed as if they were simple vectors.
-#' @details
 #' @param x Vector or a Matrix of vectors
 #' @param y Vector or a Matrix of vectors
 #' @author Florian Wagner

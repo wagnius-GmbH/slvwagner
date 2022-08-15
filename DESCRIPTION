@@ -3,14 +3,14 @@ Type: Package
 Title: All stuff that I`m missing
 Version: 0.5.0
 Author: Florian Wagner
-Depends: R (>= 4.1.0)
+Depends: R (>= 4.2.0)
 Maintainer: Florian Wagner <florian.wagner@wagnius.ch>
 Description: All stuff I am using a lot so I do not want to rewrite it everytime.
     Alles was ich schon einmal vermisst habe in R.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
     slvwagner,
