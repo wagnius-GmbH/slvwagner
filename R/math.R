@@ -660,8 +660,8 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
 #' @returns
 #' Vector with length of dth dimension
 #' @examples
-#' math_dot_product(c(1,0,0),c(0.1,5,0),d = NULL)
-#' math_dot_product(c(0.1,5,0),c(1,0,0),d = NULL)
+#' math_dot_product(c(1,0,0),c(0.1,5,0))
+#' math_dot_product(c(1,0),c(0,1))
 #' sqrt(math_dot_product(c(1,1,1), c(1,1,1)))  #=> 1.732051
 #' @export
 

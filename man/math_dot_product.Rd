@@ -22,8 +22,8 @@ Returns the 'dot' or 'scalar' product of vectors or columns of matrices. Two vec
 If x and y are column or row vectors, their dot product will be computed as if they were simple vectors.
 }
 \examples{
-math_dot_product(c(1,0,0),c(0.1,5,0),d = NULL)
-math_dot_product(c(0.1,5,0),c(1,0,0),d = NULL)
+math_dot_product(c(1,0,0),c(0.1,5,0))
+math_dot_product(c(1,0),c(0,1))
 sqrt(math_dot_product(c(1,1,1), c(1,1,1)))  #=> 1.732051
 }
 \author{
