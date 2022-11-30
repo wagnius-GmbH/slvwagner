@@ -22,6 +22,7 @@ library(slvwagner)
 # Package slvwagner 
 This inclueds all stuff that I am missing.
 Das ist mein erster Versuch einen Vignette zu erzeugen.  
+Yes
 
 
 
