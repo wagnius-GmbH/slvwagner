@@ -1,16 +1,17 @@
-#######################################
-#' Calculate unit vector
+###################################################################
+#' Center Signal around zero (AC cupling)
 #'
 #' @name signal_center
-#' @description centre data point around zero, that the range of the vector \code{x} is +/- the same value.
+#' @description centre data point around zero, that the range(\code{x}) is +/- the same value.
 #' @param x vector
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns centred vector \code{x}
 #' @examples
-#' rnorm(100,mean = -0.5)|>signal_center()
+#' x <- rnorm(100,mean = -0.5)
+#' plot(x)
+#' signal_center(x)|>plot()
 #' @export
-
 
 signal_center <- function (x)
 {

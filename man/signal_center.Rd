@@ -2,7 +2,7 @@
 % Please edit documentation in R/singal.R
 \name{signal_center}
 \alias{signal_center}
-\title{Calculate unit vector}
+\title{Center Signal around zero (AC cupling)}
 \usage{
 signal_center(x)
 }
@@ -13,10 +13,12 @@ signal_center(x)
 centred vector \code{x}
 }
 \description{
-centre data point around zero, that the range of the vector \code{x} is +/- the same value.
+centre data point around zero, that the range(\code{x}) is +/- the same value.
 }
 \examples{
-rnorm(100,mean = -0.5)|>signal_center()
+x <- rnorm(100,mean = -0.5)
+plot(x)
+signal_center(x)|>plot()
 }
 \author{
 Florian Wagner

@@ -69,16 +69,17 @@ r_is.defined <- function(sym) {
 #' @param text character vector
 #' @param fg foreground colour, defaults to white
 #' @param bg background colour, defaults to transparent
-#' @export
 #' @examples
 #' print(r_colourise("Red", "red"))
 #' cat(r_colourise("Red", "red"), "\n")
 #' cat(r_colourise("White on red", "white", "red"), "\n")
+#' @export
+
 r_colourise <- function(text, fg = "black", bg = NULL) {
   term <- Sys.getenv()["TERM"]
   colour_terms <- c("xterm-color","xterm-256color", "screen", "screen-256color")
 
-  if(rcmd_running() || !any(term %in% colour_terms, na.rm = TRUE)) {
+  if(r_cmd_running() || !any(term %in% colour_terms, na.rm = TRUE)) {
     return(text)
   }
 
@@ -126,7 +127,7 @@ r_colourise <- function(text, fg = "black", bg = NULL) {
   "light gray" = "47"
 )
 
-rcmd_running <- function() {
+r_cmd_running <- function() {
   nchar(Sys.getenv('R_TESTS')) != 0
 }
 
