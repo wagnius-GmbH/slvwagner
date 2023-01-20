@@ -20,6 +20,7 @@
 #' @param features list of vectors (features) or data frame
 #' @param binwidth number to define the bin width, binwidth = 1
 #' @param ratio number to define how many more data points as bins are generated, ratio = 5
+#' @param times_sd min and maximum value returned from mean of all supplied data points \code{features}|>unlist()|>sd()
 #' @return returns tibble with coordinates x, y and feature name
 #' @examples
 #' library(tidyverse)
@@ -51,7 +52,7 @@
 #'
 #' @export
 
-plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
+plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5, times_sd = 3) {
   # check data type
   if(is.data.frame(features)|| is.list(features) & !is.null(features)){
     # change df to list
@@ -63,7 +64,7 @@ plot_gausOverlayData <- function(features, binwidth = 1, ratio = 5) {
     }
     data <- unlist(features)
     #bins <- seq(floor(min(data,na.rm=T)),ceiling(max(data,na.rm=T)),binwidth/ratio)
-    bins <- seq(floor(mean(data,na.rm=T)-5*sd(data,na.rm=T)),ceiling(mean(data,na.rm=T)+5*sd(data,na.rm=T)),binwidth/ratio)
+    bins <- seq(floor(mean(data,na.rm=T)-times_sd*sd(data,na.rm=T)),ceiling(mean(data,na.rm=T)+times_sd*sd(data,na.rm=T)),binwidth/ratio)
     l_gaus <- list()
     for(i in 1:length(features)){
       hist <- hist(features[[i]], breaks = bins, plot = FALSE)#, main = paste(levels(df$Messungen)[i]))

@@ -4,7 +4,7 @@
 \alias{plot_gausOverlayData}
 \title{Get normal distributed overlay for faceted histogram}
 \usage{
-plot_gausOverlayData(features, binwidth = 1, ratio = 5)
+plot_gausOverlayData(features, binwidth = 1, ratio = 5, times_sd = 3)
 }
 \arguments{
 \item{features}{list of vectors (features) or data frame}
@@ -12,6 +12,8 @@ plot_gausOverlayData(features, binwidth = 1, ratio = 5)
 \item{binwidth}{number to define the bin width, binwidth = 1}
 
 \item{ratio}{number to define how many more data points as bins are generated, ratio = 5}
+
+\item{times_sd}{min and maximum value returned from mean of all supplied data points \code{features}|>unlist()|>sd()}
 }
 \value{
 returns tibble with coordinates x, y and feature name
