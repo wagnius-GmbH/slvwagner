@@ -9,11 +9,11 @@ plot_gausOverlayData(features, binwidth = 1, ratio = 5, times_sd = 3)
 \arguments{
 \item{features}{list of vectors (features) or data frame}
 
-\item{binwidth}{number to define the bin width, binwidth = 1}
+\item{binwidth}{variable to define the bin width for the histogram, binwidth = 1}
 
-\item{ratio}{number to define how many more data points as bins are generated, ratio = 5}
+\item{ratio}{variable to define how many more data points than bins are generated (resolution), ratio = 5}
 
-\item{times_sd}{min and maximum value returned from mean of all supplied data points \code{features}|>unlist()|>sd()}
+\item{times_sd}{value range calculated by mean +/- \code{times_sd} of all supplied data points.}
 }
 \value{
 returns tibble with coordinates x, y and feature name

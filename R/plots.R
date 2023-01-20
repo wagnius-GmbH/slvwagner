@@ -18,9 +18,9 @@
 #' To be able to generate a faceted plot the bin width is important to set equal in the ggplot call
 #' ggplot()+geom_histogram(aes(...),binwidth = 1). Check the examples for further information.
 #' @param features list of vectors (features) or data frame
-#' @param binwidth number to define the bin width, binwidth = 1
-#' @param ratio number to define how many more data points as bins are generated, ratio = 5
-#' @param times_sd min and maximum value returned from mean of all supplied data points \code{features}|>unlist()|>sd()
+#' @param binwidth variable to define the bin width for the histogram, binwidth = 1
+#' @param ratio variable to define how many more data points than bins are generated (resolution), ratio = 5
+#' @param times_sd  value range calculated by mean +/- \code{times_sd} of all supplied data points.
 #' @return returns tibble with coordinates x, y and feature name
 #' @examples
 #' library(tidyverse)
