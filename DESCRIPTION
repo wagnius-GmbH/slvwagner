@@ -6,7 +6,7 @@ Author: Florian Wagner
 Depends: R (>= 4.2.0)
 Maintainer: Florian Wagner <florian.wagner@wagnius.ch>
 Description: All stuff I am using a lot so I do not want to rewrite it everytime.
-    Alles was ich schon einmal vermisst habe in R.
+    Alles was ich schon einmal vermisst habe und nicht immmer wieder schreiben möchte.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -20,6 +20,7 @@ Suggests:
     ggforce,
     Ryacas,
     tidyverse,
+    stringi,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
