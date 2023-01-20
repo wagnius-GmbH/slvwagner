@@ -29,5 +29,7 @@ utils::globalVariables(c("tibble",
                          "C",
                          "dnorm",
                          "sd",
-                         "B"
+                         "B",
+                         "significant_digits",
+                         "times_sd"
                          ))

@@ -8,3 +8,10 @@ test_that("signal_center",{
   c_range = range(x)|>abs()
   expect_equal(c_range[1],c_range[2])
 })
+
+test_that("r_signif",{
+  test <- c(25,signif(rnorm(10),3))
+  expect_equal(format(test, format = "g", digits = 3), r_signif(test))
+  expect_equal(format(test, format = "g", digits = 5), r_signif(test,5))
+
+})
