@@ -526,7 +526,7 @@ math_unit_vector <- function(x){
 #'                           8,-5,
 #'                           1,-3),
 #'                           nrow = 5, byrow = TRUE)
-#' l_list <- math_conic_section_from_5points(section_points, nb = 60)
+#' l_list <- math_conic_section_from_5points(section_points, nb = 20)
 #' l_list
 #' l_list$df|>plot(asp = 1)
 #' abline(a = l_list$lf_a_b[1,2], b = l_list$lf_a_b[1,1])
@@ -626,7 +626,7 @@ math_conic_section_from_5points <- function(section_points, nb = 10){
         m <- M_eigen$vectors[2,]/M_eigen$vectors[1,]
         lf <- matrix(c(m, center[2]-m*center[1]),nrow = 2, byrow = F)|>
           as.data.frame()|>
-          setNames(c("intercept","slope"))
+          setNames(c("slope","intercept"))
 
         phi <- ifelse((lambda[1]-P["A",])<=(lambda[2]-P["C",]),
                       atan(m[2]),

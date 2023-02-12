@@ -34,7 +34,7 @@ section_points <- matrix(c(-1,3,
                           8,-5,
                           1,-3),
                           nrow = 5, byrow = TRUE)
-l_list <- math_conic_section_from_5points(section_points, nb = 60)
+l_list <- math_conic_section_from_5points(section_points, nb = 20)
 l_list
 l_list$df|>plot(asp = 1)
 abline(a = l_list$lf_a_b[1,2], b = l_list$lf_a_b[1,1])
