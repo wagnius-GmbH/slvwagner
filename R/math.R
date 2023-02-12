@@ -652,7 +652,8 @@ math_conic_section_from_5points <- function(section_points, nb = 10){
       return(list(type = "circle"))
       }
   }else {
-    return(list(type = "degenerate"))
+    return(list(type = "degenerate"),
+           "Input: Section points" = section_points)
   }
 }
 
