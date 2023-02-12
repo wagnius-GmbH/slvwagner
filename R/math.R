@@ -509,10 +509,12 @@ math_unit_vector <- function(x){
 #' @description calculate conic section from five given points \code{section_points}
 #' @details \eqn{Ax^2+Bxy+Cy^2+Dx+Ey+F=0}
 #' @details <https://en.wikipedia.org/wiki/Conic_section>
-#' @details The algorithme determins fist the type of conic section. If the concic section results in an ellipse or a circle the function returns useful values
-#' such as the center of and data frame of coordinates. For an ellipse the semi \eqn{b} and major axis \eqn{a} of the ellipse. F
+#' @details The algorithm determines fist the type of conic section. If the conic section results in an ellipse or a circle the function returns useful values
+#' such as the equation and the centre of the ellipse.
+#' Additionally you can define the number of points returned \code{nb} to visualize the ellipse or the circle.
+#' For an ellipse additionally the semi \eqn{b} and major axis \eqn{a} of the ellipse are provided.
 #' @param section_points matrix of section points, one point per row.
-#' @param nb number of points returned
+#' @param nb number of points returned to plot the ellipse
 #' @author Florian Wagner \email{florian.wagner@wagnius.ch}
 #' @returns
 #' list
@@ -527,8 +529,8 @@ math_unit_vector <- function(x){
 #' l_list <- math_conic_section_from_5points(section_points)
 #' l_list
 #' l_list$df|>plot(asp = 1)
-#' abline(a = l_list$lf[1,2], b = l_list$lf[1,1])
-#' abline(a = l_list$lf[2,2], b = l_list$lf[2,1])
+#' abline(a = l_list$lf_a_b[1,2], b = l_list$lf_a_b[1,1])
+#' abline(a = l_list$lf_a_b[2,2], b = l_list$lf_a_b[2,1])
 #' points(x = l_list$center[1],y = l_list$center[2])
 #'
 #' # hyperbola
@@ -541,12 +543,12 @@ math_unit_vector <- function(x){
 #'    math_conic_section_from_5points()
 #'
 #' #circle
-#' matrix(c(-1,0,
+#' (matrix(c(-1,0,
 #'          0,1,
 #'          1,0,
 #'          0,-1,
 #'          cos(pi/4),sin(pi/4)),
-#'          nrow = 5, byrow = TRUE)|>
+#'          nrow = 5, byrow = TRUE)+0.2)|>
 #'    math_conic_section_from_5points()
 #'
 #' #parabola
@@ -560,7 +562,7 @@ math_unit_vector <- function(x){
 #' @export
 
 
-math_conic_section_from_5points <- function(section_points, nb = 100){
+math_conic_section_from_5points <- function(section_points, nb = 10){
   A <- matrix(c(section_points[1,1]^2,section_points[1,1]*section_points[1,2],section_points[1,2]^2,section_points[1,1],section_points[1,2],
                 section_points[2,1]^2,section_points[2,1]*section_points[2,2],section_points[2,2]^2,section_points[2,1],section_points[2,2],
                 section_points[3,1]^2,section_points[3,1]*section_points[3,2],section_points[3,2]^2,section_points[3,1],section_points[3,2],
@@ -590,12 +592,16 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
 
   if(det(M0) != 0){
     if(det(M)<0) {
-      writeLines("hyperbola")
-      return(list(type = "hyperbola"))
+      #writeLines("hyperbola")
+      return(list(type = "hyperbola",
+                  EQ = paste0(P["A",],"*x^2+",P["B",],"*x*y+",P["C",],"*y^2+",P["D",],"*x+",P["E",],"*y+",P["F",],"=0"),
+                  "section points" = section_points))
       }
     else if (det(M)==0) {
-      writeLines("parabola")
-      return(list(type = "parabola"))
+      #writeLines("parabola")
+      return(list(type = "parabola",
+                  EQ = paste0(P["A",],"*x^2+",P["B",],"*x*y+",P["C",],"*y^2+",P["D",],"*x+",P["E",],"*y+",P["F",],"=0"),
+                  "section points" = section_points))
       }
     else if (det(M)>0) { #either ellipse or circle
 
@@ -606,15 +612,17 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
       t <- seq(0, 2*pi, len = nb)
 
       if(a==b){
-        writeLines("circle")
+        #writeLines("circle")
         df <- data.frame(x = a*cos(t) - b*sin(t),
                          y = a*cos(t) + b*sin(t))
         return(list(type = "circle",
+                    EQ = paste0(P["A",],"*x^2+",P["B",],"*x*y+",P["C",],"*y^2+",P["D",],"*x+",P["E",],"*y+",P["F",],"=0"),
                     df = df,
-                    center = center)
+                    center = center,
+                    "Input: Section points" = section_points)
                )
       }else{
-        writeLines("ellipse")
+        #writeLines("ellipse")
         m <- M_eigen$vectors[2,]/M_eigen$vectors[1,]
         lf <- matrix(c(m, center[2]-m*center[1]),nrow = 2, byrow = F)|>
           as.data.frame()|>
@@ -629,12 +637,14 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
                          y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi))
 
         return(list(type = "ellipse",
+                    EQ = paste0(P["A",],"*x^2+",P["B",],"*x*y+",P["C",],"*y^2+",P["D",],"*x+",P["E",],"*y+",P["F",],"=0"),
                     df = df,
                     center = center,
                     a = a,
                     b = b,
                     phi = phi,
-                    lf = lf)
+                    lf_a_b = lf,
+                    "Input: Section points" = section_points)
                )
         }
     }

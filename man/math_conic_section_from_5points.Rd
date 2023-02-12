@@ -4,12 +4,12 @@
 \alias{math_conic_section_from_5points}
 \title{Conic section from five point}
 \usage{
-math_conic_section_from_5points(section_points, nb = 100)
+math_conic_section_from_5points(section_points, nb = 10)
 }
 \arguments{
 \item{section_points}{matrix of section points, one point per row.}
 
-\item{nb}{number of points returned}
+\item{nb}{number of points returned to plot the ellipse}
 }
 \value{
 list
@@ -22,8 +22,10 @@ calculate conic section from five given points \code{section_points}
 
 \url{https://en.wikipedia.org/wiki/Conic_section}
 
-The algorithme determins fist the type of conic section. If the concic section results in an ellipse or a circle the function returns useful values
-such as the center of and data frame of coordinates. For an ellipse the semi \eqn{b} and major axis \eqn{a} of the ellipse. F
+The algorithm determines fist the type of conic section. If the conic section results in an ellipse or a circle the function returns useful values
+such as the equation and the centre of the ellipse.
+Additionally you can define the number of points returned \code{nb} to visualize the ellipse or the circle.
+For an ellipse additionally the semi \eqn{b} and major axis \eqn{a} of the ellipse are provided.
 }
 \examples{
 section_points <- matrix(c(-1,3,
@@ -35,8 +37,8 @@ section_points <- matrix(c(-1,3,
 l_list <- math_conic_section_from_5points(section_points)
 l_list
 l_list$df|>plot(asp = 1)
-abline(a = l_list$lf[1,2], b = l_list$lf[1,1])
-abline(a = l_list$lf[2,2], b = l_list$lf[2,1])
+abline(a = l_list$lf_a_b[1,2], b = l_list$lf_a_b[1,1])
+abline(a = l_list$lf_a_b[2,2], b = l_list$lf_a_b[2,1])
 points(x = l_list$center[1],y = l_list$center[2])
 
 # hyperbola
@@ -49,12 +51,12 @@ matrix(c(-2,1,
    math_conic_section_from_5points()
 
 #circle
-matrix(c(-1,0,
+(matrix(c(-1,0,
          0,1,
          1,0,
          0,-1,
          cos(pi/4),sin(pi/4)),
-         nrow = 5, byrow = TRUE)|>
+         nrow = 5, byrow = TRUE)+0.2)|>
    math_conic_section_from_5points()
 
 #parabola
