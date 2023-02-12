@@ -510,7 +510,7 @@ math_unit_vector <- function(x){
 #' @details \eqn{Ax^2+Bxy+Cy^2+Dx+Ey+F=0}
 #' @details <https://en.wikipedia.org/wiki/Conic_section>
 #' @details The algorithm determines fist the type of conic section. If the conic section results in an ellipse or a circle the function returns useful values
-#' such as the equation and the centre of the ellipse.
+#' such as the equation and the centre of the ellipse or circle.
 #' Additionally you can define the number of points returned \code{nb} to visualize the ellipse or the circle.
 #' For an ellipse additionally the semi \eqn{b} and major axis \eqn{a} of the ellipse are provided.
 #' @param section_points matrix of section points, one point per row.
@@ -526,7 +526,7 @@ math_unit_vector <- function(x){
 #'                           8,-5,
 #'                           1,-3),
 #'                           nrow = 5, byrow = TRUE)
-#' l_list <- math_conic_section_from_5points(section_points)
+#' l_list <- math_conic_section_from_5points(section_points, nb = 60)
 #' l_list
 #' l_list$df|>plot(asp = 1)
 #' abline(a = l_list$lf_a_b[1,2], b = l_list$lf_a_b[1,1])
@@ -634,10 +634,13 @@ math_conic_section_from_5points <- function(section_points, nb = 10){
         names(phi)<-NULL
 
         df <- data.frame(x = center[1] + a*cos(t)*cos(phi) - b*sin(t)*sin(phi),
-                         y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi))
+                         y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi)
+                         )
 
         return(list(type = "ellipse",
                     EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
+                    "x(t)" = paste0(center[1],"+", a, "*cos(t)*cos(",phi,") - ",b,"*sin(t)*sin(",phi,")"),
+                    "y(y)" = paste0(center[2],"+ ",a, "*cos(t)*sin(",phi,") + ",b,"*sin(t)*cos(",phi,")"),
                     df = df,
                     center = center,
                     a = a,
@@ -649,11 +652,20 @@ math_conic_section_from_5points <- function(section_points, nb = 10){
         }
     }
     else if (A == C & B == 0) {
-      return(list(type = "circle"))
+      #writeLines("circle")
+      df <- data.frame(x = a*cos(t) - b*sin(t),
+                       y = a*cos(t) + b*sin(t))
+      return(list(type = "circle",
+                  EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
+                  df = df,
+                  center = center,
+                  "Input: Section points" = section_points)
+      )
       }
   }else {
-    return(list(type = "degenerate"),
-           "Input: Section points" = section_points)
+    return(list(type = "degenerate",
+                "Input: Section points" = section_points)
+           )
   }
 }
 

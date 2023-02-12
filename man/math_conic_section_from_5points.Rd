@@ -23,7 +23,7 @@ calculate conic section from five given points \code{section_points}
 \url{https://en.wikipedia.org/wiki/Conic_section}
 
 The algorithm determines fist the type of conic section. If the conic section results in an ellipse or a circle the function returns useful values
-such as the equation and the centre of the ellipse.
+such as the equation and the centre of the ellipse or circle.
 Additionally you can define the number of points returned \code{nb} to visualize the ellipse or the circle.
 For an ellipse additionally the semi \eqn{b} and major axis \eqn{a} of the ellipse are provided.
 }
@@ -34,7 +34,7 @@ section_points <- matrix(c(-1,3,
                           8,-5,
                           1,-3),
                           nrow = 5, byrow = TRUE)
-l_list <- math_conic_section_from_5points(section_points)
+l_list <- math_conic_section_from_5points(section_points, nb = 60)
 l_list
 l_list$df|>plot(asp = 1)
 abline(a = l_list$lf_a_b[1,2], b = l_list$lf_a_b[1,1])
