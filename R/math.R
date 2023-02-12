@@ -594,13 +594,13 @@ math_conic_section_from_5points <- function(section_points, nb = 10){
     if(det(M)<0) {
       #writeLines("hyperbola")
       return(list(type = "hyperbola",
-                  EQ = paste0(P["A",],"*x^2+",P["B",],"*x*y+",P["C",],"*y^2+",P["D",],"*x+",P["E",],"*y+",P["F",],"=0"),
+                  EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
                   "section points" = section_points))
       }
     else if (det(M)==0) {
       #writeLines("parabola")
       return(list(type = "parabola",
-                  EQ = paste0(P["A",],"*x^2+",P["B",],"*x*y+",P["C",],"*y^2+",P["D",],"*x+",P["E",],"*y+",P["F",],"=0"),
+                  EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
                   "section points" = section_points))
       }
     else if (det(M)>0) { #either ellipse or circle
@@ -616,7 +616,7 @@ math_conic_section_from_5points <- function(section_points, nb = 10){
         df <- data.frame(x = a*cos(t) - b*sin(t),
                          y = a*cos(t) + b*sin(t))
         return(list(type = "circle",
-                    EQ = paste0(P["A",],"*x^2+",P["B",],"*x*y+",P["C",],"*y^2+",P["D",],"*x+",P["E",],"*y+",P["F",],"=0"),
+                    EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
                     df = df,
                     center = center,
                     "Input: Section points" = section_points)
@@ -637,7 +637,7 @@ math_conic_section_from_5points <- function(section_points, nb = 10){
                          y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi))
 
         return(list(type = "ellipse",
-                    EQ = paste0(P["A",],"*x^2+",P["B",],"*x*y+",P["C",],"*y^2+",P["D",],"*x+",P["E",],"*y+",P["F",],"=0"),
+                    EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
                     df = df,
                     center = center,
                     a = a,
