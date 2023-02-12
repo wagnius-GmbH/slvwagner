@@ -51,13 +51,15 @@ matrix(c(-2,1,
    math_conic_section_from_5points()
 
 #circle
-(matrix(c(-1,0,
+l_list <- (matrix(c(-1,0,
          0,1,
          1,0,
          0,-1,
          cos(pi/4),sin(pi/4)),
          nrow = 5, byrow = TRUE)+0.2)|>
-   math_conic_section_from_5points()
+   math_conic_section_from_5points(nb = 20)
+l_list
+l_list$df|>plot(asp=1)
 
 #parabola
 matrix(c(-2,3,

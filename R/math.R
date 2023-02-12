@@ -543,13 +543,15 @@ math_unit_vector <- function(x){
 #'    math_conic_section_from_5points()
 #'
 #' #circle
-#' (matrix(c(-1,0,
+#' l_list <- (matrix(c(-1,0,
 #'          0,1,
 #'          1,0,
 #'          0,-1,
 #'          cos(pi/4),sin(pi/4)),
 #'          nrow = 5, byrow = TRUE)+0.2)|>
-#'    math_conic_section_from_5points()
+#'    math_conic_section_from_5points(nb = 20)
+#' l_list
+#' l_list$df|>plot(asp=1)
 #'
 #' #parabola
 #' matrix(c(-2,3,
@@ -613,10 +615,13 @@ math_conic_section_from_5points <- function(section_points, nb = 10){
 
       if(a==b){
         #writeLines("circle")
-        df <- data.frame(x = a*cos(t) - b*sin(t),
-                         y = a*cos(t) + b*sin(t))
+        df <- data.frame(x = (a*cos(t)) + center[1],
+                         y = (a*sin(t)) + center[2]
+                         )
         return(list(type = "circle",
                     EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
+                    "x(t)" = paste0(a,"*cos(t) +",center[1]),
+                    "y(t)" = paste0(a,"*sin(t) +",center[2]),
                     df = df,
                     center = center,
                     "Input: Section points" = section_points)
@@ -653,10 +658,13 @@ math_conic_section_from_5points <- function(section_points, nb = 10){
     }
     else if (A == C & B == 0) {
       #writeLines("circle")
-      df <- data.frame(x = a*cos(t) - b*sin(t),
-                       y = a*cos(t) + b*sin(t))
+      df <- data.frame(x = (a*cos(t)) + center[1],
+                       y = (a*sin(t)) + center[2]
+      )
       return(list(type = "circle",
                   EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
+                  "x(t)" = paste0(a,"*cos(t) +",center[1]),
+                  "y(t)" = paste0(a,"*sin(t) +",center[2]),
                   df = df,
                   center = center,
                   "Input: Section points" = section_points)
