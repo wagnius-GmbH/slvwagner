@@ -173,18 +173,42 @@ math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Rad
   return(t(apply(slerp, 1, function(i) i + cp)))
 }
 
+#######################################
+#' 2d rotation matrix
+#'
+#' @name math_rot_matrix2d
+#' @description
+#' Calculates a 2D rotation matrix for a given \code{angle}. The rotation will be applied by the right hand rule.
+#' @details
+#' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
+#' @param  angle in radiant
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Returns 3D rotation matrix for given axis (unit vector) and angle.
+#' @examples
+#' math_rot_matrix2d(30/180*pi)
+#' @export
+
+### Rotations_matrix
+math_rot_matrix2d <- function(angle){
+  matrix(c(cos(angle),-sin(angle),
+           sin(angle),cos(angle)),
+         nrow = 2, byrow = T)
+}
+
 
 #######################################
 #' 3d rotation matrix
 #'
 #' @name math_rot_matrix3d
 #' @description
-#' Calculates a 3D rotation matrix for a given rotation axis \code{x}(unitvector) and an angle  \code{angle}. The rotation will be appied by the right hand rule.
+#' Calculates a 3D rotation matrix for a given rotation axis \code{x}(unit vector) and an angle  \code{angle}. The rotation will be applied by the right hand rule.
 #' @details
 #' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
 #' \url{https://de.wikipedia.org/wiki/Drehmatrix#Drehmatrizen_des_Raumes_%E2%84%9D%C2%B3}
 #' @param  x unit vector c(x1,x2,x3) defining the rotation axis
-#' @param  angle angel in radiant
+#' @param  angle in radiant
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
