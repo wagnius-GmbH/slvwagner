@@ -1,5 +1,5 @@
 ###################################################################
-#' Create fast dictionary
+#' Initialize fast dictionary environment
 #'
 #' @name dict_init_hash
 #' @description The reason for using dictionaries in the first place is performance.
@@ -10,7 +10,7 @@
 #' @param lenght lenght of the environment, e.g. nrow(data_frame)
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
-#' @returns Environment that can be uses as fast dictionary
+#' @returns A initialized environment that can be assigned with keys and values
 #' @examples
 #' df <- data.frame(key   = c("ch","se","de","it"),
 #'                  value = c(41L,46L,49L,39L))
@@ -36,7 +36,7 @@ dict_init_hash <- function(lenght)
 #' environments with the option hash = TRUE
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
-#' @returns Environment hash that can be used as fast dictionary.
+#' @returns Environment hashed, that can be used as fast dictionary.
 #' @examples
 #' df <- data.frame(key   = c("ch","se","de","it"),
 #'                  value = c(41L,46L,49L,39L))
@@ -59,7 +59,7 @@ dict_assign_hash <- Vectorize(assign, vectorize.args = c("x", "value"))
 #' environments with the option hash = TRUE
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
-#' @returns Environment hash that can be used as fast dictionary.
+#' @returns named vector
 #' @examples
 #' df <- data.frame(key   = c("ch","se","de","it"),
 #'                  value = c(41L,46L,49L,39L))
@@ -80,12 +80,12 @@ dict_get_hash <- Vectorize(get, vectorize.args = "x")
 #' environments with the option hash = TRUE
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
-#' @returns Vector
+#' @returns Vector True/False
 #' @examples
 #' df <- data.frame(key   = c("ch","se","de","it"),
 #'                  value = c(41L,46L,49L,39L))
 #' hash <- dict_from_data.frame(df)
-#' dict_exists_hash(c("ch", "it"), hash)
+#' dict_exists_hash(c("ch", "it", "xx"), hash)
 #' @export
 dict_exists_hash <- Vectorize(exists, vectorize.args = "x")
 

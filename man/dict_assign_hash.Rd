@@ -14,7 +14,7 @@ dict_assign_hash(
 )
 }
 \value{
-Environment hash that can be used as fast dictionary.
+Environment hashed, that can be used as fast dictionary.
 }
 \description{
 The reason for using dictionaries in the first place is performance.

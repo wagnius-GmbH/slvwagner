@@ -14,7 +14,7 @@ dict_exists_hash(
 )
 }
 \value{
-Vector
+Vector True/False
 }
 \description{
 The reason for using dictionaries in the first place is performance.
@@ -27,7 +27,7 @@ environments with the option hash = TRUE
 df <- data.frame(key   = c("ch","se","de","it"),
                  value = c(41L,46L,49L,39L))
 hash <- dict_from_data.frame(df)
-dict_exists_hash(c("ch", "it"), hash)
+dict_exists_hash(c("ch", "it", "xx"), hash)
 }
 \author{
 Florian Wagner

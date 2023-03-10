@@ -13,7 +13,7 @@ dict_get_hash(
 )
 }
 \value{
-Environment hash that can be used as fast dictionary.
+named vector
 }
 \description{
 The reason for using dictionaries in the first place is performance.

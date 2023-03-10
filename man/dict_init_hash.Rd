@@ -2,7 +2,7 @@
 % Please edit documentation in R/dict.R
 \name{dict_init_hash}
 \alias{dict_init_hash}
-\title{Create fast dictionary}
+\title{Initialize fast dictionary environment}
 \usage{
 dict_init_hash(lenght)
 }
@@ -10,7 +10,7 @@ dict_init_hash(lenght)
 \item{lenght}{lenght of the environment, e.g. nrow(data_frame)}
 }
 \value{
-Environment that can be uses as fast dictionary
+A initialized environment that can be assigned with keys and values
 }
 \description{
 The reason for using dictionaries in the first place is performance.
