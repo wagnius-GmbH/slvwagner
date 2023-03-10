@@ -4,14 +4,7 @@
 \alias{dict_exists_hash}
 \title{Check if key is in dictionary}
 \usage{
-dict_exists_hash(
-  x,
-  where = -1,
-  envir = if (missing(frame)) as.environment(where) else sys.frame(frame),
-  frame,
-  mode = "any",
-  inherits = TRUE
-)
+1. Argument:vector to check, 2. Argument: The Environment.
 }
 \value{
 Vector True/False

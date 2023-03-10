@@ -4,13 +4,7 @@
 \alias{dict_get_hash}
 \title{Get values from fast dictionary}
 \usage{
-dict_get_hash(
-  x,
-  pos = -1L,
-  envir = as.environment(pos),
-  mode = "any",
-  inherits = TRUE
-)
+1. Argument:vector to check, 2. Argument: The Environment.
 }
 \value{
 named vector

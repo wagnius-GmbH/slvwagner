@@ -29,6 +29,7 @@ dict_init_hash <- function(lenght)
 #' Assigne key and value to fast dictionary
 #'
 #' @name dict_assign_hash
+#' @usage 1. Argument:vector key. 2. Argument: vector value, 3. Argument:The Environment.
 #' @description The reason for using dictionaries in the first place is performance.
 #' Although it is correct that you can use named vectors and lists for the task,
 #' the issue is that they are becoming quite slow and memory hungry with more data.
@@ -52,6 +53,7 @@ dict_assign_hash <- Vectorize(assign, vectorize.args = c("x", "value"))
 #' Get values from fast dictionary
 #'
 #' @name dict_get_hash
+#' @usage 1. Argument:vector to check, 2. Argument: The Environment.
 #' @description The reason for using dictionaries in the first place is performance.
 #' Although it is correct that you can use named vectors and lists for the task,
 #' the issue is that they are becoming quite slow and memory hungry with more data.
@@ -73,6 +75,7 @@ dict_get_hash <- Vectorize(get, vectorize.args = "x")
 #' Check if key is in dictionary
 #'
 #' @name dict_exists_hash
+#' @usage 1. Argument:vector to check, 2. Argument: The Environment.
 #' @description The reason for using dictionaries in the first place is performance.
 #' Although it is correct that you can use named vectors and lists for the task,
 #' the issue is that they are becoming quite slow and memory hungry with more data.
@@ -112,6 +115,7 @@ dict_exists_hash <- Vectorize(exists, vectorize.args = "x")
 
 dict_from_data.frame <- function(df)
   {
+  df <- as.data.frame(df)
   # initialize hash
   hash = new.env(hash = TRUE, parent = emptyenv(), size = nrow(df))
   # assign values to keys
