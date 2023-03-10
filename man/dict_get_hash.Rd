@@ -2,7 +2,7 @@
 % Please edit documentation in R/dict.R
 \name{dict_get_hash}
 \alias{dict_get_hash}
-\title{Create a fast dictionary in R from data frame with key and value}
+\title{Get values from fast dictionary}
 \usage{
 dict_get_hash(
   x,
@@ -26,7 +26,7 @@ environments with the option hash = TRUE
 df <- data.frame(key   = c("ch","se","de","it"),
                  value = c(41L,46L,49L,39L))
 # initialize hash
-hash <- dict_from_key_value(df)
+hash <- dict_from_data.frame(df)
 dict_get_hash(c("ch", "it"), hash)
 }
 \author{

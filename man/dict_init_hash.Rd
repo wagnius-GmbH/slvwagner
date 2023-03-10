@@ -2,7 +2,7 @@
 % Please edit documentation in R/dict.R
 \name{dict_init_hash}
 \alias{dict_init_hash}
-\title{Initialise Hash Enviroment}
+\title{Create fast dictionary}
 \usage{
 dict_init_hash(lenght)
 }

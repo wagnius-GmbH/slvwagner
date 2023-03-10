@@ -2,7 +2,7 @@
 % Please edit documentation in R/dict.R
 \name{dict_assign_hash}
 \alias{dict_assign_hash}
-\title{Create a fast dictionary in R from with key and value}
+\title{Assigne key and value to fast dictionary}
 \usage{
 dict_assign_hash(
   x,

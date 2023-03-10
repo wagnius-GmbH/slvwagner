@@ -1,5 +1,5 @@
 ###################################################################
-#' Initialise Hash Enviroment
+#' Create fast dictionary
 #'
 #' @name dict_init_hash
 #' @description The reason for using dictionaries in the first place is performance.
@@ -26,7 +26,7 @@ dict_init_hash <- function(lenght)
 }
 
 ###################################################################
-#' Create a fast dictionary in R from with key and value
+#' Assigne key and value to fast dictionary
 #'
 #' @name dict_assign_hash
 #' @description The reason for using dictionaries in the first place is performance.
@@ -49,7 +49,7 @@ dict_init_hash <- function(lenght)
 dict_assign_hash <- Vectorize(assign, vectorize.args = c("x", "value"))
 
 ###################################################################
-#' Create a fast dictionary in R from data frame with key and value
+#' Get values from fast dictionary
 #'
 #' @name dict_get_hash
 #' @description The reason for using dictionaries in the first place is performance.
@@ -64,13 +64,13 @@ dict_assign_hash <- Vectorize(assign, vectorize.args = c("x", "value"))
 #' df <- data.frame(key   = c("ch","se","de","it"),
 #'                  value = c(41L,46L,49L,39L))
 #' # initialize hash
-#' hash <- dict_from_key_value(df)
+#' hash <- dict_from_data.frame(df)
 #' dict_get_hash(c("ch", "it"), hash)
 #' @export
 dict_get_hash <- Vectorize(get, vectorize.args = "x")
 
 ###################################################################
-#' Create a fast dictionary in R from data frame with key and value
+#' Check if key is in dictionary
 #'
 #' @name dict_exists_hash
 #' @description The reason for using dictionaries in the first place is performance.
@@ -80,20 +80,20 @@ dict_get_hash <- Vectorize(get, vectorize.args = "x")
 #' environments with the option hash = TRUE
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
-#' @returns Environment hash that can be used as fast dictionary.
+#' @returns Vector
 #' @examples
 #' df <- data.frame(key   = c("ch","se","de","it"),
 #'                  value = c(41L,46L,49L,39L))
-#' hash <- dict_from_key_value(df)
+#' hash <- dict_from_data.frame(df)
 #' dict_exists_hash(c("ch", "it"), hash)
 #' @export
 dict_exists_hash <- Vectorize(exists, vectorize.args = "x")
 
 
 ###################################################################
-#' Create a fast dictionary in R from data frame with key and value
+#' Create a fast dictionary from data frame
 #'
-#' @name dict_from_key_value
+#' @name dict_from_data.frame
 #' @description The reason for using dictionaries in the first place is performance.
 #' Although it is correct that you can use named vectors and lists for the task,
 #' the issue is that they are becoming quite slow and memory hungry with more data.
@@ -106,11 +106,11 @@ dict_exists_hash <- Vectorize(exists, vectorize.args = "x")
 #' @examples
 #' df <- data.frame(key   = c("ch","se","de","it"),
 #'                  value = c(41L,46L,49L,39L))
-#' hash <- dict_from_key_value(df)
+#' hash <- dict_from_data.frame(df)
 #' dict_get_hash(c("ch", "it"), hash)
 #' @export
 
-dict_from_key_value <- function(df)
+dict_from_data.frame <- function(df)
   {
   # initialize hash
   hash = new.env(hash = TRUE, parent = emptyenv(), size = nrow(df))

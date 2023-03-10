@@ -2,7 +2,7 @@
 % Please edit documentation in R/dict.R
 \name{dict_exists_hash}
 \alias{dict_exists_hash}
-\title{Create a fast dictionary in R from data frame with key and value}
+\title{Check if key is in dictionary}
 \usage{
 dict_exists_hash(
   x,
@@ -14,7 +14,7 @@ dict_exists_hash(
 )
 }
 \value{
-Environment hash that can be used as fast dictionary.
+Vector
 }
 \description{
 The reason for using dictionaries in the first place is performance.
@@ -26,7 +26,7 @@ environments with the option hash = TRUE
 \examples{
 df <- data.frame(key   = c("ch","se","de","it"),
                  value = c(41L,46L,49L,39L))
-hash <- dict_from_key_value(df)
+hash <- dict_from_data.frame(df)
 dict_exists_hash(c("ch", "it"), hash)
 }
 \author{
