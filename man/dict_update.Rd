@@ -2,7 +2,7 @@
 % Please edit documentation in R/dict.R
 \name{dict_update}
 \alias{dict_update}
-\title{Update fast dictionary}
+\title{Update key/value pairs of fast dictionary}
 \usage{
 This function can update, add key/value pairs. Check the examples for more information.
 }
