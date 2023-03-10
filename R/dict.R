@@ -125,7 +125,7 @@ dict_from_data.frame <- function(df)
 
 
 ###################################################################
-#' Update fast dictionary
+#' Update key/value pairs of fast dictionary
 #'
 #' @name dict_update
 #' @usage This function can update, add key/value pairs. Check the examples for more information.
@@ -160,5 +160,4 @@ dict_update <- function(df, dict)
   }
   return(dict)
 }
-
 
