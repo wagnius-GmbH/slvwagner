@@ -102,7 +102,7 @@ dict_exists_key <- Vectorize(exists, vectorize.args = "x")
 #' the issue is that they are becoming quite slow and memory hungry with more data.
 #' Yet what many people don't know is that R has indeed an inbuilt dictionary data structure
 #' environments with the option hash = TRUE
-#' @param df data frame with column 1 = key and column 2 = value
+#' @param df data frame with 1. column = key (must be character), 2. column = value (any atomic type)
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns Environment hash that can be used as fast dictionary.
@@ -116,11 +116,19 @@ dict_exists_key <- Vectorize(exists, vectorize.args = "x")
 dict_from_data.frame <- function(df)
   {
   df <- as.data.frame(df)
-  # initialize hash
-  hash = new.env(hash = TRUE, parent = emptyenv(), size = nrow(df))
-  # assign values to keys
-  dict_assign_key_values(df[,1], df[,2], hash)
-  return(hash)
+  if(!is.character(df[1,1])){
+    c("dict_from_data.frame:\nkey is not character in column 1 of the dataframe argument")|>
+      r_colourise(fg = "Red")|>
+      writeLines()
+    return(NULL)
+  }else
+    {
+    # initialize hash
+    hash = new.env(hash = TRUE, parent = emptyenv(), size = nrow(df))
+    # assign values to keys
+    dict_assign_key_values(df[,1], df[,2], hash)
+    return(hash)
+    }
   }
 
 

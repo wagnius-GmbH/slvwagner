@@ -7,7 +7,7 @@
 dict_from_data.frame(df)
 }
 \arguments{
-\item{df}{data frame with column 1 = key and column 2 = value}
+\item{df}{data frame with 1. column = key (must be character), 2. column = value (any atomic type)}
 }
 \value{
 Environment hash that can be used as fast dictionary.
