@@ -20,4 +20,5 @@ The R compatible file Path will be returned
 # Copy file path to the cliboard and call the function.
 utils::writeClipboard("C:\\\\Windows")
 r_path()
+r_path("C:\\\\Windows")
 }

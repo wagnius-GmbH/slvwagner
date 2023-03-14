@@ -9,14 +9,14 @@
 #' @examples # Copy file path to the cliboard and call the function.
 #' utils::writeClipboard("C:\\Windows")
 #' r_path()
+#' r_path("C:\\Windows")
 #' @export
 
 r_path <- function(path = "clipboard") {
-  y <- if (path == "clipboard") {
-    utils::readClipboard()
+  if (path == "clipboard") {
+    y <- utils::readClipboard()
   } else {
-    cat("Please enter the path:\n\n")
-    readline()
+    y <- path
   }
   x <- chartr("\\", "/", y)
   utils::writeClipboard(x)
@@ -34,12 +34,18 @@ r_path <- function(path = "clipboard") {
 #' r_win_path(tempdir())
 #' @export
 
-r_win_path <- function(x){
-   x <- chartr("\\", "/", x)
-   utils::writeClipboard(x)
-   return(x)
+r_win_path <- function(path = "clipboard"){
+  if (path == "clipboard") {
+    y <- utils::readClipboard()
+  }else{
+    y <- path
+  }
+  x <- chartr("/","\\", y)
+  utils::writeClipboard(x)
+  return(x)
 }
 
+# r_path("C:\\src\\repos\\slvwagner")
 
 ###################################################################
 #' Check if variable is defined in R`s global environment.
