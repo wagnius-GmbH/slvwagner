@@ -28,7 +28,7 @@ r_path <- function(path = "clipboard") {
 #'
 #' @name r_win_path
 #' @description Function to convert R path to windows compatible path.
-#' @param  x R path character vector
+#' @param  path R path character vector
 #' @return Windows compatible character vector
 #' @examples
 #' r_win_path(tempdir())

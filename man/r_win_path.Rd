@@ -7,7 +7,7 @@
 r_win_path(path = "clipboard")
 }
 \arguments{
-\item{x}{R path character vector}
+\item{path}{R path character vector}
 }
 \value{
 Windows compatible character vector
