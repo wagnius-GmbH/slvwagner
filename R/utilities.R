@@ -73,15 +73,15 @@ r_is.defined <- function(sym) {
 #' purple, red, white, yellow
 #'
 #' @param text character vector
-#' @param fg foreground colour, defaults to white
-#' @param bg background colour, defaults to transparent
+#' @param color foreground colour, defaults to white
 #' @examples
 #' # copy paste the code to the terminal
 #' print(r_colourise("text", "red"))
-#' r_colourise("text", "red")|>writeLines()
+#' r_colourise("text", "red")
+#' c("this", "text","is colored")|>r_colourise(c("red","green","yellow"))
 #' @export
 
-r_colourise <- function(text, fg = "black", bg = NULL) {
+r_colourise <- function(text, color = "black") {
   term <- Sys.getenv()["TERM"]
   colour_terms <- c("xterm-color","xterm-256color", "screen", "screen-256color")
 
@@ -92,18 +92,17 @@ r_colourise <- function(text, fg = "black", bg = NULL) {
   col_escape <- function(col) {
     paste0("\033[", col, "m")
   }
-
-  col <- .fg_colours[tolower(fg)]
-  if (!is.null(bg)) {
-    col <- paste0(col, .bg_colours[tolower(bg)], sep = ";")
-  }
-
+  # stings to concatenate
+  col <- .color_colours[tolower(color)]
   init <- col_escape(col)
   reset <- col_escape("0")
-  paste0(init, text, reset)
+
+  # execute it
+  paste0(init, text, reset)|>
+    writeLines()
 }
 
-.fg_colours <- c(
+.color_colours <- c(
   "black" = "0;30",
   "blue" = "0;34",
   "green" = "0;32",
@@ -122,16 +121,6 @@ r_colourise <- function(text, fg = "black", bg = NULL) {
   "white" = "1;37"
 )
 
-.bg_colours <- c(
-  "black" = "40",
-  "red" = "41",
-  "green" = "42",
-  "brown" = "43",
-  "blue" = "44",
-  "purple" = "45",
-  "cyan" = "46",
-  "light gray" = "47"
-)
 
 r_cmd_running <- function() {
   nchar(Sys.getenv('R_TESTS')) != 0
