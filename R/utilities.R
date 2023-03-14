@@ -45,8 +45,6 @@ r_win_path <- function(path = "clipboard"){
   return(x)
 }
 
-# r_path("C:\\src\\repos\\slvwagner")
-
 ###################################################################
 #' Check if variable is defined in R`s global environment.
 #'
