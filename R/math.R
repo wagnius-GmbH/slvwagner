@@ -173,18 +173,42 @@ math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Rad
   return(t(apply(slerp, 1, function(i) i + cp)))
 }
 
+#######################################
+#' 2d rotation matrix
+#'
+#' @name math_rot_matrix2d
+#' @description
+#' Calculates a 2D rotation matrix for a given \code{angle}. The rotation will be applied by the right hand rule.
+#' @details
+#' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
+#' @param  angle in radiant
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Returns 3D rotation matrix for given axis (unit vector) and angle.
+#' @examples
+#' math_rot_matrix2d(30/180*pi)
+#' @export
+
+### Rotations_matrix
+math_rot_matrix2d <- function(angle){
+  matrix(c(cos(angle),-sin(angle),
+           sin(angle),cos(angle)),
+         nrow = 2, byrow = T)
+}
+
 
 #######################################
 #' 3d rotation matrix
 #'
 #' @name math_rot_matrix3d
 #' @description
-#' Calculates a 3D rotation matrix for a given rotation axis \code{x}(unitvector) and an angle  \code{angle}. The rotation will be appied by the right hand rule.
+#' Calculates a 3D rotation matrix for a given rotation axis \code{x}(unit vector) and an angle  \code{angle}. The rotation will be applied by the right hand rule.
 #' @details
 #' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
 #' \url{https://de.wikipedia.org/wiki/Drehmatrix#Drehmatrizen_des_Raumes_%E2%84%9D%C2%B3}
 #' @param  x unit vector c(x1,x2,x3) defining the rotation axis
-#' @param  angle angel in radiant
+#' @param  angle in radiant
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
@@ -509,10 +533,12 @@ math_unit_vector <- function(x){
 #' @description calculate conic section from five given points \code{section_points}
 #' @details \eqn{Ax^2+Bxy+Cy^2+Dx+Ey+F=0}
 #' @details <https://en.wikipedia.org/wiki/Conic_section>
-#' @details The algorithme determins fist the type of conic section. If the concic section results in an ellipse or a circle the function returns useful values
-#' such as the center of and data frame of coordinates. For an ellipse the semi \eqn{b} and major axis \eqn{a} of the ellipse. F
+#' @details The algorithm determines fist the type of conic section. If the conic section results in an ellipse or a circle the function returns useful values
+#' such as the equation and the centre of the ellipse or circle.
+#' Additionally you can define the number of points returned \code{nb} to visualize the ellipse or the circle.
+#' For an ellipse additionally the semi \eqn{b} and major axis \eqn{a} of the ellipse are provided.
 #' @param section_points matrix of section points, one point per row.
-#' @param nb number of points returned
+#' @param nb number of points returned to plot the ellipse
 #' @author Florian Wagner \email{florian.wagner@wagnius.ch}
 #' @returns
 #' list
@@ -524,11 +550,11 @@ math_unit_vector <- function(x){
 #'                           8,-5,
 #'                           1,-3),
 #'                           nrow = 5, byrow = TRUE)
-#' l_list <- math_conic_section_from_5points(section_points)
+#' l_list <- math_conic_section_from_5points(section_points, nb = 20)
 #' l_list
 #' l_list$df|>plot(asp = 1)
-#' abline(a = l_list$lf[1,2], b = l_list$lf[1,1])
-#' abline(a = l_list$lf[2,2], b = l_list$lf[2,1])
+#' abline(a = l_list$lf_a_b[1,2], b = l_list$lf_a_b[1,1])
+#' abline(a = l_list$lf_a_b[2,2], b = l_list$lf_a_b[2,1])
 #' points(x = l_list$center[1],y = l_list$center[2])
 #'
 #' # hyperbola
@@ -541,13 +567,15 @@ math_unit_vector <- function(x){
 #'    math_conic_section_from_5points()
 #'
 #' #circle
-#' matrix(c(-1,0,
+#' l_list <- (matrix(c(-1,0,
 #'          0,1,
 #'          1,0,
 #'          0,-1,
 #'          cos(pi/4),sin(pi/4)),
-#'          nrow = 5, byrow = TRUE)|>
-#'    math_conic_section_from_5points()
+#'          nrow = 5, byrow = TRUE)+0.2)|>
+#'    math_conic_section_from_5points(nb = 20)
+#' l_list
+#' l_list$df|>plot(asp=1)
 #'
 #' #parabola
 #' matrix(c(-2,3,
@@ -560,7 +588,7 @@ math_unit_vector <- function(x){
 #' @export
 
 
-math_conic_section_from_5points <- function(section_points, nb = 100){
+math_conic_section_from_5points <- function(section_points, nb = 10){
   A <- matrix(c(section_points[1,1]^2,section_points[1,1]*section_points[1,2],section_points[1,2]^2,section_points[1,1],section_points[1,2],
                 section_points[2,1]^2,section_points[2,1]*section_points[2,2],section_points[2,2]^2,section_points[2,1],section_points[2,2],
                 section_points[3,1]^2,section_points[3,1]*section_points[3,2],section_points[3,2]^2,section_points[3,1],section_points[3,2],
@@ -590,12 +618,16 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
 
   if(det(M0) != 0){
     if(det(M)<0) {
-      writeLines("hyperbola")
-      return(list(type = "hyperbola"))
+      #writeLines("hyperbola")
+      return(list(type = "hyperbola",
+                  EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
+                  "section points" = section_points))
       }
     else if (det(M)==0) {
-      writeLines("parabola")
-      return(list(type = "parabola"))
+      #writeLines("parabola")
+      return(list(type = "parabola",
+                  EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
+                  "section points" = section_points))
       }
     else if (det(M)>0) { #either ellipse or circle
 
@@ -606,19 +638,24 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
       t <- seq(0, 2*pi, len = nb)
 
       if(a==b){
-        writeLines("circle")
-        df <- data.frame(x = a*cos(t) - b*sin(t),
-                         y = a*cos(t) + b*sin(t))
+        #writeLines("circle")
+        df <- data.frame(x = (a*cos(t)) + center[1],
+                         y = (a*sin(t)) + center[2]
+                         )
         return(list(type = "circle",
+                    EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
+                    "x(t)" = paste0(a,"*cos(t) +",center[1]),
+                    "y(t)" = paste0(a,"*sin(t) +",center[2]),
                     df = df,
-                    center = center)
+                    center = center,
+                    "Input: Section points" = section_points)
                )
       }else{
-        writeLines("ellipse")
+        #writeLines("ellipse")
         m <- M_eigen$vectors[2,]/M_eigen$vectors[1,]
         lf <- matrix(c(m, center[2]-m*center[1]),nrow = 2, byrow = F)|>
           as.data.frame()|>
-          setNames(c("intercept","slope"))
+          setNames(c("slope","intercept"))
 
         phi <- ifelse((lambda[1]-P["A",])<=(lambda[2]-P["C",]),
                       atan(m[2]),
@@ -626,23 +663,41 @@ math_conic_section_from_5points <- function(section_points, nb = 100){
         names(phi)<-NULL
 
         df <- data.frame(x = center[1] + a*cos(t)*cos(phi) - b*sin(t)*sin(phi),
-                         y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi))
+                         y = center[2] + a*cos(t)*sin(phi) + b*sin(t)*cos(phi)
+                         )
 
         return(list(type = "ellipse",
+                    EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
+                    "x(t)" = paste0(center[1],"+", a, "*cos(t)*cos(",phi,") - ",b,"*sin(t)*sin(",phi,")"),
+                    "y(y)" = paste0(center[2],"+ ",a, "*cos(t)*sin(",phi,") + ",b,"*sin(t)*cos(",phi,")"),
                     df = df,
                     center = center,
                     a = a,
                     b = b,
                     phi = phi,
-                    lf = lf)
+                    lf_a_b = lf,
+                    "Input: Section points" = section_points)
                )
         }
     }
     else if (A == C & B == 0) {
-      return(list(type = "circle"))
+      #writeLines("circle")
+      df <- data.frame(x = (a*cos(t)) + center[1],
+                       y = (a*sin(t)) + center[2]
+      )
+      return(list(type = "circle",
+                  EQ = paste0(P["A",],"*x^2+(",P["B",],")*x*y+(",P["C",],")*y^2+(",P["D",],")*x+(",P["E",],")*y+(",P["F",],")=0"),
+                  "x(t)" = paste0(a,"*cos(t) +",center[1]),
+                  "y(t)" = paste0(a,"*sin(t) +",center[2]),
+                  df = df,
+                  center = center,
+                  "Input: Section points" = section_points)
+      )
       }
   }else {
-    return(list(type = "degenerate"))
+    return(list(type = "degenerate",
+                "Input: Section points" = section_points)
+           )
   }
 }
 
