@@ -9,13 +9,13 @@ math_rot_matrix3d(x, angle)
 \arguments{
 \item{x}{unit vector c(x1,x2,x3) defining the rotation axis}
 
-\item{angle}{angel in radiant}
+\item{angle}{in radiant}
 }
 \value{
 Returns 3D rotation matrix for given axis (unit vector) and angle.
 }
 \description{
-Calculates a 3D rotation matrix for a given rotation axis \code{x}(unitvector) and an angle  \code{angle}. The rotation will be appied by the right hand rule.
+Calculates a 3D rotation matrix for a given rotation axis \code{x}(unit vector) and an angle  \code{angle}. The rotation will be applied by the right hand rule.
 }
 \details{
 \url{https://en.wikipedia.org/wiki/Rotation_matrix}
