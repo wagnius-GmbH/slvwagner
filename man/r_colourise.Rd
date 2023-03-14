@@ -4,14 +4,12 @@
 \alias{r_colourise}
 \title{Colourise text for display in the terminal.}
 \usage{
-r_colourise(text, fg = "black", bg = NULL)
+r_colourise(text, color = "black")
 }
 \arguments{
 \item{text}{character vector}
 
-\item{fg}{foreground colour, defaults to white}
-
-\item{bg}{background colour, defaults to transparent}
+\item{color}{foreground colour, defaults to white}
 }
 \description{
 If R is not currently running in a system that supports terminal colours
@@ -23,7 +21,8 @@ blue, light cyan, light gray, light green, light purple, light red,
 purple, red, white, yellow
 }
 \examples{
-print(r_colourise("Red", "red"))
-cat(r_colourise("Red", "red"), "\n")
-cat(r_colourise("White on red", "white", "red"), "\n")
+# copy paste the code to the terminal
+print(r_colourise("text", "red"))
+r_colourise("text", "red")
+c("this", "text","is colored")|>r_colourise(c("red","green","yellow"))
 }

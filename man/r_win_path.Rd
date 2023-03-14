@@ -4,10 +4,10 @@
 \alias{r_win_path}
 \title{Convert R path to windows compatible path}
 \usage{
-r_win_path(x)
+r_win_path(path = "clipboard")
 }
 \arguments{
-\item{x}{R path character vector}
+\item{path}{R path character vector}
 }
 \value{
 Windows compatible character vector
