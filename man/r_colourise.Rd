@@ -23,7 +23,7 @@ blue, light cyan, light gray, light green, light purple, light red,
 purple, red, white, yellow
 }
 \examples{
-print(r_colourise("Red", "red"))
-cat(r_colourise("Red", "red"), "\n")
-cat(r_colourise("White on red", "white", "red"), "\n")
+# copy paste the code to the terminal
+print(r_colourise("text", "red"))
+r_colourise("text", "red")|>writeLines()
 }

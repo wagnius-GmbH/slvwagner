@@ -76,9 +76,9 @@ r_is.defined <- function(sym) {
 #' @param fg foreground colour, defaults to white
 #' @param bg background colour, defaults to transparent
 #' @examples
-#' print(r_colourise("Red", "red"))
-#' cat(r_colourise("Red", "red"), "\n")
-#' cat(r_colourise("White on red", "white", "red"), "\n")
+#' # copy paste the code to the terminal
+#' print(r_colourise("text", "red"))
+#' r_colourise("text", "red")|>writeLines()
 #' @export
 
 r_colourise <- function(text, fg = "black", bg = NULL) {
@@ -111,13 +111,13 @@ r_colourise <- function(text, fg = "black", bg = NULL) {
   "red" = "0;31",
   "purple" = "0;35",
   "brown" = "0;33",
-  "light gray" = "0;37",
-  "dark gray" = "1;30",
-  "light blue" = "1;34",
-  "light green" = "1;32",
-  "light cyan" = "1;36",
-  "light red" = "1;31",
-  "light purple" = "1;35",
+  "lightgray" = "0;37",
+  "darkgray" = "1;30",
+  "lightblue" = "1;34",
+  "lightgreen" = "1;32",
+  "lightcyan" = "1;36",
+  "pink" = "1;31",
+  "purple" = "1;35",
   "yellow" = "1;33",
   "white" = "1;37"
 )
