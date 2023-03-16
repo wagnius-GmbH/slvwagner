@@ -118,7 +118,7 @@ dict_from_data.frame <- function(df)
   df <- as.data.frame(df)
   if(!is.character(df[1,1])){
     c("dict_from_data.frame:\nkey is not character in column 1 of the dataframe argument")|>
-      r_colourise(fg = "Red")|>
+      r_colourise("Red")|>
       writeLines()
     return(NULL)
   }else
