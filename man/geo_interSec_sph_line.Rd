@@ -2,7 +2,7 @@
 % Please edit documentation in R/geometry.R
 \name{geo_interSec_sph_line}
 \alias{geo_interSec_sph_line}
-\title{Computes intersection point of a line and a sphere surface.}
+\title{Intersection point(s) of line and sphere.}
 \usage{
 geo_interSec_sph_line(p, u, m, r)
 }
@@ -19,7 +19,10 @@ geo_interSec_sph_line(p, u, m, r)
 list of intersecting point(s) (x,y,z) and parameter \code{t}. Parameter \code{t} is giving the distance from \code{p} to \code{m}
 }
 \description{
-Computes intersection point of a line and a sphere surface.
+Intersection point(s) of line and sphere.
+}
+\details{
+Computes the intersecting point of a line and the surface of a spear.
 }
 \examples{
 p <- c(x = 1, y = -2, z = 3)

@@ -1,7 +1,8 @@
 #######################################
-#' Computes intersection point of a line and a sphere surface.
+#' Intersection point(s) of line and sphere.
 #'
 #' @name geo_interSec_sph_line
+#' @details Computes the intersecting point of a line and the surface of a spear.
 #' @param p position vector for the line  c(x = ,y = ,z = )
 #' @param u direction vector for the line c(x = ,y = ,z = )
 #' @param m position vector of the centre of the sphere c(x = ,y = ,z = )
