@@ -1,7 +1,7 @@
 #######################################
 #' linear function with parameter mx+b
 #'
-#' @name math_lf
+#' @name lf
 #' @description
 #' linear function with parameter slope and intercept.
 #' @details \eqn{f(x)=mx+b}
@@ -12,18 +12,18 @@
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
-#' math_lf(-12:10,0.8,3.265)
-#' plot(math_lf(-12:10,0.8,3.265))
+#' lf(-12:10,0.8,3.265)
+#' plot(lf(-12:10,0.8,3.265))
 #' @export
 
-math_lf <- function(x,m,b){
+lf <- function(x,m,b){
   return(m*x+b)
 }
 
 #######################################
 #' linear function but with data frame instead of single parameters
 #'
-#' @name math_lf_df_mb
+#' @name lf_df_mb
 #' @description
 #' Calculate y for different linear functions.
 #' The parameters slope and intercept shall be provided by data frame with columns "slope" and "intercept".
@@ -35,20 +35,20 @@ math_lf <- function(x,m,b){
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples df <- data.frame(slope = 0.5, intercept = 1)
-#' math_lf_df_mb(0:10,df)
+#' lf_df_mb(0:10,df)
 #' df <- data.frame(slope = c(0.5,1,-0.5), intercept = c(1,-10,0))
-#' math_lf_df_mb(10,df)
+#' lf_df_mb(10,df)
 #' @export
 
 
-math_lf_df_mb <- function(x,df_mb){
+lf_df_mb <- function(x,df_mb){
   x*df_mb[,"slope"]+df_mb[,"intercept"]
 }
 
 #######################################
 #' Find linear function perpendicular to linear function through given point
 #'
-#' @name math_lf_perpendicular
+#' @name lf_perpendicular
 #' @description
 #' Find linear function`s perpendicular to supplied linear function through given point \code{x}.
 #' @param x point vector
@@ -57,20 +57,20 @@ math_lf_df_mb <- function(x,df_mb){
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
-#' math_lf_perpendicular(x = c(2,-9),
+#' lf_perpendicular(x = c(2,-9),
 #'                       data.frame(slope = -3,intercept = 5))
 #' @export
 
-math_lf_perpendicular <- function(x,lf){ #x point(s) lf(intercept, slope)
+lf_perpendicular <- function(x,lf){ #x point(s) lf(intercept, slope)
   s=-1/lf$slope
-  i =x[2]-(math_lf_rev_slope(lf$slope)*x[1])
+  i =x[2]-(lf_rev_slope(lf$slope)*x[1])
   return(data.frame(slope = s,intercept = i))
 }
 
 #######################################
 #' find perpendicular slope to linear function
 #'
-#' @name math_lf_rev_slope
+#' @name lf_rev_slope
 #' @description
 #' find perpendicular slope to linear function
 #' @param slope The slop or m of linear function f(x)= mx+b
@@ -78,17 +78,17 @@ math_lf_perpendicular <- function(x,lf){ #x point(s) lf(intercept, slope)
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
-#' math_lf_rev_slope(c(0.1,-0.89))
+#' lf_rev_slope(c(0.1,-0.89))
 #' @export
 #senkrechte zu einer geraden
-math_lf_rev_slope <- function(slope){#
+lf_rev_slope <- function(slope){#
   return(-1/slope)
 }
 
 #######################################
 #' linear function from 2 points
 #'
-#' @name math_lf_fromPoints
+#' @name lf_fromPoints
 #' @description
 #' get linear fuction from 2 points x1 and x2
 #' @param x matrix or data frame
@@ -102,9 +102,9 @@ math_lf_rev_slope <- function(slope){#
 #' y <- data.frame(p1 = c(x = -1, y = -5),
 #'                 p2 = c(x =  3, y =  3))
 #'
-#' math_lf_fromPoints(x)
+#' lf_fromPoints(x)
 #'
-#' result <- math_lf_fromPoints(y)
+#' result <- lf_fromPoints(y)
 #'
 #' library(tidyverse)
 #' ggplot(as_tibble(t(y)),aes(x,y))+
@@ -114,7 +114,7 @@ math_lf_rev_slope <- function(slope){#
 #' geom_vline(xintercept = 0)
 #' @export
 
-math_lf_fromPoints <- function (x){
+lf_fromPoints <- function (x){
   delta <- (x[,1]-x[,2])
   m <- delta[2]/delta[1]
   b <- x[2,1]-m*x[1,1]
@@ -124,7 +124,7 @@ math_lf_fromPoints <- function (x){
 #######################################
 #' Intersection point from two linear functions
 #'
-#' @name math_lf_intersect
+#' @name lf_intersect
 #' @description
 #' Calculate intersecting point(s) from two linear function \code{x} and linear function \code{y}.
 #'
@@ -140,19 +140,19 @@ math_lf_fromPoints <- function (x){
 #' @examples
 #' x <- data.frame(slope = 2.3, intercept = -2)
 #' y <- data.frame(slope = 2.3, intercept = -2)
-#' math_lf_intersect(x,y)
+#' lf_intersect(x,y)
 #' y <- y|>
 #'   rbind(data.frame(slope = 1.25, intercept = 2))
-#' math_lf_intersect(y)
+#' lf_intersect(y)
 #' names(y)<-c("slope","intercept")
-#' math_lf_intersect(y)
-#' math_lf_intersect(data.frame(slope = c(0.2,-1),intercept = c(2,3)))
-#' math_lf_intersect(matrix(c(0.2,-1,2,3),ncol = 2))
+#' lf_intersect(y)
+#' lf_intersect(data.frame(slope = c(0.2,-1),intercept = c(2,3)))
+#' lf_intersect(matrix(c(0.2,-1,2,3),ncol = 2))
 #' y <- matrix(c(0.2,-1,2,3),ncol = 2)
-#' math_lf_intersect(y)
+#' lf_intersect(y)
 #' @export
 
-math_lf_intersect <- function(x,...){
+lf_intersect <- function(x,...){
   if(missing(...)){
     if(nrow(x)>1){
       if(is.null(names(x))){

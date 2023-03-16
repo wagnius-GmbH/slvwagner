@@ -109,7 +109,6 @@ geo_interSec_sph_line <- function(p, u, m, r) {
 #'    geo_conic_section_from_5points()
 #' @export
 
-
 geo_conic_section_from_5points <- function(section_points, nb = 10){
   A <- matrix(c(section_points[1,1]^2,section_points[1,1]*section_points[1,2],section_points[1,2]^2,section_points[1,1],section_points[1,2],
                 section_points[2,1]^2,section_points[2,1]*section_points[2,2],section_points[2,2]^2,section_points[2,1],section_points[2,2],
