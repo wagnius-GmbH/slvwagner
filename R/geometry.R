@@ -226,7 +226,7 @@ geo_conic_section_from_5points <- function(section_points, nb = 10){
 #######################################
 #' slerp  by 3 points and a given radius.
 #'
-#' @name math_slerp
+#' @name geo_slerp
 #' @description
 #' Radius interpolation by 3 points and a given radius.
 #' The Radius interpolation will be calculated using the \code{cp} = common center point and the vector \code{x1} and \code{x2}.
@@ -247,7 +247,7 @@ geo_conic_section_from_5points <- function(section_points, nb = 10){
 #'                             x2 = c(-20,10,2),
 #'                             cp = c(10,-10,10))))
 #'
-#' m <- math_slerp(R  =10,
+#' m <- geo_slerp(R  =10,
 #'                 x1 = p["x1",],
 #'                 x2 = p["x2",],
 #'                 cp = p["cp",],
@@ -263,7 +263,7 @@ geo_conic_section_from_5points <- function(section_points, nb = 10){
 #'                    ))
 #' @export
 
-math_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radius, Punkteanzahl
+geo_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radius, Punkteanzahl
   #(cp => Ortsvektor)
   #Verschieben des Koordinatensystems: Neuer Ursprung cp
   sp <- x1-cp #Stützvektor
