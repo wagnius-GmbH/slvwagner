@@ -22,8 +22,8 @@ Functions start with math
 -   lf Linear function helpers 
 -   math_ Quadrant and angle finder for 2D vector
 -   math_ cross and dot vector product
--   magnitued of vector 
--   inbetween angel of two vectors
+-   Magnitude of vector 
+-   In-between angel of two vectors
 
 #### Math in yacas 
 Functions start with math_
