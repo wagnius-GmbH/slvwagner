@@ -803,3 +803,62 @@ math_cross_product <- function (x, y)
   }
   return(xxy)
 }
+
+
+
+#######################################
+#' Computes intersection point of a line and a sphere surface.
+#'
+#' @name math_interSec_sph_line
+#' @param p position vector for the line  c(x = ,y = ,z = )
+#' @param u direction vector for the line c(x = ,y = ,z = )
+#' @param m position vector of the centre of the sphere c(x = ,y = ,z = )
+#' @param r radius of the sphere
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @seealso <math_dot_product>
+#' @returns
+#' list of intersecting point(s) (x,y,z) and parameter \code{t}. Parameter \code{t} is giving the distance from \code{p} to \code{m}
+#' @examples
+#' p <- c(x = 1, y = -2, z = 3)
+#' u <- c(x = 1, y = 0, z = 1)
+#' m <- c(1,-2,4)
+#' r <- 1
+#' math_interSec_sph_line(p, u, m, r)
+#' @export
+
+math_interSec_sph_line <- function(p, u, m, r) {
+  ## Formula
+  t_expression <-expression(c((sqrt(((p[1]-m[1])*u[1]+u[1]*(p[1]-m[1])+(p[2]-m[2])*u[2]+u[2]*(p[2]-m[2])+(p[3]-m[3])*u[3]+u[3]*
+                                       (p[3]-m[3]))^2-4*(u[1]^2+u[2]^2+u[3]^2)*((p[1]-m[1])^2+(p[2]-m[2])^2+(p[3]-m[3])^2-r^2))-
+                                 ((p[1]-m[1])*u[1]+u[1]*(p[1]-m[1])+(p[2]-m[2])*u[2]+u[2]*(p[2]-m[2])+(p[3]-m[3])*u[3]+
+                                    u[3] * (p[3] - m[3])))/(2 * (u[1]^2 + u[2]^2 + u[3]^2)),
+                              (-((p[1]-m[1])*u[1]+u[1]*(p[1]-m[1])+(p[2]-m[2])*u[2]+u[2]*(p[2]-m[2])+(p[3]-m[3])*u[3]+u[3]*(p[3]-m[3])+
+                                   sqrt(((p[1]-m[1])*u[1]+u[1]*(p[1]-m[1])+(p[2]-m[2])*u[2]+u[2]*(p[2]-m[2])+(p[3]-m[3])*u[3]+u[3]*
+                                           (p[3]-m[3]))^2-4*(u[1]^2+u[2]^2+u[3]^2)*((p[1]-m[1])^2+(p[2]-m[2])^2+(p[3]-m[3])^2-r^2))))/
+                                (2*(u[1]^2 + u[2]^2 + u[3]^2))))
+
+  # Parameter t
+  c_result <- eval(t_expression, list(p, u, m, r))
+  names(c_result) <- rep("",length(c_result))
+
+  # Intersection points
+  l_Result <- list()
+  for (ii in 1:length(c_result)) {
+    l_Result[[ii]] <- c(p + (c_result[ii] * u),t = c_result[ii])
+  }
+
+  if(is.na(c_result)|>sum() == 0){
+    return(l_Result)
+  }else{
+    print(warning())
+    return(NULL)
+  }
+}
+
+p <- c(x = 1, y = -2, z = 3)
+u <- c(x = 1, y = 0, z = 1)
+m <- c(1,-2,4)
+r <- 1
+
+math_interSec_sph_line(p, u, m, r)
