@@ -42,12 +42,12 @@ Functions start with lf_
 - intersection point of two functions
 - linear function from two points
 
-### Utilities
+#### Utilities
 Functions start with r_
 
 -   r_ R utility functions, e.g. windows path to R compatible path
 
-### Fast dictionary in R
+#### Fast dictionary in R
 Function start with dict_
 
 -   Create fast dictionary, convenience functions.
