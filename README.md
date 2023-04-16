@@ -27,7 +27,7 @@ Functions start with math
 -   In-between angel of two vectors
 
 #### Math in yacas 
-Functions start with math_
+Functions start with yac_
 
 -   rotation matrix 2D
 -   rotation matrix 3D
