@@ -31,5 +31,8 @@ utils::globalVariables(c("tibble",
                          "sd",
                          "B",
                          "significant_digits",
-                         "times_sd"
+                         "times_sd",
+                         "as_r",
+                         "y_fn",
+                         "yac_assign"
                          ))

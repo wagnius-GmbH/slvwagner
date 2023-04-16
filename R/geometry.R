@@ -10,7 +10,7 @@
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' list of intersecting point(s) (x,y,z) and parameter \code{t}. Parameter \code{t} is giving the distance from \code{p} to \code{m}
+#' list of intersecting point(s)
 #' @examples
 #' p <- c(x = 1, y = -2, z = 3)
 #' u <- c(x = 1, y = 0, z = 1)
@@ -37,7 +37,7 @@ geo_interSec_sph_line <- function(p, u, m, r) {
   # Intersection points
   l_Result <- list()
   for (ii in 1:length(c_result)) {
-    l_Result[[ii]] <- c(p + (c_result[ii] * u),t = c_result[ii])
+    l_Result[[ii]] <- c(p + (c_result[ii] * u))
   }
 
   if(is.na(c_result)|>sum() == 0){
@@ -289,4 +289,65 @@ geo_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radi
   slerp <- slerp*R
   #Koordinaten um cp (Ortsvektor) verschieben
   return(t(apply(slerp, 1, function(i) i + cp)))
+}
+
+
+#######################################
+#' Convert plane in coordinate form to parameter from
+#'
+#' @name geo_convert_plane_coord_to_param
+#' @description
+#' Get parametric function from a plane coordinate equation.
+#' The function returns a position vector \deqn{\vec p}, and
+#' @details
+#' The coordinate form of the plane is:
+#' \deqn{a x + b y + c z - d = 0}
+#' where \deqn{d = \vec p \cdot \vec n} and \deqn{\vec n = \begin{pmatrix} a \\ b \\ c \end{pmatrix}}
+#' with the parameter \deqn{s},\deqn{t}
+#' The Parameter form of a Plane equation is:
+#' \deqn{\vec x = \vec p + s \cdot \vec u + t \cdot \vec v}
+#' \url{https://de.wikipedia.org/wiki/Ebenengleichung#Normalenform}
+#' \url{https://en.wikipedia.org/wiki/Euclidean_planes_in_three-dimensional_space}
+#' @param  E Plane equation (Ryacas)
+#' @param  axis character vector indentifiying the axis variables  e.g. c("x1","x2","x3")
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' data frame
+#' \deqn{\vec p, \vec u, \vec v, \vec n}
+#' @examples
+#' geo_convert_plane_coord_to_param("10*x+15*y+20*z+50")
+#' geo_convert_plane_coord_to_param("-10*z-15*x+20*y-50")
+#' @export
+
+geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
+  # assign plane to yacas variable
+  Ryacas::yac_assign(E, "e")
+
+  Ryacas::yac_str(paste0("Expand(e,{",paste0(axis,collapse = ","),"})"))
+  x <- Ryacas::ysym(paste0("Coef(e,",axis[1],",1)"))
+  y <- Ryacas::ysym(paste0("Coef(e,",axis[2],",1)"))
+  z <- Ryacas::ysym(paste0("Coef(e,",axis[3],",1)"))
+
+  n <- c(x,y,z)|>Ryacas::as_r()
+  d <- -((E+paste0(-n[1],"*x+",-n[2],"*y+",-n[3],"*z")|>Ryacas::ysym())|>
+           Ryacas::y_fn("Expand"))|>Ryacas::as_r()
+
+  Result <- d/n
+
+  for(ii in 1:length(Result)){
+    if(Result[ii]|>is.infinite()){
+      suppressWarnings(Result[ii] <- 0)
+    }
+  }
+
+  p1 <- c(Result[1],0,0)
+  p2 <- c(0,Result[2],0)
+  p3 <- c(0,0,Result[3])
+
+  u <- p1-p2
+  v <- p2-p3
+
+  p <- (slvwagner::math_betrag(d)/slvwagner::math_betrag(n))*n/slvwagner::math_betrag(n)
+  return(list(p=p,u=u,v=v,n=n)|>as.data.frame())
 }

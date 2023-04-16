@@ -16,7 +16,7 @@ geo_interSec_sph_line(p, u, m, r)
 \item{r}{radius of the sphere}
 }
 \value{
-list of intersecting point(s) (x,y,z) and parameter \code{t}. Parameter \code{t} is giving the distance from \code{p} to \code{m}
+list of intersecting point(s)
 }
 \description{
 Intersection point(s) of line and sphere.
