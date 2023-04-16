@@ -46,6 +46,6 @@ Functions start with lf_
 Functions start with r_
 
 -   r_ R utility functions, e.g. windows path to R compatible path
--   Create fast dictionary, convenient functions.
+-   Create fast dictionary, convenience functions.
 
 
