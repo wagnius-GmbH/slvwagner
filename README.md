@@ -16,7 +16,7 @@ Functions start with geo_
 -   get parameter from a plane equation (coordinate form)
 
 ### Math 
-Functions start with math
+Functions start with math_
 
 -   Transformation from spherical to Cartesian coordinate system and back. 
 -   Rotation Matrix in R and Ryacas (YACAS)
@@ -35,7 +35,7 @@ Functions start with yac_
 -   Intersection plane and line
 
 #### Linear function helper
-Functions start with lf
+Functions start with lf_
 
 - simple linear function 
 - perpendicular to function 
