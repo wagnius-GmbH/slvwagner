@@ -1,7 +1,7 @@
 # slvwagner
 My R library, including all functions I use very often.
 
-Some function need yacas an simbolic solver: 
+Some function need yacas an symbolic solver: 
 http://www.yacas.org/
 
 ## Content
@@ -13,6 +13,7 @@ Functions start with geo_
 -   slerp 
 -   Intersection of sphere and line, 
 -   Intersecting point(s) of plane and line
+-   get parameter from a plane equation (coordinate form)
 
 ### Math 
 Functions start with math
