@@ -318,6 +318,10 @@ geo_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radi
 #' @examples
 #' geo_convert_plane_coord_to_param("10*x+15*y+20*z+50")
 #' geo_convert_plane_coord_to_param("-10*z-15*x+20*y-50")
+#' geo_convert_plane_coord_to_param("-10*z-15*x-50")
+#' geo_convert_plane_coord_to_param("-10*z-50")
+#' geo_convert_plane_coord_to_param("-10*y-50")
+#' geo_convert_plane_coord_to_param("-10*x-50")
 #' @export
 
 geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
@@ -333,13 +337,14 @@ geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
            Ryacas::y_fn("Expand"))|>Ryacas::as_r()
   # Find intercept with the axis
   Result <- d/n
-  # Find infinite values to be replaced by zero
-  # Needed
-  for(ii in 1:length(Result)){
-    if(Result[ii]|>is.infinite()){
-      suppressWarnings(Result[ii] <- 0)
-    }
-  }
+  Result <- ifelse(is.infinite(Result),0,Result)
+  # # Find infinite values to be replaced by zero
+  # # Needed
+  # for(ii in 1:length(Result)){
+  #   if(Result[ii]|>is.infinite()){
+  #     suppressWarnings(Result[ii] <- 0)
+  #   }
+  # }
   # Assign found axis intercept to vector
   p1 <- c(Result[1],0,0)
   p2 <- c(0,Result[2],0)
@@ -349,5 +354,24 @@ geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
   v <- p2-p3
   # compute normal vector pointing to plane (Perpendicular to plane)
   p <- (slvwagner::math_betrag(d)/slvwagner::math_betrag(n))*n/slvwagner::math_betrag(n)
+  # If vector u or v is zero it needs to be replaced be predefined vector
+  if(sum(u)==0 | sum(v)==0 | (slvwagner::math_betrag(u)==slvwagner::math_betrag(v))){
+    print("u or v are zero, so using predefined vector")
+    # plane is perpendicular to x
+    if(p[2]==0 & p[3]==0){
+      u <- c(0,1,1)
+      v <- c(0,-1,1)
+      }
+    # plane is perpendicular to y
+    else if(p[1]==0 & p[3]==0){
+      u <- c(1,0,1)
+      v <- c(-1,0,1)
+    }
+    # plane is perpendicular to z
+    else if(p[1]==0 & p[2]==0){
+      u <- c(1,1,0)
+      v <- c(-1,1,0)
+    }
+  }
   return(list(p=p,u=u,v=v)|>as.data.frame())
 }

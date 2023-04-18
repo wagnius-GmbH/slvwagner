@@ -32,6 +32,10 @@ with the parameter \deqn{s},\deqn{t}
 \examples{
 geo_convert_plane_coord_to_param("10*x+15*y+20*z+50")
 geo_convert_plane_coord_to_param("-10*z-15*x+20*y-50")
+geo_convert_plane_coord_to_param("-10*z-15*x-50")
+geo_convert_plane_coord_to_param("-10*z-50")
+geo_convert_plane_coord_to_param("-10*y-50")
+geo_convert_plane_coord_to_param("-10*x-50")
 }
 \author{
 Florian Wagner
