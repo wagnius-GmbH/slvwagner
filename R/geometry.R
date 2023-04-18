@@ -351,5 +351,3 @@ geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
   p <- (slvwagner::math_betrag(d)/slvwagner::math_betrag(n))*n/slvwagner::math_betrag(n)
   return(list(p=p,u=u,v=v)|>as.data.frame())
 }
-
-E <- "-10*z-15*x+20*y-50"
