@@ -323,31 +323,33 @@ geo_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radi
 geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
   # assign plane to yacas variable
   Ryacas::yac_assign(E, "e")
-
-  Ryacas::yac_str(paste0("Expand(e,{",paste0(axis,collapse = ","),"})"))
+  # get parameters from plane equation
   x <- Ryacas::ysym(paste0("Coef(e,",axis[1],",1)"))
   y <- Ryacas::ysym(paste0("Coef(e,",axis[2],",1)"))
   z <- Ryacas::ysym(paste0("Coef(e,",axis[3],",1)"))
-
+  # get normal vector
   n <- c(x,y,z)|>Ryacas::as_r()
   d <- -((E+paste0(-n[1],"*x+",-n[2],"*y+",-n[3],"*z")|>Ryacas::ysym())|>
            Ryacas::y_fn("Expand"))|>Ryacas::as_r()
-
+  # Find intercept with the axis
   Result <- d/n
-
+  # Find infinite values to be replaced by zero
+  # Needed
   for(ii in 1:length(Result)){
     if(Result[ii]|>is.infinite()){
       suppressWarnings(Result[ii] <- 0)
     }
   }
-
+  # Assign found axis intercept to vector
   p1 <- c(Result[1],0,0)
   p2 <- c(0,Result[2],0)
   p3 <- c(0,0,Result[3])
-
+  # Find orientation vectors
   u <- p1-p2
   v <- p2-p3
   # compute normal vector pointing to plane (Perpendicular to plane)
   p <- (slvwagner::math_betrag(d)/slvwagner::math_betrag(n))*n/slvwagner::math_betrag(n)
-  return(list(p=p,u=u,v=v,n=n)|>as.data.frame())
+  return(list(p=p,u=u,v=v)|>as.data.frame())
 }
+
+E <- "-10*z-15*x+20*y-50"
