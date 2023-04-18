@@ -338,13 +338,6 @@ geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
   # Find intercept with the axis
   Result <- d/n
   Result <- ifelse(is.infinite(Result),0,Result)
-  # # Find infinite values to be replaced by zero
-  # # Needed
-  # for(ii in 1:length(Result)){
-  #   if(Result[ii]|>is.infinite()){
-  #     suppressWarnings(Result[ii] <- 0)
-  #   }
-  # }
   # Assign found axis intercept to vector
   p1 <- c(Result[1],0,0)
   p2 <- c(0,Result[2],0)
