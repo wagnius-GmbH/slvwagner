@@ -326,12 +326,18 @@ geo_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radi
 #' geo_convert_plane_coord_to_param("-10*x-15*y+20*z-50")
 #' geo_convert_plane_coord_to_param("10*x-15*y-20*z-50")
 #' geo_convert_plane_coord_to_param("-10*x+15*y-20*z-50")
-#' geo_convert_plane_coord_to_param("-10*x-15*y-50")
-#' geo_convert_plane_coord_to_param("-10*z-15*y-50")
-#' geo_convert_plane_coord_to_param("-10*z-15*x-50")
-#' geo_convert_plane_coord_to_param("-10*x-15*y+50")
-#' geo_convert_plane_coord_to_param("-10*z-15*y+50")
-#' geo_convert_plane_coord_to_param("-10*z-15*x+50")
+#' geo_convert_plane_coord_to_param("10*x+15*y+50")
+#' geo_convert_plane_coord_to_param("10*x+15*z+50")
+#' geo_convert_plane_coord_to_param("10*y+15*z+50")
+#' geo_convert_plane_coord_to_param("10*x+15*y-50")
+#' geo_convert_plane_coord_to_param("10*x+15*z-50")
+#' geo_convert_plane_coord_to_param("10*y+15*z-50")
+#' geo_convert_plane_coord_to_param("-10*x+15*y+50")
+#' geo_convert_plane_coord_to_param("-10*x+15*z+50")
+#' geo_convert_plane_coord_to_param("-10*y+15*z+50")
+#' geo_convert_plane_coord_to_param("10*x-15*y+50")
+#' geo_convert_plane_coord_to_param("10*x-15*z+50")
+#' geo_convert_plane_coord_to_param("10*y-15*z+50")
 #' geo_convert_plane_coord_to_param("-10*z-50")
 #' geo_convert_plane_coord_to_param("-10*y-50")
 #' geo_convert_plane_coord_to_param("-10*x-50")
@@ -368,9 +374,9 @@ geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
   # compute normal vector pointing to plane (Perpendicular to plane)
   p <- (slvwagner::math_betrag(d)/slvwagner::math_betrag(n))*n/slvwagner::math_betrag(n)
   if(d < 0) p <- -p
-  # If vector u or v is zero it needs to be replaced by predefined vector
+  # If vector u or v is zero it needs to be replaced by predefined vector or if the magnitude of u and v are equal
   if(sum(u)==0 | sum(v)==0 | (slvwagner::math_betrag(u)==slvwagner::math_betrag(v))){
-    print("u or v are zero, so using predefined vector")
+    #print("u or v are zero, so using predefined vector")
     # plane is perpendicular to x
     if(p[2]==0 & p[3]==0){
       u <- c(0,1,0)
@@ -386,7 +392,15 @@ geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
       u <- c(1,0,0)
       v <- c(0,1,0)
     }
+    # plane is parallel to y
+    else if(sum(p2)==0){
+      #print("plane is parallel to y")
+      v <- c(0,1,0)
+      u <- slvwagner::math_cross_product(p,v)
+      u <- u/slvwagner::math_betrag(u)
+    }
   }
+  names(n) <- c("a","b","c")
   return(list(parameter = cbind(p=p,u=u,v=v),n = n,d=d))
 }
 
