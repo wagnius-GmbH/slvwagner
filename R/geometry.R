@@ -297,31 +297,47 @@ geo_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radi
 #'
 #' @name geo_convert_plane_coord_to_param
 #' @description
-#' Get parametric function from a plane coordinate equation.
-#' The function returns a position vector \deqn{\vec p}, and the directions vectors \deqn{\vec v, \vec v}.
+#' Get parametric function for a plane with the parameter s,t: \deqn{\vec x = \vec p + s \cdot \vec u + t \cdot \vec v}
+#' The function returns a position vector \deqn{\vec p}, and two directions vectors \deqn{\vec u, \vec v}.
 #' The Vector \deqn{\vec p} is also the normal vector (perpendicular to the plane).
 #' @details
 #' The coordinate form of the plane is:
 #' \deqn{a x + b y + c z - d = 0}
 #' where \deqn{d = \vec p \cdot \vec n} and \deqn{\vec n = \begin{pmatrix} a \\ b \\ c \end{pmatrix}}
-#' with the parameter \deqn{s},\deqn{t}
 #' \url{https://de.wikipedia.org/wiki/Ebenengleichung#Normalenform}
-#'
 #' \url{https://en.wikipedia.org/wiki/Euclidean_planes_in_three-dimensional_space}
 #' @param  E Plane equation (Ryacas)
 #' @param  axis character vector indentifiying the axis variables  e.g. c("x1","x2","x3")
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' data frame with the Vecors:
-#' \deqn{\vec p, \vec u, \vec v, \vec n}
+#' list with matrix containing the Vectors
+#' \deqn{\vec p, \vec u, \vec v}
+#' and \deqn{\vec n = \begin{pmatrix} a \\ b \\ c \end{pmatrix},-d}
 #' @examples
 #' geo_convert_plane_coord_to_param("10*x+15*y+20*z+50")
-#' geo_convert_plane_coord_to_param("-10*z-15*x+20*y-50")
+#' geo_convert_plane_coord_to_param("-10*x+15*y+20*z+50")
+#' geo_convert_plane_coord_to_param("10*x-15*y+20*z+50")
+#' geo_convert_plane_coord_to_param("10*x+15*y-20*z+50")
+#' geo_convert_plane_coord_to_param("10*x+15*y+20*z-50")
+#' geo_convert_plane_coord_to_param("-10*x-15*y+20*z+50")
+#' geo_convert_plane_coord_to_param("10*x-15*y-20*z+50")
+#' geo_convert_plane_coord_to_param("-10*x+15*y-20*z+50")
+#' geo_convert_plane_coord_to_param("-10*x-15*y+20*z-50")
+#' geo_convert_plane_coord_to_param("10*x-15*y-20*z-50")
+#' geo_convert_plane_coord_to_param("-10*x+15*y-20*z-50")
+#' geo_convert_plane_coord_to_param("-10*x-15*y-50")
+#' geo_convert_plane_coord_to_param("-10*z-15*y-50")
 #' geo_convert_plane_coord_to_param("-10*z-15*x-50")
+#' geo_convert_plane_coord_to_param("-10*x-15*y+50")
+#' geo_convert_plane_coord_to_param("-10*z-15*y+50")
+#' geo_convert_plane_coord_to_param("-10*z-15*x+50")
 #' geo_convert_plane_coord_to_param("-10*z-50")
 #' geo_convert_plane_coord_to_param("-10*y-50")
 #' geo_convert_plane_coord_to_param("-10*x-50")
+#' geo_convert_plane_coord_to_param("-10*z+50")
+#' geo_convert_plane_coord_to_param("-10*y+50")
+#' geo_convert_plane_coord_to_param("-10*x+50")
 #' @export
 
 geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
@@ -336,35 +352,41 @@ geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
   d <- -((E+paste0(-n[1],"*x+",-n[2],"*y+",-n[3],"*z")|>Ryacas::ysym())|>
            Ryacas::y_fn("Expand"))|>Ryacas::as_r()
   # Find intercept with the axis
-  Result <- d/n
-  Result <- ifelse(is.infinite(Result),0,Result)
+  p <- d/n
+  p <- ifelse(is.infinite(p),0,p)
   # Assign found axis intercept to vector
-  p1 <- c(Result[1],0,0)
-  p2 <- c(0,Result[2],0)
-  p3 <- c(0,0,Result[3])
+  p1 <- c(p[1],0,0)
+  p2 <- c(0,p[2],0)
+  p3 <- c(0,0,p[3])
   # Find orientation vectors
   u <- p1-p2
+  u <- u/slvwagner::math_betrag(u)
+  u <- ifelse(is.nan(u),0,u)
   v <- p2-p3
+  v <- v/slvwagner::math_betrag(v)
+  v <- ifelse(is.nan(v),0,v)
   # compute normal vector pointing to plane (Perpendicular to plane)
   p <- (slvwagner::math_betrag(d)/slvwagner::math_betrag(n))*n/slvwagner::math_betrag(n)
+  if(d < 0) p <- -p
   # If vector u or v is zero it needs to be replaced be predefined vector
   if(sum(u)==0 | sum(v)==0 | (slvwagner::math_betrag(u)==slvwagner::math_betrag(v))){
     print("u or v are zero, so using predefined vector")
     # plane is perpendicular to x
     if(p[2]==0 & p[3]==0){
-      u <- c(0,1,1)
-      v <- c(0,-1,1)
+      u <- c(0,1,0)
+      v <- c(0,0,1)
       }
     # plane is perpendicular to y
     else if(p[1]==0 & p[3]==0){
-      u <- c(1,0,1)
-      v <- c(-1,0,1)
+      u <- c(1,0,0)
+      v <- c(0,0,1)
     }
     # plane is perpendicular to z
     else if(p[1]==0 & p[2]==0){
-      u <- c(1,1,0)
-      v <- c(-1,1,0)
+      u <- c(1,0,0)
+      v <- c(0,1,0)
     }
   }
-  return(list(p=p,u=u,v=v)|>as.data.frame())
+  return(list(parameter = cbind(p=p,u=u,v=v),n = n,d=d))
 }
+

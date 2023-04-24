@@ -12,30 +12,46 @@ geo_convert_plane_coord_to_param(E, axis = c("x", "y", "z"))
 \item{axis}{character vector indentifiying the axis variables  e.g. c("x1","x2","x3")}
 }
 \value{
-data frame with the Vecors:
-\deqn{\vec p, \vec u, \vec v, \vec n}
+list with matrix containing the Vectors
+\deqn{\vec p, \vec u, \vec v}
+and \deqn{\vec n = \begin{pmatrix} a \\ b \\ c \end{pmatrix},-d}
 }
 \description{
-Get parametric function from a plane coordinate equation.
-The function returns a position vector \deqn{\vec p}, and the directions vectors \deqn{\vec v, \vec v}.
+Get parametric function for a plane with the parameter s,t: \deqn{\vec x = \vec p + s \cdot \vec u + t \cdot \vec v}
+The function returns a position vector \deqn{\vec p}, and two directions vectors \deqn{\vec u, \vec v}.
 The Vector \deqn{\vec p} is also the normal vector (perpendicular to the plane).
 }
 \details{
 The coordinate form of the plane is:
 \deqn{a x + b y + c z - d = 0}
 where \deqn{d = \vec p \cdot \vec n} and \deqn{\vec n = \begin{pmatrix} a \\ b \\ c \end{pmatrix}}
-with the parameter \deqn{s},\deqn{t}
 \url{https://de.wikipedia.org/wiki/Ebenengleichung#Normalenform}
-
 \url{https://en.wikipedia.org/wiki/Euclidean_planes_in_three-dimensional_space}
 }
 \examples{
 geo_convert_plane_coord_to_param("10*x+15*y+20*z+50")
-geo_convert_plane_coord_to_param("-10*z-15*x+20*y-50")
+geo_convert_plane_coord_to_param("-10*x+15*y+20*z+50")
+geo_convert_plane_coord_to_param("10*x-15*y+20*z+50")
+geo_convert_plane_coord_to_param("10*x+15*y-20*z+50")
+geo_convert_plane_coord_to_param("10*x+15*y+20*z-50")
+geo_convert_plane_coord_to_param("-10*x-15*y+20*z+50")
+geo_convert_plane_coord_to_param("10*x-15*y-20*z+50")
+geo_convert_plane_coord_to_param("-10*x+15*y-20*z+50")
+geo_convert_plane_coord_to_param("-10*x-15*y+20*z-50")
+geo_convert_plane_coord_to_param("10*x-15*y-20*z-50")
+geo_convert_plane_coord_to_param("-10*x+15*y-20*z-50")
+geo_convert_plane_coord_to_param("-10*x-15*y-50")
+geo_convert_plane_coord_to_param("-10*z-15*y-50")
 geo_convert_plane_coord_to_param("-10*z-15*x-50")
+geo_convert_plane_coord_to_param("-10*x-15*y+50")
+geo_convert_plane_coord_to_param("-10*z-15*y+50")
+geo_convert_plane_coord_to_param("-10*z-15*x+50")
 geo_convert_plane_coord_to_param("-10*z-50")
 geo_convert_plane_coord_to_param("-10*y-50")
 geo_convert_plane_coord_to_param("-10*x-50")
+geo_convert_plane_coord_to_param("-10*z+50")
+geo_convert_plane_coord_to_param("-10*y+50")
+geo_convert_plane_coord_to_param("-10*x+50")
 }
 \author{
 Florian Wagner
