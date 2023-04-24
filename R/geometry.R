@@ -368,7 +368,7 @@ geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
   # compute normal vector pointing to plane (Perpendicular to plane)
   p <- (slvwagner::math_betrag(d)/slvwagner::math_betrag(n))*n/slvwagner::math_betrag(n)
   if(d < 0) p <- -p
-  # If vector u or v is zero it needs to be replaced be predefined vector
+  # If vector u or v is zero it needs to be replaced by predefined vector
   if(sum(u)==0 | sum(v)==0 | (slvwagner::math_betrag(u)==slvwagner::math_betrag(v))){
     print("u or v are zero, so using predefined vector")
     # plane is perpendicular to x
