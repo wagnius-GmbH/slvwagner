@@ -657,6 +657,8 @@ math_polynom_from_roots <- function(roots){
   # Re/Im Factors
   c_factors_re <- list()
   c_factors_im <- list()
+  cnt_im <- 1
+  cnt_re <- 1
   # Factor and simplify to get the polinomial
   for (ii in 1:length(roots)) {
     if(is.complex(roots[[ii]])){ # is the root complex?
@@ -668,18 +670,19 @@ math_polynom_from_roots <- function(roots){
                        paste0("x-",input_Re),
                        paste0("x+",abs(input_Re)))|>
         add_brackets()
-
       # imaginary part and conjugated imaginary part
-      c_factors_im[[ii]] <- paste0("Expand((",c_real,"-I*",input_Im,")*(",c_real,"+I*",input_Im,"))")|>
+      c_factors_im[[cnt_im]] <- paste0("Expand((",c_real,"-I*",input_Im,")*(",c_real,"+I*",input_Im,"))")|>
         Ryacas::yac_str()|>
         add_brackets()
+      cnt_im <- cnt_im+1
 
     }else{ # only real
       #print("real")
-      c_factors_re[[ii]] <- ifelse(roots[[ii]] >= 0,
-                                   paste0("x-",roots[[ii]]),
-                                   paste0("x+",abs(roots[[ii]])))|>
+      c_factors_re[[cnt_re]] <- ifelse(roots[[ii]] >= 0,
+                                       paste0("x-",roots[[ii]]),
+                                       paste0("x+",abs(roots[[ii]])))|>
         add_brackets()
+      cnt_re <- cnt_re+1
     }
   }
   # select the imaginary terms
