@@ -563,3 +563,132 @@ math_cross_product <- function (x, y)
   return(xxy)
 }
 
+#######################################
+#' Compute polynomial from roots
+#'
+#' @name math_polynom_from_roots
+#' @description The polynomial will be calculated according to the roots supplied in the list.
+#' If roots are complex it will also include the complex conjugated root.
+#' @param roots list of roots
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' polynom as character string
+#' @examples
+#' list(-5,0,2i)|>math_polynom_from_roots()
+#' list(-5,0,2i,-2i)|>math_polynom_from_roots()
+#' list(3,2+1i)|>math_polynom_from_roots()
+#' list(3,2+1i,2-1i)|>math_polynom_from_roots()
+#' @export
+
+math_polynom_from_roots <- function(roots){
+  # Function to remove complex conjugated from roots list
+  remove_complex_conjugated <- function(x) {
+    # add complex conjugated to list
+    add_Conj <- function(x){
+      x|>lapply(function(x){
+        if(is.complex(x)){
+          c(x,Conj(x))
+        }else x
+      })
+    }
+    # Sort
+    y <- add_Conj(x)|>
+      lapply(function(x){
+        sort(x)
+      })
+    # check if complex
+    c_select <- y|>lapply(function(x){
+      is.complex(x)
+    })|>
+      unlist()
+    c_complex <- (1:length(x))[c_select]
+    # find complex conjugated from list if already in the list
+    l_matches <- list()
+    cnt <- 1
+    for (ii in c_complex){
+      c_compare <- c_complex[c_complex != ii]
+      for (jj in c_compare) {
+        if(sum(unlist(y[ii]) == unlist(y[jj]))>0){
+          c_match <- sort(c(ii,jj))
+          if(length(l_matches)>0){ # check if matches to compare are available
+            do_break <- F
+            for (kk in 1:length(l_matches)) { # compare matches with actual match
+              if(sum(l_matches[[kk]] == c_match) > 0){
+                do_break <- T
+                break
+              }
+            }
+            if(do_break) { # if found brake
+              break
+            }
+            else{ # if no match add to match list
+              l_matches[[cnt]] <- c_match
+              cnt <- cnt+1
+            }
+          }else{  # if no entry add to match list
+            l_matches[[cnt]] <- c_match
+            cnt <- cnt+1
+          }
+        }
+      }
+    }
+    # remove found complex conjugated from list
+    c_remove <- l_matches|>
+      lapply(function(x){
+        unlist(x)[2]
+      })|>
+      unlist()
+    x[c_remove] <- NULL
+    return(x)
+  }
+  # Function to add brackes
+  add_brackets <- function(x)paste0("(",x,")")
+
+  ###################################################################
+  # remove complex conjgated roots from roots list
+  roots <- remove_complex_conjugated(roots)
+  # Re/Im Factors
+  c_factors_re <- list()
+  c_factors_im <- list()
+  # Factor and simplify to get the polinomial
+  for (ii in 1:length(roots)) {
+    if(is.complex(roots[[ii]])){ # is the root complex?
+      #print("complex")
+      input_Re <- Re(roots[[ii]])
+      input_Im <- Im(roots[[ii]])|>abs()
+
+      c_real <- ifelse(input_Re >= 0,
+                       paste0("x-",input_Re),
+                       paste0("x+",abs(input_Re)))|>
+        add_brackets()
+
+      # imaginary part and conjugated imaginary part
+      c_factors_im[[ii]] <- paste0("Expand((",c_real,"-I*",input_Im,")*(",c_real,"+I*",input_Im,"))")|>
+        Ryacas::yac_str()|>
+        add_brackets()
+
+    }else{ # only real
+      #print("real")
+      c_factors_re[[ii]] <- ifelse(roots[[ii]] >= 0,
+                                   paste0("x-",roots[[ii]]),
+                                   paste0("x+",abs(roots[[ii]])))|>
+        add_brackets()
+    }
+  }
+  # select the imaginary terms
+  c_select <- c_factors_im|>
+    lapply(function(x)!is.null(x))|>
+    unlist()
+  # convert to binomial
+  if(length(c_factors_im[c_select])==0){
+    return(paste0("Expand(",c_factors_re|>paste0(collapse = "*"),")")|>
+             Ryacas::yac_str()
+    )
+  }else{
+    return(paste0("Expand(",c_factors_re|>paste0(collapse = "*"),"*",c_factors_im[c_select]|>unlist()|>paste0(collapse = "*"),")")|>
+             Ryacas::yac_str()
+    )
+  }
+}
+

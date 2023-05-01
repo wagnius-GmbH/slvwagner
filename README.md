@@ -25,6 +25,7 @@ Functions start with math_
 -   cross and dot vector product
 -   Magnitude of vector 
 -   In-between angel of two vectors
+-   Get polynomial from roots 
 
 #### Math in yacas 
 Functions start with yac_
