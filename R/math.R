@@ -575,13 +575,19 @@ math_cross_product <- function (x, y)
 #' @returns
 #' polynom as character string
 #' @examples
-#' list(-5,0,2i)|>math_polynom_from_roots()
-#' list(-5,0,2i,-2i)|>math_polynom_from_roots()
-#' list(3,2+1i)|>math_polynom_from_roots()
-#' list(3,2+1i,2-1i)|>math_polynom_from_roots()
+#' c(-5,0,2i)|>math_polynom_from_roots()
+#' c(-5,0,2i,-2i)|>math_polynom_from_roots()
+#' c(3,2+1i)|>math_polynom_from_roots()
+#' c(3,2+1i,2-1i)|>math_polynom_from_roots()
 #' @export
 
 math_polynom_from_roots <- function(roots){
+  # convert to list
+  roots <- roots|>
+    lapply(function(x){
+      if(Im(x)==0) return(Re(x))
+      else x
+    })
   # Function to remove complex conjugated from roots list
   remove_complex_conjugated <- function(x) {
     # add complex conjugated to list

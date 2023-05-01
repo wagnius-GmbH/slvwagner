@@ -17,10 +17,10 @@ The polynomial will be calculated according to the roots supplied in the list.
 If roots are complex it will also include the complex conjugated root.
 }
 \examples{
-list(-5,0,2i)|>math_polynom_from_roots()
-list(-5,0,2i,-2i)|>math_polynom_from_roots()
-list(3,2+1i)|>math_polynom_from_roots()
-list(3,2+1i,2-1i)|>math_polynom_from_roots()
+c(-5,0,2i)|>math_polynom_from_roots()
+c(-5,0,2i,-2i)|>math_polynom_from_roots()
+c(3,2+1i)|>math_polynom_from_roots()
+c(3,2+1i,2-1i)|>math_polynom_from_roots()
 }
 \author{
 Florian Wagner
