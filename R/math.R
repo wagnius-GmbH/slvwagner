@@ -579,14 +579,14 @@ math_cross_product <- function (x, y)
 #' "0.1*x^5+0.0000000001*x^3+0.9999999999*x^2+x-0.2"|>math_polynom_round()
 #' @export
 
-math_polynom_round <- function(c_poly,round_digits = 9) {
-  c_degree <- paste0("Degree(",c_poly,",","x",")")|>
+math_polynom_round <- function(poly,round_digits = 9) {
+  c_degree <- paste0("Degree(",poly,",","x",")")|>
     Ryacas::ysym()|>
     Ryacas::as_r()
 
   c_coef <- rep("",as.integer(c_degree))
 
-  c_coef <- paste0("Coef(",c_poly,",x,0 .. ",c_degree,")")|>
+  c_coef <- paste0("Coef(",poly,",x,0 .. ",c_degree,")")|>
     Ryacas::ysym()|>
     Ryacas::as_r()
 

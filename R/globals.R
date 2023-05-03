@@ -36,5 +36,7 @@ utils::globalVariables(c("tibble",
                          "y_fn",
                          "yac_assign",
                          "stringr",
-                         "str_detect"
+                         "str_detect",
+                         "polynom",
+                         "as.polynomial"
                          ))
