@@ -4,15 +4,15 @@
 \alias{math_polynom_round}
 \title{round polynomials}
 \usage{
-math_polynom_round(poly, round_digits = 9)
+math_polynom_round(c_poly, round_digits = 9)
 }
 \arguments{
-\item{poly}{polynomial character string}
-
 \item{round_digits}{the number of digit used to round the polynomial coefficients}
+
+\item{poly}{polynomial character string}
 }
 \value{
-polynomial character string
+polynomial
 }
 \description{
 The polynomial will be rounded according to \code{round_digits}.

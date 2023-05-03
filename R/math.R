@@ -573,41 +573,31 @@ math_cross_product <- function (x, y)
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' polynomial character string
+#' polynomial
 #' @examples
 #' "-x^5+0.0000000001*x^3+0.9999999999*x^2+x-0.2"|>math_polynom_round()
 #' "0.1*x^5+0.0000000001*x^3+0.9999999999*x^2+x-0.2"|>math_polynom_round()
 #' @export
 
-math_polynom_round <- function(poly, round_digits = 9) {
-  c_degree <- paste0("Degree(",poly,",","x",")")|>
+math_polynom_round <- function(c_poly,round_digits = 9) {
+  c_degree <- paste0("Degree(",c_poly,",","x",")")|>
     Ryacas::ysym()|>
     Ryacas::as_r()
 
   c_coef <- rep("",as.integer(c_degree))
 
-  cnt <- 1
-  for (ii in c_degree:0) {
-    c_coef[cnt] <- Ryacas::yac_str(paste0("Coef(",poly,",x,",ii,")"))
-    cnt <- cnt + 1
-  }
+  c_coef <- paste0("Coef(",c_poly,",x,0 .. ",c_degree,")")|>
+    Ryacas::ysym()|>
+    Ryacas::as_r()
+
   # Round coefficients
   c_coef <- c_coef|>
     as.numeric()|>
     round(round_digits)|>
     as.character()
-  # add + sign
-  c_coef <- ifelse(stringr::str_detect(c_coef,"[-]"),c_coef,paste0("+",c_coef))
-  #compose polynomial
-  c_poly_ <- cbind(c_coef,"*x^",c_degree:0)|>
-    apply(1, function(x){
-      paste0(x, collapse = "")
-    })|>
-    paste0(collapse = "")
-  # simplify polynomial
-  poly <- paste0("Simplify(",c_poly_,")")|>
-    Ryacas::yac_str()
-  return(poly)
+  c_coef
+
+  return(polynom::as.polynomial(c_coef))
 }
 
 
