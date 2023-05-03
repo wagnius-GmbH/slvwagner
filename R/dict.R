@@ -7,7 +7,7 @@
 #' the issue is that they are becoming quite slow and memory hungry with more data.
 #' Yet what many people don't know is that R has indeed an inbuilt dictionary data structure
 #' environments with the option hash = TRUE
-#' @param lenght lenght of the environment, e.g. nrow(data_frame)
+#' @param length length of the environment, e.g. nrow(data_frame)
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns A initialized environment that can be assigned with keys and values
@@ -20,9 +20,9 @@
 #' dict_get_values(c("ch", "it"), hash)
 #' @export
 
-dict_init <- function(lenght)
+dict_init <- function(length)
 {
-  new.env(hash = TRUE, parent = emptyenv(), size = lenght)
+  new.env(hash = TRUE, parent = emptyenv(), size = length)
 }
 
 ###################################################################
@@ -48,6 +48,7 @@ dict_init <- function(lenght)
 #' dict_get_values(c("ch", "it"), hash)
 #' @export
 dict_assign_key_values <- Vectorize(assign, vectorize.args = c("x", "value"))
+
 
 ###################################################################
 #' Get values from fast dictionary

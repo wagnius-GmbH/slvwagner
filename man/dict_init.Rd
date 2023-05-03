@@ -4,10 +4,10 @@
 \alias{dict_init}
 \title{Initialize fast dictionary environment}
 \usage{
-dict_init(lenght)
+dict_init(length)
 }
 \arguments{
-\item{lenght}{lenght of the environment, e.g. nrow(data_frame)}
+\item{length}{length of the environment, e.g. nrow(data_frame)}
 }
 \value{
 A initialized environment that can be assigned with keys and values
