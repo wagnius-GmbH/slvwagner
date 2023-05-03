@@ -17,6 +17,7 @@ polynom as character string
 \description{
 The polynomial will be calculated according to the roots supplied in the list.
 If roots are complex it will also include the complex conjugated root.
+The resulting polynomial will be rounded according to \code{round_digits}.
 }
 \examples{
 c(-5,0,2i)|>math_polynom_from_roots()
