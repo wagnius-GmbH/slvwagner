@@ -26,6 +26,7 @@ Functions start with math_
 -   Magnitude of vector 
 -   In-between angel of two vectors
 -   Get polynomial from roots 
+-   Round polynomial equation
 
 #### Math in yacas 
 Functions start with yac_
