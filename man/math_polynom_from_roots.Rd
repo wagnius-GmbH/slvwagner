@@ -4,10 +4,12 @@
 \alias{math_polynom_from_roots}
 \title{Compute polynomial from roots}
 \usage{
-math_polynom_from_roots(roots)
+math_polynom_from_roots(roots, round_digits = 9)
 }
 \arguments{
 \item{roots}{list of roots}
+
+\item{round_digits}{the number of digit used to round the polynomial coefficients}
 }
 \value{
 polynom as character string

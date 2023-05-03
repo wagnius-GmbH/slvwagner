@@ -34,5 +34,7 @@ utils::globalVariables(c("tibble",
                          "times_sd",
                          "as_r",
                          "y_fn",
-                         "yac_assign"
+                         "yac_assign",
+                         "stringr",
+                         "str_detect"
                          ))

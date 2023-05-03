@@ -570,6 +570,7 @@ math_cross_product <- function (x, y)
 #' @description The polynomial will be calculated according to the roots supplied in the list.
 #' If roots are complex it will also include the complex conjugated root.
 #' @param roots list of roots
+#' @param round_digits the number of digit used to round the polynomial coefficients
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
@@ -581,13 +582,15 @@ math_cross_product <- function (x, y)
 #' c(3,2+1i,2-1i)|>math_polynom_from_roots()
 #' @export
 
-math_polynom_from_roots <- function(roots){
+math_polynom_from_roots <- function(roots,round_digits=9){
+  ###################################################################
   # convert to list
   roots <- roots|>
     lapply(function(x){
       if(Im(x)==0) return(Re(x))
       else x
     })
+  ###################################################################
   # Function to remove complex conjugated from roots list
   remove_complex_conjugated <- function(x) {
     # add complex conjugated to list
@@ -648,9 +651,45 @@ math_polynom_from_roots <- function(roots){
     x[c_remove] <- NULL
     return(x)
   }
+  ###################################################################
   # Function to add brackes
   add_brackets <- function(x)paste0("(",x,")")
 
+  ###################################################################
+  # Round polynomial
+  Round_poly <- function(c_poly, round_digits = 9) {
+    c_degree <- paste0("Degree(",c_poly,",","x",")")|>
+      Ryacas::ysym()|>
+      Ryacas::as_r()
+
+    c_coef <- rep("",as.integer(c_degree))
+
+    cnt <- 1
+    for (ii in c_degree:0) {
+      c_coef[cnt] <- Ryacas::yac_str(paste0("Coef(",c_poly,",x,",ii,")"))
+      cnt <- cnt + 1
+    }
+    # Round coefficients
+    c_coef <- c_coef|>
+      as.numeric()|>
+      round(round_digits)|>
+      as.character()
+    # add + sign
+    c_coef <- ifelse(stringr::str_detect(c_coef,"[-]"),c_coef,paste0("+",c_coef))
+    #compose polynomial
+    c_poly_ <- cbind(c_coef,"*x^",c_degree:0)|>
+      apply(1, function(x){
+        paste0(x, collapse = "")
+      })|>
+      paste0(collapse = "")
+    # simplify polynomial
+    c_poly <- paste0("Simplify(",c_poly_,")")|>
+      Ryacas::yac_str()
+    return(c_poly)
+  }
+
+  ###################################################################
+  # Polynomial from roots
   ###################################################################
   # remove complex conjgated roots from roots list
   roots <- remove_complex_conjugated(roots)
@@ -689,15 +728,19 @@ math_polynom_from_roots <- function(roots){
   c_select <- c_factors_im|>
     lapply(function(x)!is.null(x))|>
     unlist()
-  # convert to binomial
+  # convert to polynomial
   if(length(c_factors_im[c_select])==0){
-    return(paste0("Expand(",c_factors_re|>paste0(collapse = "*"),")")|>
-             Ryacas::yac_str()
-    )
+    c_poly <- paste0("Expand(",c_factors_re|>paste0(collapse = "*"),")")|>
+      Ryacas::yac_str()
+    c_poly <- paste0("Simplify(",c_poly,")")|>
+      Ryacas::yac_str()
+    return(Round_poly(c_poly))
   }else{
-    return(paste0("Expand(",c_factors_re|>paste0(collapse = "*"),"*",c_factors_im[c_select]|>unlist()|>paste0(collapse = "*"),")")|>
-             Ryacas::yac_str()
-    )
+    c_poly <- paste0("Expand(",c_factors_re|>paste0(collapse = "*"),"*",c_factors_im[c_select]|>unlist()|>paste0(collapse = "*"),")")|>
+      Ryacas::yac_str()
+    c_poly <- paste0("Simplify(",c_poly,")")|>
+      Ryacas::yac_str()
+    return(Round_poly(c_poly))
   }
 }
 
