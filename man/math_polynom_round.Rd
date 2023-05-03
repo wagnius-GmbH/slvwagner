@@ -12,7 +12,7 @@ math_polynom_round(poly, round_digits = 9)
 \item{round_digits}{the number of digit used to round the polynomial coefficients}
 }
 \value{
-polynom as character string
+polynomial character string
 }
 \description{
 The polynomial will be rounded according to \code{round_digits}.

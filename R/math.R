@@ -573,7 +573,7 @@ math_cross_product <- function (x, y)
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' polynom as character string
+#' polynomial character string
 #' @examples
 #' "-x^5+0.0000000001*x^3+0.9999999999*x^2+x-0.2"|>math_polynom_round()
 #' "0.1*x^5+0.0000000001*x^3+0.9999999999*x^2+x-0.2"|>math_polynom_round()
@@ -623,7 +623,7 @@ math_polynom_round <- function(poly, round_digits = 9) {
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' polynom as character string
+#' polynomial character string
 #' @examples
 #' c(-5,0,2i)|>math_polynom_from_roots()
 #' c(-5,0,2i,-2i)|>math_polynom_from_roots()
@@ -715,7 +715,7 @@ math_polynom_from_roots <- function(roots,round_digits=9){
   c_factors_im <- list()
   cnt_im <- 1
   cnt_re <- 1
-  # Factor and simplify to get the polinomial
+  # Factor and simplify to get the polynomial
   for (ii in 1:length(roots)) {
     if(is.complex(roots[[ii]])){ # is the root complex?
       #print("complex")

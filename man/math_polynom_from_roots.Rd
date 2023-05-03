@@ -12,7 +12,7 @@ math_polynom_from_roots(roots, round_digits = 9)
 \item{round_digits}{the number of digit used to round the polynomial coefficients}
 }
 \value{
-polynom as character string
+polynomial character string
 }
 \description{
 The polynomial will be calculated according to the roots supplied in the list.
