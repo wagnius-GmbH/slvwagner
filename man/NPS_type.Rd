@@ -12,7 +12,7 @@ NPS_type(df_data, rating = "rating", df_levels)
 \item{rating}{string identifying the column of the rating}
 
 \item{df_levels}{data frame containing range for each type (Promoters, Passives, Detractors)
-df_levels <- tibble(Detractors = c(1,6),
+df_levels <- tibble::tibble(Detractors = c(1,6),
 Passives   = c(7,8),
 Promoters  = c(9,10))}
 }
@@ -25,13 +25,13 @@ Get NPS type
 \examples{
 library(tidyverse)
 # Test data
-df_data <- tibble( rating = c(1:10,rep(10,5)),
+df_data <- tibble::tibble( rating = c(1:10,rep(10,5)),
                    c_group = c(rep("A",10),rep("B",5)))
-df_levels <- tibble(Detractors= c(1,6),Passives= c(7,8), Promoters= c(9,10))
+df_levels <- tibble::tibble(Detractors= c(1,6),Passives= c(7,8), Promoters= c(9,10))
 NPS_type(df_data, df_levels = df_levels)
 
-df_data <- tibble(c_group  = c(letters[1:10],rep("a",5)),
+df_data <- tibble::tibble(c_group  = c(letters[1:10],rep("a",5)),
                   rating = c(1:5,rep(5,10)))
-df_levels <- tibble(Detractors= c(1,3),Passives= c(4,4.5), Promoters= c(4.5,5))
+df_levels <- tibble::tibble(Detractors= c(1,3),Passives= c(4,4.5), Promoters= c(4.5,5))
 NPS_type(df_data, df_levels = df_levels)
 }

@@ -18,11 +18,14 @@ Suggests:
     rmarkdown,
     rgl,
     ggforce,
-    Ryacas,
     tidyverse,
     stringi,
-    stringr,
-    polynom,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Imports: 
+    dplyr,
+    polynom,
+    Ryacas,
+    tibble,
+    tidyr

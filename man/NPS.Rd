@@ -14,7 +14,7 @@ NPS(x, rating, c_group, df_levels)
 \item{c_group}{string with the column name to group the data frame.}
 
 \item{df_levels}{data frame containing range for each type (Promoters, Passives, Detractors)
-df_levels <- tibble(Detractors = c(1,6),
+df_levels <- tibble::tibble(Detractors = c(1,6),
 Passives   = c(7,8),
 Promoters  = c(9,10))}
 }
@@ -32,15 +32,15 @@ The parameter \code{df_levels} is by standard: Detractors (1...6), Passives (7,8
 \examples{
 library(tidyverse)
 # Test data
-df_data <- tibble(user   = c(letters[1:10],rep("a",5)),
+df_data <- tibble::tibble(user   = c(letters[1:10],rep("a",5)),
                    Feedback = c(1:10,rep(10,5)),
                    Gruppe = c(rep("A",10),rep("B",5)))
 
 NPS(df_data, "Feedback", "Gruppe")
 NPS(df_data, "Feedback")
 
-df_levels <- tibble(Detractors= c(1,3),Passives= c(4,4), Promoters= c(5,5))
-df_data <- tibble(user   = c(letters[1:10],rep("a",5)),
+df_levels <- tibble::tibble(Detractors= c(1,3),Passives= c(4,4), Promoters= c(5,5))
+df_data <- tibble::tibble(user   = c(letters[1:10],rep("a",5)),
                   Feedback = c(1:5,rep(5,10)),
                   Gruppe = c(rep("A",10),rep("B",5)))
 NPS(df_data, "Feedback", "Gruppe",df_levels)
