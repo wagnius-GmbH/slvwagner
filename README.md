@@ -56,6 +56,9 @@ Functions start with stat_
 -   Process capability index (CPK)
 -   Probability density function
 
+### busines
+- NPS (net promoter score)
+
 ### Utilities
 
 #### Plot
