@@ -103,6 +103,8 @@ dict_exists_key <- Vectorize(exists, vectorize.args = "x")
 #' the issue is that they are becoming quite slow and memory hungry with more data.
 #' Yet what many people don't know is that R has indeed an inbuilt dictionary data structure
 #' environments with the option hash = TRUE
+#' @details
+#'  \url{https://blog.ephorie.de/hash-me-if-you-can}
 #' @param df data frame with 1. column = key (must be character), 2. column = value (any atomic type)
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
@@ -169,4 +171,6 @@ dict_update <- function(df, dict)
   }
   return(dict)
 }
+
+
 
