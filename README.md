@@ -44,14 +44,31 @@ Functions start with lf_
 - intersection point of two functions
 - linear function from two points
 
+#### signal
+Functions start with signal_
+
+-   Center Signal around zero (AC cupling)
+
+
+#### statistical 
+Functions start with stat_
+
+-   Process capability index (CPK)
+-   Probability density function
+
 ### Utilities
 
-### System 
+#### Plot
+Functions start with plot_
+
+-    Get normal distributed overlay for faceted histograms
+
+#### System 
 Functions start with r_
 
 -   r_ R utility functions, e.g. windows path to R compatible path
 
-### Fast dictionary
+#### Fast dictionary
 Function start with dict_
 
 -   Create fast dictionary, convenience functions.
