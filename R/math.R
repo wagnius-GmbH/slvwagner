@@ -439,26 +439,6 @@ math_unit_vector <- function(x){
   x/math_betrag(x)
 }
 
-#######################################
-#' Calculate unit vector
-#'
-#' @name math_unit_vector
-#' @description calculate unite vector from \code{x}
-#' @param x vector of cartesian coordinates
-#' @author Florian Wagner
-#' \email{florian.wagner@wagnius.ch}
-#' @returns
-#' unit vector
-#' @examples
-#' math_unit_vector(c(x = 1,y = 1,z = 1))
-#' math_unit_vector(c(1,2,3))
-#' @export
-
-math_unit_vector <- function(x){
-  x/math_betrag(x)
-}
-
-
 
 #######################################
 #' Compute the dot product of two vectors
