@@ -8,6 +8,8 @@
 #' Yet what many people don't know is that R has indeed an inbuilt dictionary data structure
 #' environments with the option hash = TRUE
 #' @param length length of the environment, e.g. nrow(data_frame)
+#' @details
+#'  \url{https://blog.ephorie.de/hash-me-if-you-can}
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns A initialized environment that can be assigned with keys and values
@@ -40,6 +42,8 @@ dict_init <- function(length)
 #' the issue is that they are becoming quite slow and memory hungry with more data.
 #' Yet what many people don't know is that R has indeed an inbuilt dictionary data structure
 #' environments with the option hash = TRUE
+#' @details
+#'  \url{https://blog.ephorie.de/hash-me-if-you-can}
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns Environment hashed, that can be used as fast dictionary.
@@ -70,6 +74,8 @@ dict_assign_key_values <- Vectorize(assign, vectorize.args = c("x", "value"))
 #' @param envir = as.environment(pos)
 #' @param mode = "any"
 #' @param inherits = TRUE
+#' @details
+#'  \url{https://blog.ephorie.de/hash-me-if-you-can}
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns named vector
@@ -98,6 +104,8 @@ dict_get_values <- Vectorize(get, vectorize.args = "x")
 #' @param frame frame
 #' @param mode = "any"
 #' @param inherits = TRUE
+#' @details
+#'  \url{https://blog.ephorie.de/hash-me-if-you-can}
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns Vector True/False
@@ -163,6 +171,8 @@ dict_from_data.frame <- function(df)
 #' environments with the option hash = TRUE
 #' @param df data frame with column 1 = key and column 2 = value
 #' @param dict hash
+#' @details
+#'  \url{https://blog.ephorie.de/hash-me-if-you-can}
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns Environment hash that can be used as fast dictionary.

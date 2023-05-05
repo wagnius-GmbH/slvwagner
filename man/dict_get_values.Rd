@@ -33,6 +33,9 @@ the issue is that they are becoming quite slow and memory hungry with more data.
 Yet what many people don't know is that R has indeed an inbuilt dictionary data structure
 environments with the option hash = TRUE
 }
+\details{
+\url{https://blog.ephorie.de/hash-me-if-you-can}
+}
 \examples{
 df <- data.frame(key   = c("ch","se","de","it"),
                  value = c(41L,46L,49L,39L))
