@@ -4,7 +4,27 @@
 \alias{dict_exists_key}
 \title{Check if key is in dictionary}
 \usage{
-1. Argument:vector to check, 2. Argument: The Environment.
+dict_exists_key(
+  x,
+  where = -1,
+  envir = if (missing(frame)) as.environment(where) else sys.frame(frame),
+  frame,
+  mode = "any",
+  inherits = TRUE
+)
+}
+\arguments{
+\item{x}{key (character)}
+
+\item{where}{= -1}
+
+\item{envir}{= if (missing(frame)) as.environment(where) else sys.frame(frame)}
+
+\item{frame}{frame}
+
+\item{mode}{= "any"}
+
+\item{inherits}{= TRUE}
 }
 \value{
 Vector True/False

@@ -4,7 +4,24 @@
 \alias{dict_get_values}
 \title{Get values from fast dictionary}
 \usage{
-1. Argument:vector to check, 2. Argument: The Environment.
+dict_get_values(
+  x,
+  pos = -1L,
+  envir = as.environment(pos),
+  mode = "any",
+  inherits = TRUE
+)
+}
+\arguments{
+\item{x}{key (character)}
+
+\item{pos}{= -1L}
+
+\item{envir}{= as.environment(pos)}
+
+\item{mode}{= "any"}
+
+\item{inherits}{= TRUE}
 }
 \value{
 named vector

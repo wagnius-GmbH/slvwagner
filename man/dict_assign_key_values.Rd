@@ -4,7 +4,27 @@
 \alias{dict_assign_key_values}
 \title{Assigne key and value to fast dictionary}
 \usage{
-1. Argument:vector key. 2. Argument: vector value, 3. Argument:The Environment.
+dict_assign_key_values(
+  x,
+  value,
+  pos = -1,
+  envir = as.environment(pos),
+  inherits = FALSE,
+  immediate = TRUE
+)
+}
+\arguments{
+\item{x}{key (character)}
+
+\item{value}{value (character)}
+
+\item{pos}{= -1}
+
+\item{envir}{= as.environment(pos)}
+
+\item{inherits}{= FALSE}
+
+\item{immediate}{= TRUE}
 }
 \value{
 Environment hashed, that can be used as fast dictionary.

@@ -4,10 +4,12 @@
 \alias{dict_update}
 \title{Update key/value pairs of fast dictionary}
 \usage{
-This function can update, add key/value pairs. Check the examples for more information.
+dict_update(df, dict)
 }
 \arguments{
 \item{df}{data frame with column 1 = key and column 2 = value}
+
+\item{dict}{hash}
 }
 \value{
 Environment hash that can be used as fast dictionary.
