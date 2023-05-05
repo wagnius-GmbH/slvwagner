@@ -9,7 +9,7 @@ dict_update(df, dict)
 \arguments{
 \item{df}{data frame with column 1 = key and column 2 = value}
 
-\item{dict}{hash}
+\item{dict}{environment name}
 }
 \value{
 Environment hash that can be used as fast dictionary.

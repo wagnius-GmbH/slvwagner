@@ -170,7 +170,7 @@ dict_from_data.frame <- function(df)
 #' Yet what many people don't know is that R has indeed an inbuilt dictionary data structure
 #' environments with the option hash = TRUE
 #' @param df data frame with column 1 = key and column 2 = value
-#' @param dict hash
+#' @param dict environment name
 #' @details
 #'  \url{https://blog.ephorie.de/hash-me-if-you-can}
 #' @author Florian Wagner
