@@ -745,9 +745,10 @@ math_polynom_from_roots <- function(roots,round_digits=9){
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' polynomial character string
+#' vector of length \code{n}
 #' @examples
 #' math_nonlinear_vector(1000,100000,8)
+#' math_nonlinear_vector(1000,100000,8)|>plot()
 #' @export
 
 math_nonlinear_vector <- function(c_start, c_end, n){

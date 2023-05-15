@@ -14,7 +14,7 @@ math_nonlinear_vector(c_start, c_end, n)
 \item{n}{lenght of returned vector}
 }
 \value{
-polynomial character string
+vector of length \code{n}
 }
 \description{
 Function returns a vector of length \code{n}. The first value of the returned vector is \code{c_start} and the last value is \code{c_end}.
@@ -23,6 +23,7 @@ so the returned vector will be caluclated with: \eqn{c_{start}\cdot a^{(0:(n-1))
 }
 \examples{
 math_nonlinear_vector(1000,100000,8)
+math_nonlinear_vector(1000,100000,8)|>plot()
 }
 \author{
 Florian Wagner
