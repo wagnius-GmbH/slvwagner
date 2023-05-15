@@ -731,3 +731,26 @@ math_polynom_from_roots <- function(roots,round_digits=9){
   }
 }
 
+#######################################
+#' Generate non-linear vector
+#'
+#' @name math_nonlinear_vector
+#' @description
+#' Function returns a vector of length \code{n}. The first value of the returned vector is \code{c_start} and the last value is \code{c_end}.
+#' The caluclation is done accordingly: \eqn{c_{end}=c_{start}a^{n−1}} => \eqn{a=\frac{c_{end}}{c_{start}}^{\frac{1}{n-1}}}
+#' so the returned vector will be caluclated with: \eqn{c_{start}\cdot a^{(0:(n-1))}}
+#' @param c_start value of first value of returned vector
+#' @param c_end value of last index of returned vector
+#' @param n lenght of returned vector
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' polynomial character string
+#' @examples
+#' math_nonlinear_vector(1000,100000,8)
+#' @export
+
+math_nonlinear_vector <- function(c_start, c_end, n){
+  a <- (c_end/c_start)^(1/(n-1))
+  return(c_start*a^(0:(n-1)))
+}
