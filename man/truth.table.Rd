@@ -15,11 +15,11 @@ truth.table(
 \arguments{
 \item{bit}{integer number of bits}
 
-\item{exponent}{typ of truth table}
+\item{exponent}{type of truth table}
 
 \item{hex_style}{If exponent > 9 the number will be changed to letters.}
 
-\item{stringsAsFactors}{logical specifying if character vectors are converted to factors.}
+\item{stringsAsFactors}{logical specifying if character vectors are converted to factors.Check expand.grid() documentation for more information.}
 
 \item{KEEP.OUT.ATTRS}{a logical indicating the "out.attrs" attribute. Check out expand.grid() function for more detailed information.}
 }
@@ -28,7 +28,7 @@ A data frame containing one row for each combination of the supplied factors(\co
 }
 \description{
 Create a truth table for the number of \code{bit}`s supplied. The Standard is a binary truth.table so the \code{exponent = 2}.
-If  (\code{exponent} > 9) you can choose (\code{hex_style = TRUE}) to exchange any bigger number than 9 with Letters,see examples for more Information.
+If  (\code{exponent} > 9) you can choose (\code{hex_style = TRUE}) to exchange any bigger number than 9 with letters,see examples for more information.
 }
 \examples{
 truth.table(3)

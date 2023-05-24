@@ -34,11 +34,11 @@ r_signif <- function (x, significant_digits = 3)
 #' @name truth.table
 #' @description
 #' Create a truth table for the number of \code{bit}`s supplied. The Standard is a binary truth.table so the \code{exponent = 2}.
-#' If  (\code{exponent} > 9) you can choose (\code{hex_style = TRUE}) to exchange any bigger number than 9 with Letters,see examples for more Information.
+#' If  (\code{exponent} > 9) you can choose (\code{hex_style = TRUE}) to exchange any bigger number than 9 with letters,see examples for more information.
 #' @param bit integer number of bits
-#' @param exponent typ of truth table
+#' @param exponent type of truth table
 #' @param hex_style If exponent > 9 the number will be changed to letters.
-#' @param stringsAsFactors logical specifying if character vectors are converted to factors.
+#' @param stringsAsFactors logical specifying if character vectors are converted to factors.Check expand.grid() documentation for more information.
 #' @param KEEP.OUT.ATTRS	a logical indicating the "out.attrs" attribute. Check out expand.grid() function for more detailed information.
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
