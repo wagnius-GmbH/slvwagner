@@ -755,3 +755,6 @@ math_nonlinear_vector <- function(c_start, c_end, n){
   a <- (c_end/c_start)^(1/(n-1))
   return(c_start*a^(0:(n-1)))
 }
+
+
+
