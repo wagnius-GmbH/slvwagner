@@ -111,9 +111,9 @@ truth.table <- function(bit, exponent = 2, hex_style = FALSE ,stringsAsFactors =
       rep.fac <- rep.fac * nx
     }
   }
-  # if (KEEP.OUT.ATTRS) {
-  #   attr(cargs, "out.attrs") <- list(dim = d, dimnames = dn)
-  #   }
+  if (KEEP.OUT.ATTRS) {
+    attr(cargs, "out.attrs") <- list(dim = d, dimnames = dn)
+    }
   rn <- .set_row_names(as.integer(prod(d)))
 
   df_data <- structure(cargs, class = "data.frame", row.names = rn)
