@@ -760,25 +760,26 @@ math_nonlinear_vector <- function(c_start, c_end, n){
 #######################################
 #' Polynomial coefficients
 #'
-#' @name math_poly_coef
+#' @name math_polyCoef
 #' @description
 #' Calculates the polynomial coefficients from a polynomial \code{equation}. The variablel \code{var} can be chosen.
 #' The order of the terms does not matter.
-#' @param equation polynomial equation
-#' @param var variable of the \code{equation}
+#' @param equation polynomial equation string
+#' @param variable of the \code{equation}
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
 #' vector with polynomial coefficients.
 #' @examples
-#' "-20*x + 4*x^2 + 5*x^3 + x^4"|>math_poly_coef()
-#' "4*x^2 -  20*x + 5*x^3 + x^4"|>math_poly_coef()
-#' "4*x^8 -  5*x^3 + x^4-0.2"|>math_poly_coef()
+#' "-20*x + 4*x^2 + 5*x^3 + x^4"|>math_polyCoef()
+#' "4*x^2 -  20*x + 5*x^3 + x^4"|>math_polyCoef()
+#' "4*x^8 -  5*x^3 + x^4-0.2"|>math_polyCoef()
+#' "3*z^3"|>math_polyCoef("z")
 #' @export
 
-math_poly_coef <- function(equation){
+math_polyCoef <- function(equation, variable = "x"){
   deg <- Ryacas::yac_str(paste0("Degree(",equation,")"))|>as.integer();
-  Ryacas::yac_str(paste0("Coef(",equation,",x,{",paste0(0:deg,collapse = ","),"})"))|>
+  Ryacas::yac_str(paste0("Coef(",equation,",",variable,",{",paste0(0:deg,collapse = ","),"})"))|>
     Ryacas::as_r()|>
     as.numeric()
 }
