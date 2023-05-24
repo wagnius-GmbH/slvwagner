@@ -731,6 +731,7 @@ math_polynom_from_roots <- function(roots,round_digits=9){
   }
 }
 
+
 #######################################
 #' Generate non-linear vector
 #'
@@ -756,5 +757,29 @@ math_nonlinear_vector <- function(c_start, c_end, n){
   return(c_start*a^(0:(n-1)))
 }
 
+#######################################
+#' Polynomial coefficients
+#'
+#' @name math_poly_coef
+#' @description
+#' Calculates the polynomial coefficients from a polynomial \code{equation}. The variablel \code{var} can be chosen.
+#' The order of the terms does not matter.
+#' @param equation polynomial equation
+#' @param var variable of the \code{equation}
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' vector with polynomial coefficients.
+#' @examples
+#' "-20*x + 4*x^2 + 5*x^3 + x^4"|>math_poly_coef()
+#' "4*x^2 -  20*x + 5*x^3 + x^4"|>math_poly_coef()
+#' "4*x^8 -  5*x^3 + x^4-0.2"|>math_poly_coef()
+#' @export
 
+math_poly_coef <- function(equation){
+  deg <- Ryacas::yac_str(paste0("Degree(",equation,")"))|>as.integer();
+  Ryacas::yac_str(paste0("Coef(",equation,",x,{",paste0(0:deg,collapse = ","),"})"))|>
+    Ryacas::as_r()|>
+    as.numeric()
+}
 
