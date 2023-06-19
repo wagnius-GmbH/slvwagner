@@ -10,21 +10,6 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// Student
-DataFrame Student(int ID, std::string Name, std::string Lastname, std::string eMail, std::string phone);
-RcppExport SEXP _slvwagner_Student(SEXP IDSEXP, SEXP NameSEXP, SEXP LastnameSEXP, SEXP eMailSEXP, SEXP phoneSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type ID(IDSEXP);
-    Rcpp::traits::input_parameter< std::string >::type Name(NameSEXP);
-    Rcpp::traits::input_parameter< std::string >::type Lastname(LastnameSEXP);
-    Rcpp::traits::input_parameter< std::string >::type eMail(eMailSEXP);
-    Rcpp::traits::input_parameter< std::string >::type phone(phoneSEXP);
-    rcpp_result_gen = Rcpp::wrap(Student(ID, Name, Lastname, eMail, phone));
-    return rcpp_result_gen;
-END_RCPP
-}
 // calc_roots_from_seeds_C
 List calc_roots_from_seeds_C(ComplexVector seeds, ComplexVector roots, NumericVector poly);
 RcppExport SEXP _slvwagner_calc_roots_from_seeds_C(SEXP seedsSEXP, SEXP rootsSEXP, SEXP polySEXP) {
@@ -40,7 +25,6 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_slvwagner_Student", (DL_FUNC) &_slvwagner_Student, 5},
     {"_slvwagner_calc_roots_from_seeds_C", (DL_FUNC) &_slvwagner_calc_roots_from_seeds_C, 3},
     {NULL, NULL, 0}
 };

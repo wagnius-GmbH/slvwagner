@@ -2,7 +2,6 @@
 
 export(NPS)
 export(NPS_type)
-export(Student)
 export(calc_roots_from_seeds_C)
 export(cas_intersection_plane_line)
 export(cas_plane_fun)
@@ -52,5 +51,6 @@ export(r_win_path)
 export(signal_center)
 export(stat_cpk)
 export(stat_norm_dist)
+export(truth.table)
+importFrom(Rcpp,sourceCpp)
 useDynLib(slvwagner, .registration = TRUE)
-

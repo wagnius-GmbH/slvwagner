@@ -6,55 +6,6 @@
 
 using namespace Rcpp;
 
-
-//////////////////////////////////////////////
-struct Student_struct
-  {
-  int ID;
-  std::string Name;
-  std::string SurName;
-  std::string eMail;
-  std::string phone;
-
-  Student_struct(int last_ID)
-    {
-    ID = last_ID + 1;
-    }
-  };
-
-//////////////////////////////////////////////
-//' Student
-//' @name Student
-//' @title Student
-//' @description Create Student data frame.
-//' @param ID last ID needed to create
-//' @param Name Name of student
-//' @param Lastname Lastname of student
-//' @param eMail eMail
-//' @param phone Phone
-//' @examples
-//' library(Rcpp)
-//' Student(12)
-//' Student(12, "Florian", "Wagner")
-//' @export
-
-// [[Rcpp::export]]
-DataFrame Student (int ID, std::string Name, std::string Lastname, std::string eMail = "", std::string phone = ""){
-  Student_struct Student(ID);
-  Student.SurName = Lastname;
-  Student.Name = Name;
-  Student.eMail = eMail;
-  Student.phone = phone;
-  DataFrame df = DataFrame::create(Named("ID")       = Student.ID,
-                                   Named("Name")     = Student.Name,
-                                   Named("Last.Name")= Student.SurName,
-                                   Named("eMail")    = Student.eMail,
-                                   Named("Phone")    = Student.phone
-                                     );
-  Rcpp::Rcout << "Student:" << std::endl;
-  return df;
-}
-
 //////////////////////////////////////////////////////////////////////
 class class_roots_from_seeds {
 
@@ -86,7 +37,7 @@ class class_roots_from_seeds {
   void computeDerivative_C() {
     // Calculate the derivative of the polynomial
     NumericVector derivative;
-    for (size_t i = 1; i < poly.size(); ++i) {
+    for (int i = 1; i < int(poly.size()); ++i) {
         derivative.push_back(poly[i] * i);
     }
     poly_ = derivative;
@@ -140,7 +91,7 @@ class class_roots_from_seeds {
         bool found_root = false;
         while (run) {
             int kk = 0;
-            // Newtonian optimaisation algorithm
+            // Newtonian optimisation algorithm
             x_n[1] = x_n[0] - (function_calc_complex(x_n[0]) / function_calc_complex_(x_n[0]));
             x_n[0] = x_n[1];
             // Find complex conjugated root
@@ -149,7 +100,6 @@ class class_roots_from_seeds {
                 distance = abs(x_n[1] - std::complex<double>(double(roots_complex_conjugated[kk].r), double(roots_complex_conjugated[kk].i)));
                 if (distance < test) {
                     roots_from_seeds[ii] = kk;
-                    //cout << "Root complex conjugated: " << kk << " (" << roots_complex_conjugated[kk].x << "," << roots_complex_conjugated[kk].y << ") found for seed " << seeds[ii] << " with calculation depth: " << jj << endl;
                     found_root = true;
                     break;
                 }
@@ -160,7 +110,6 @@ class class_roots_from_seeds {
                 distance = abs(x_n[1] - std::complex<double>(double(roots_complex_conjugated[kk].r), double(roots_complex_conjugated[kk].i)));
                 if (distance < test) {
                     roots_from_seeds[ii] = kk;
-                    //cout << "Root complex: " << kk << " (" << roots[kk].x << "," << roots[kk].y << ") found for seed " << seeds[ii] << " with calculation depth: " << jj << endl;
                     found_root = true;
                     break;
                 }
@@ -171,7 +120,6 @@ class class_roots_from_seeds {
                 run = false;
             }
             else if (jj == c_calculation_depth) { // Stop Root not found
-                //std::cout << "No root found for seed " << seeds[ii] << " with calculation depth: " << jj << std::endl;
                 roots_from_seeds[ii] = 1000;
                 run = false;
             }
