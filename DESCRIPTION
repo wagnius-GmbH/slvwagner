@@ -28,6 +28,7 @@ Imports:
     Rcpp,
     Ryacas,
     tibble,
-    tidyr
+    tidyr,
+    nleqslv
 LinkingTo: 
     Rcpp

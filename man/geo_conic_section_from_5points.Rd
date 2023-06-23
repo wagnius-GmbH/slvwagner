@@ -12,7 +12,7 @@ geo_conic_section_from_5points(section_points, nb = 10)
 \item{nb}{number of points returned to plot the ellipse}
 }
 \value{
-list
+list, check out the example.
 }
 \description{
 calculate conic section from five given points \code{section_points}

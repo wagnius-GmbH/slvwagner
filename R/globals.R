@@ -38,5 +38,6 @@ utils::globalVariables(c("tibble",
                          "stringr",
                          "str_detect",
                          "polynom",
-                         "as.polynomial"
+                         "as.polynomial",
+                         "nleqslv::nleqslv"
                          ))

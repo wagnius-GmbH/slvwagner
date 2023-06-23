@@ -63,7 +63,7 @@ geo_interSec_sph_line <- function(p, u, m, r) {
 #' @param nb number of points returned to plot the ellipse
 #' @author Florian Wagner \email{florian.wagner@wagnius.ch}
 #' @returns
-#' list
+#' list, check out the example.
 #'
 #' @examples
 #' section_points <- matrix(c(-1,3,
@@ -402,5 +402,44 @@ geo_convert_plane_coord_to_param <- function(E,axis = c("x","y","z")) {
   }
   names(n) <- c("a","b","c")
   return(list(parameter = cbind(p=p,u=u,v=v),n = n,d=d))
+}
+
+#######################################
+#' Calculate the an intersection point of three spears
+#'
+#' @name geo_interSec_3spheres
+#' @description
+#' Using numerical solver to calculate a intersecting point upon an initial guess.
+#' @details
+#' The spears will be calculated from the form (x - x0)^2 + (y - y0)^2 + (z - z0)^2 - r^2).
+#' @param  param_matrix for each spear a vector with its coefficients is needed: c(x0,y0,z0,r) so the matrix will have rows and four columns
+#' @param  initial_guess A vector with the intial guess c(x = 0,y = 0,z = 1)
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' vector with named coordinates
+#' @examples
+#' library(nleqslv)
+#' params <- matrix(c(0 , 0, 0, 20.728,
+#'                    15, 0, 0, 31.304,
+#'                    0 ,10, 0, 26.576), ncol = 4, byrow = TRUE)
+#' colnames(params) <- c("x0","y0","z0","r")
+#' params
+#' geo_interSec_3spheres(params, c(0,0,1))
+#' @export
+
+geo_interSec_3spheres<- function(param_matrix, initial_guess) {
+  equations <- function(vars) {
+    residuals <- apply(param_matrix, 1, function(params) {
+      return((vars[1] - params[1])^2 + (vars[2] - params[2])^2 + (vars[3] - params[3])^2 - params[4]^2)
+    })
+    return(residuals)
+  }
+
+  # Solve the system of equations numerically
+  solution <- nleqslv(initial_guess, equations)
+
+  # Return the intersecting points
+  return(c(x = solution$x[1], y = solution$x[2], z = solution$x[3]))
 }
 
