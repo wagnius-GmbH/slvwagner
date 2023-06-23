@@ -188,15 +188,4 @@ df <- expand.grid(re = seq(0,10,0.1),
 seeds <- complex(df$re,df$im)
 calc_roots_from_seeds_C(seeds, c(0.2,2.5,3+1i), 1:10)
 
-
-
-Student()
-Student(12)
-Student(12, "Flo")
-Student(12, Lastname = "Florian")
-Student(12, "Florian", "Wagner")
-Student(12, "Florian", "Wagner","flo@wagnius.ch")
-Student(12, "Florian", "Wagner","flo@wagnius.ch", "+41 76 327 7306")
-Student(12, "Florian", "Wagner",email = "flo@wagnius.ch", "+41 76 327 7306")
-
 */

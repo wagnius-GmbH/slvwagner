@@ -340,10 +340,108 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(slvwagner)</span></code></pre></div>
-<div id="this-is-my-first-test-on-vignettes" class="section level2">
-<h2>This is my first test on vignette`s</h2>
-<p>Test</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(slvwagner)</span></code></pre></div>
+<p>My R library, including all functions I use very often.</p>
+<p>Some function need yacas a symbolic solver:<br />
+<a href="http://www.yacas.org/" class="uri">http://www.yacas.org/</a></p>
+<div id="content" class="section level2">
+<h2>Content</h2>
+<div id="geometrical-stuff" class="section level3">
+<h3>Geometrical stuff</h3>
+<p>Functions start with geo_</p>
+<ul>
+<li>conic section</li>
+<li>slerp</li>
+<li>Intersection of sphere and line,</li>
+<li>Intersecting point(s) of plane and line</li>
+<li>convert plane equation (coordinate form) into parametric from. Get
+position vector and tow orientation vectors.<br />
+</li>
+<li>intersection point from three globs upon an initial guess</li>
+</ul>
+</div>
+<div id="math" class="section level3">
+<h3>Math</h3>
+<p>Functions start with math_</p>
+<ul>
+<li>Transformation from spherical to Cartesian coordinate system and
+back.</li>
+<li>Rotation Matrix in R and Ryacas (YACAS)</li>
+<li>lf Linear function helpers</li>
+<li>Quadrant and angle finder for 2D vector</li>
+<li>cross and dot vector product</li>
+<li>Magnitude of vector</li>
+<li>In-between angel of two vectors</li>
+<li>Get polynomial from roots</li>
+<li>Round polynomial equation</li>
+<li>Generate non linear Vector with start, end and vector length</li>
+</ul>
+<div id="math-in-yacas" class="section level4">
+<h4>Math in yacas</h4>
+<p>Functions start with yac_</p>
+<ul>
+<li>rotation matrix 2D</li>
+<li>rotation matrix 3D</li>
+<li>Plane coordinate function</li>
+<li>Intersection plane and line</li>
+</ul>
+</div>
+<div id="linear-function-helper" class="section level4">
+<h4>Linear function helper</h4>
+<p>Functions start with lf_</p>
+<ul>
+<li>simple linear function</li>
+<li>perpendicular to function</li>
+<li>intersection point of two functions</li>
+<li>linear function from two points</li>
+</ul>
+</div>
+<div id="signal" class="section level4">
+<h4>signal</h4>
+<p>Functions start with signal_</p>
+<ul>
+<li>Center Signal around zero (AC cupling)</li>
+</ul>
+</div>
+<div id="statistical" class="section level4">
+<h4>statistical</h4>
+<p>Functions start with stat_</p>
+<ul>
+<li>Process capability index (CPK)</li>
+<li>Probability density function</li>
+</ul>
+</div>
+</div>
+<div id="busines" class="section level3">
+<h3>busines</h3>
+<ul>
+<li>NPS (net promoter score)</li>
+</ul>
+</div>
+<div id="utilities" class="section level3">
+<h3>Utilities</h3>
+<div id="plot" class="section level4">
+<h4>Plot</h4>
+<p>Functions start with plot_</p>
+<ul>
+<li>Get normal distributed overlay for faceted histograms</li>
+</ul>
+</div>
+<div id="system" class="section level4">
+<h4>System</h4>
+<p>Functions start with r_</p>
+<ul>
+<li>r_ R utility functions, e.g. windows path to R compatible path</li>
+</ul>
+</div>
+<div id="fast-dictionary" class="section level4">
+<h4>Fast dictionary</h4>
+<p>Function start with dict_</p>
+<ul>
+<li>Create fast dictionary, convenience functions.</li>
+</ul>
+</div>
+</div>
 </div>
 
 

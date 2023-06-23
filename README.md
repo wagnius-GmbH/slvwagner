@@ -13,7 +13,8 @@ Functions start with geo_
 -   slerp 
 -   Intersection of sphere and line, 
 -   Intersecting point(s) of plane and line
--   convert plane equation (coordinate form) into parametric from. Get positon vector and tow orientation vectors.  
+-   convert plane equation (coordinate form) into parametric from. Get position vector and tow orientation vectors.  
+-   intersection point from three globs upon an initial guess
 
 ### Math 
 Functions start with math_
