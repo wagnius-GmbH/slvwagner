@@ -26,17 +26,17 @@ http://www.yacas.org/
 ## Content
 
 ### Geometrical stuff 
-Functions start with geo_
+  Functions start with geo_
 
--   conic section 
--   slerp 
+-   Conic section 
+-   Slerp 
 -   Intersection of sphere and line, 
 -   Intersecting point(s) of plane and line
--   convert plane equation (coordinate form) into parametric from. Get position vector and tow orientation vectors.  
--   intersection point from three globs upon an initial guess
+-   Convert plane equation (coordinate form) into parametric from. Get position vector and tow orientation vectors.  
+-   Intersection point from three globs upon an initial guess
 
 ### Math 
-Functions start with math_
+  Functions start with math_
 
 -   Transformation from spherical to Cartesian coordinate system and back. 
 -   Rotation Matrix in R and Ryacas (YACAS)
@@ -49,51 +49,51 @@ Functions start with math_
 -   Round polynomial equation
 -   Generate non linear Vector with start, end and vector length
 
-#### Math in yacas 
-Functions start with yac_
+### Math in yacas 
+  Functions start with yac_
 
--   rotation matrix 2D
--   rotation matrix 3D
--   Plane coordinate function
--   Intersection plane and line
+  -   Rotation matrix 2D
+  -   Rotation matrix 3D
+  -   Plane coordinate function
+  -   Intersection plane and line
 
 #### Linear function helper
-Functions start with lf_
+  Functions start with lf_
 
-- simple linear function 
-- perpendicular to function 
-- intersection point of two functions
-- linear function from two points
+-   Simple linear function 
+-   perpendicular to function 
+-   Intersection point of two functions
+-   Linear function from two points
 
 #### signal
-Functions start with signal_
+  Functions start with signal_
 
 -   Center Signal around zero (AC cupling)
 
 
 #### statistical 
-Functions start with stat_
+  Functions start with stat_
 
 -   Process capability index (CPK)
 -   Probability density function
 
 ### busines
-- NPS (net promoter score)
+-   NPS (net promoter score)
 
 ### Utilities
 
 #### Plot
-Functions start with plot_
+  Functions start with plot_
 
 -    Get normal distributed overlay for faceted histograms
 
 #### System 
-Functions start with r_
+  Functions start with r_
 
 -   r_ R utility functions, e.g. windows path to R compatible path
 
 #### Fast dictionary
-Function start with dict_
+  Function start with dict_
 
 -   Create fast dictionary, convenience functions.
 
