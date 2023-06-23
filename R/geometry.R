@@ -437,7 +437,7 @@ geo_interSec_3spheres<- function(param_matrix, initial_guess) {
   }
 
   # Solve the system of equations numerically
-  solution <- nleqslv(initial_guess, equations)
+  solution <- nleqslv::nleqslv(initial_guess, equations)
 
   # Return the intersecting points
   return(c(x = solution$x[1], y = solution$x[2], z = solution$x[3]))
