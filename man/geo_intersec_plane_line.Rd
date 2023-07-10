@@ -21,13 +21,7 @@ vector of intersection point
 \description{
 Function returning intersecting point of a plane and a 3D-line if it exists.
 }
-\details{
-The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS needs to be installed.
-
-\url{http://www.yacas.org/}
-}
 \examples{
-library(Ryacas)
 geo_intersec_plane_line(p = c(2,3,5),n = c(1,-5,-8),s = c(1,1,1), w = c(5,10,10))
 }
 \author{

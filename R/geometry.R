@@ -449,9 +449,6 @@ geo_interSec_3spheres<- function(param_matrix, initial_guess) {
 #' @name geo_intersec_plane_line
 #' @description
 #' Function returning intersecting point of a plane and a 3D-line if it exists.
-#' @details
-#' The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS needs to be installed.
-#' @details \url{http://www.yacas.org/}
 #' @param  p position vector for the plane
 #' @param  n normal vector of the plane
 #' @param  s position vector of the line
@@ -462,27 +459,23 @@ geo_interSec_3spheres<- function(param_matrix, initial_guess) {
 #' vector of intersection point
 #'
 #' @examples
-#' library(Ryacas)
 #' geo_intersec_plane_line(p = c(2,3,5),n = c(1,-5,-8),s = c(1,1,1), w = c(5,10,10))
 #' @export
 
-geo_intersec_plane_line <- function(p,n,s,w){
-  x <- paste0("x",1:3)|>
-    Ryacas::ysym()
-  EQ_Ebene <- Ryacas::ysym(n)*(x-Ryacas::ysym(p))
-  EQ_Ebene <- EQ_Ebene[1]+EQ_Ebene[2]+EQ_Ebene[3]
-  r <- Ryacas::ysym("r")
-  Parameter_Ebene <- s+r*w
-  Ryacas::yac_assign(Parameter_Ebene[1],"x1")
-  Ryacas::yac_assign(Parameter_Ebene[2],"x2")
-  Ryacas::yac_assign(Parameter_Ebene[3],"x3")
-  r <- EQ_Ebene|>
-    Ryacas::y_fn("Solve","r")|>
-    Ryacas::y_rmvars()|>
-    Ryacas::as_r()
-  schnittpunkte <- s+r*w
-  names(schnittpunkte) <- c("x","y","z")
-  schnittpunkte
+geo_intersec_plane_line <- function(p, n, s, w) {
+  dotProduct <- sum(n * w) # Calculate the dot product of the normal vector and the direction vector
+  # If the dot product is zero, the line is parallel to the plane and no intersection exists
+  if (dotProduct == 0) {
+    stop("The line is parallel to the plane. No intersection exists.")
+  }
+
+  # Calculate the vector from a point on the plane to a point on the line
+  v <- s - p
+  # Calculate the scalar value t for the line parameterization
+  t <- -sum(n * v) / dotProduct
+  # Calculate the intersection point
+  intersectionPoint <- s + t * w
+  return(intersectionPoint)
 }
 
 #######################################
