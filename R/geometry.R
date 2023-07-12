@@ -456,26 +456,24 @@ geo_interSec_3spheres<- function(param_matrix, initial_guess) {
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' vector of intersection point
+#' Intersection point
 #'
 #' @examples
-#' geo_intersec_plane_line(p = c(2,3,5),n = c(1,-5,-8),s = c(1,1,1), w = c(5,10,10))
+#' geo_intersec_plane_line(p = c(0,0,0),n = c(0,0,1),s = c(-1,-1,1), w = c(1,1,-1))
 #' @export
 
 geo_intersec_plane_line <- function(p, n, s, w) {
-  dotProduct <- sum(n * w) # Calculate the dot product of the normal vector and the direction vector
+  dotProduct <- sum(n * w)
   # If the dot product is zero, the line is parallel to the plane and no intersection exists
   if (dotProduct == 0) {
     stop("The line is parallel to the plane. No intersection exists.")
   }
-
   # Calculate the vector from a point on the plane to a point on the line
   v <- s - p
-  # Calculate the scalar value t for the line parameterization
+  # Calculate the scalar value t for the line parametrization
   t <- -sum(n * v) / dotProduct
-  # Calculate the intersection point
-  intersectionPoint <- s + t * w
-  return(intersectionPoint)
+  # Calculate and return the intersection point
+  return(s + t * w)
 }
 
 #######################################

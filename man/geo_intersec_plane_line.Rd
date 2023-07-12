@@ -16,13 +16,13 @@ geo_intersec_plane_line(p, n, s, w)
 \item{w}{direction vector of the line}
 }
 \value{
-vector of intersection point
+Intersection point
 }
 \description{
 Function returning intersecting point of a plane and a 3D-line if it exists.
 }
 \examples{
-geo_intersec_plane_line(p = c(2,3,5),n = c(1,-5,-8),s = c(1,1,1), w = c(5,10,10))
+geo_intersec_plane_line(p = c(0,0,0),n = c(0,0,1),s = c(-1,-1,1), w = c(1,1,-1))
 }
 \author{
 Florian Wagner
