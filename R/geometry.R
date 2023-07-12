@@ -443,3 +443,65 @@ geo_interSec_3spheres<- function(param_matrix, initial_guess) {
   return(c(x = solution$x[1], y = solution$x[2], z = solution$x[3]))
 }
 
+#######################################
+#' Intersection of a plane and a line
+#'
+#' @name geo_intersec_plane_line
+#' @description
+#' Function returning intersecting point of a plane and a 3D-line if it exists.
+#' @param  p position vector for the plane
+#' @param  n normal vector of the plane
+#' @param  s position vector of the line
+#' @param  w direction vector of the line
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Intersection point
+#'
+#' @examples
+#' geo_intersec_plane_line(p = c(0,0,0),n = c(0,0,1),s = c(-1,-1,1), w = c(1,1,-1))
+#' @export
+
+geo_intersec_plane_line <- function(p, n, s, w) {
+  dotProduct <- sum(n * w)
+  # If the dot product is zero, the line is parallel to the plane and no intersection exists
+  if (dotProduct == 0) {
+    stop("The line is parallel to the plane. No intersection exists.")
+  }
+  # Calculate the vector from a point on the plane to a point on the line
+  v <- s - p
+  # Calculate the scalar value t for the line parametrization
+  t <- -sum(n * v) / dotProduct
+  # Calculate and return the intersection point
+  return(s + t * w)
+}
+
+#######################################
+#' Coordinate function of a plane
+#'
+#' @name goe_plane_fun
+#' @description
+#' Function returning a cas function of a plane defined by position vector \eqn{p} and the normal vector \eqn{n} of a plane.
+#' @details
+#' The calculation is done by Ryacas (yacas) and uses symbolic math. The package Ryacas and the software YACAS needs to be installed.
+#' @details \url{http://www.yacas.org/}
+#' @param  p position vector
+#' @param  n normal vector of the plane
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' Yacas function
+#'
+#' @examples
+#' library(Ryacas)
+#' goe_plane_fun(c(2,3,4), c(12,5,1)|>math_unit_vector())
+#' @export
+
+goe_plane_fun <- function(p,n){
+  x <- paste0("x",1:3)|>
+    Ryacas::ysym()
+
+  EQ_Ebene <- Ryacas::ysym(n)*(x-Ryacas::ysym(p))
+  EQ_Ebene <- EQ_Ebene[1]+EQ_Ebene[2]+EQ_Ebene[3]
+  EQ_Ebene
+}
