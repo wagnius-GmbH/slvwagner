@@ -5,5 +5,5 @@ Some function need yacas a symbolic solver: \
 http://www.yacas.org/
 
 ## Usage
-If you just want to use the package you can download the latest releas and install a binary or a source package. I you use the source package (.tar.gz) you need rtools to install.
+If you just want to use the package you can download the latest release and install a binary or a source package. If you use the source package (.tar.gz) you also need to install rtools to compile.
 
