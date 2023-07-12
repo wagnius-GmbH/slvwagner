@@ -456,7 +456,7 @@ geo_interSec_3spheres<- function(param_matrix, initial_guess) {
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' Intersection point
+#' named vector (Intersecting point)
 #'
 #' @examples
 #' geo_intersec_plane_line(p = c(0,0,0),n = c(0,0,1),s = c(-1,-1,1), w = c(1,1,-1))
@@ -472,14 +472,16 @@ geo_intersec_plane_line <- function(p, n, s, w) {
   v <- s - p
   # Calculate the scalar value t for the line parametrization
   t <- -sum(n * v) / dotProduct
-  # Calculate and return the intersection point
-  return(s + t * w)
+  # Calculate the intersection point
+  Ipoint <- s + t * w
+  names(Ipoint) <- c("x","y","z")
+  return(Ipoint)
 }
 
 #######################################
 #' Coordinate function of a plane
 #'
-#' @name goe_plane_fun
+#' @name geo_plane_fun
 #' @description
 #' Function returning a cas function of a plane defined by position vector \eqn{p} and the normal vector \eqn{n} of a plane.
 #' @details
@@ -494,10 +496,10 @@ geo_intersec_plane_line <- function(p, n, s, w) {
 #'
 #' @examples
 #' library(Ryacas)
-#' goe_plane_fun(c(2,3,4), c(12,5,1)|>math_unit_vector())
+#' geo_plane_fun(c(2,3,4), c(12,5,1)|>math_unit_vector())
 #' @export
 
-goe_plane_fun <- function(p,n){
+geo_plane_fun <- function(p,n){
   x <- paste0("x",1:3)|>
     Ryacas::ysym()
 
