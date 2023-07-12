@@ -16,7 +16,7 @@ geo_intersec_plane_line(p, n, s, w)
 \item{w}{direction vector of the line}
 }
 \value{
-Intersection point
+named vector (Intersecting point)
 }
 \description{
 Function returning intersecting point of a plane and a 3D-line if it exists.
