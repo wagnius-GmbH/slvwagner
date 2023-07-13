@@ -4,4 +4,4 @@
 .Ruserdata
 inst/doc
 Rplots.pdf
-docs
+docs/*
