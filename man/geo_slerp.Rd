@@ -22,7 +22,7 @@ Matrix with \code{nrow(nb_points)}
 }
 \description{
 Radius interpolation by 3 points and a given radius.
-The Radius interpolation will be calculated using the \code{cp} = common centre point and the vector \code{x1} and \code{x2}.
+The Radius interpolation will be calculated using the \code{cp} = common centre point and the vector \code{x1} as the starting point and the vector \code{x2} as the end point.
 }
 \details{
 The slerp calculation is done by the following formula:

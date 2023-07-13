@@ -228,7 +228,7 @@ geo_conic_section_from_5points <- function(section_points, nb = 10){
 #' @name geo_slerp
 #' @description
 #' Radius interpolation by 3 points and a given radius.
-#' The Radius interpolation will be calculated using the \code{cp} = common centre point and the vector \code{x1} and \code{x2}.
+#' The Radius interpolation will be calculated using the \code{cp} = common centre point and the vector \code{x1} as the starting point and the vector \code{x2} as the end point.
 #' @details
 #' The slerp calculation is done by the following formula:
 #' \deqn{Slerp(p_0,p_1,t) = \frac{sin((1 - t) \cdot \Omega)}{sin(\Omega)} \cdot p_0   + \frac{sin(t \cdot \Omega)}{sin(\Omega)}  \cdot p_1}
