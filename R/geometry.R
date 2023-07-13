@@ -228,14 +228,15 @@ geo_conic_section_from_5points <- function(section_points, nb = 10){
 #' @name geo_slerp
 #' @description
 #' Radius interpolation by 3 points and a given radius.
-#' The Radius interpolation will be calculated using the \code{cp} = common center point and the vector \code{x1} and \code{x2}.
+#' The Radius interpolation will be calculated using the \code{cp} = common centre point and the vector \code{x1} and \code{x2}.
 #' @details
-#' \deqn{sin((1 - t) * phi) / sin(phi) * x1   +  sin(t * phi / sin(phi)  *  x2)}
+#' The slerp calculation is done by the following formula:
+#' \deqn{Slerp(\vec x_1, \vec x_2,t) = \frac{sin((1 - t) \cdot \Omega)}{sin(\Omega)} \cdot \vec x_1   + \frac{sin(t \cdot \Omega)}{sin(\Omega)}  \cdot  \vec x_2}
 #' \url{https://en.wikipedia.org/wiki/Slerp}
 #' @param  R radius
-#' @param  x1 vector
-#' @param  x2 vector
-#' @param  cp vector
+#' @param  x1 starting point vector
+#' @param  x2 end point vector
+#' @param  cp common centre point vector
 #' @param  nb_points count of points to be generate by the function.
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
@@ -247,10 +248,10 @@ geo_conic_section_from_5points <- function(section_points, nb = 10){
 #'                             cp = c(10,-10,10))))
 #'
 #' m <- geo_slerp(R  =10,
-#'                 x1 = p["x1",],
-#'                 x2 = p["x2",],
-#'                 cp = p["cp",],
-#'                 nb_points = 20)
+#'                x1 = p["x1",],
+#'                x2 = p["x2",],
+#'                cp = p["cp",],
+#'                nb_points = 20)
 #' m <- rbind(p,m)
 #' #Plot 3D
 #' library(rgl)

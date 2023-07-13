@@ -9,11 +9,11 @@ geo_slerp(R, x1, x2, cp, nb_points = 10)
 \arguments{
 \item{R}{radius}
 
-\item{x1}{vector}
+\item{x1}{starting point vector}
 
-\item{x2}{vector}
+\item{x2}{end point vector}
 
-\item{cp}{vector}
+\item{cp}{common centre point vector}
 
 \item{nb_points}{count of points to be generate by the function.}
 }
@@ -22,10 +22,11 @@ Matrix with \code{nrow(nb_points)}
 }
 \description{
 Radius interpolation by 3 points and a given radius.
-The Radius interpolation will be calculated using the \code{cp} = common center point and the vector \code{x1} and \code{x2}.
+The Radius interpolation will be calculated using the \code{cp} = common centre point and the vector \code{x1} and \code{x2}.
 }
 \details{
-\deqn{sin((1 - t) * phi) / sin(phi) * x1   +  sin(t * phi / sin(phi)  *  x2)}
+The slerp calculation is done by the following formula:
+\deqn{Slerp(\vec x_1, \vec x_2,t) = \frac{sin((1 - t) \cdot \Omega)}{sin(\Omega)} \cdot \vec x_1   + \frac{sin(t \cdot \Omega)}{sin(\Omega)}  \cdot  \vec x_2}
 \url{https://en.wikipedia.org/wiki/Slerp}
 }
 \examples{
@@ -34,10 +35,10 @@ p <- t(as.matrix(data.frame(x1 = c(-10,-5,50),
                             cp = c(10,-10,10))))
 
 m <- geo_slerp(R  =10,
-                x1 = p["x1",],
-                x2 = p["x2",],
-                cp = p["cp",],
-                nb_points = 20)
+               x1 = p["x1",],
+               x2 = p["x2",],
+               cp = p["cp",],
+               nb_points = 20)
 m <- rbind(p,m)
 #Plot 3D
 library(rgl)
