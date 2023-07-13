@@ -254,6 +254,8 @@ geo_conic_section_from_5points <- function(section_points, nb = 10){
 #'                x2 = p["x2",],
 #'                cp = p["cp",],
 #'                nb_points = 20)
+#' print(m)
+#'
 #' #Plot 3D
 #' library(rgl)
 #' plot3d( m, type = "p", lwd = 2, top = TRUE,

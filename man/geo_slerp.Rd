@@ -41,6 +41,8 @@ m <- geo_slerp(R  =10,
                x2 = p["x2",],
                cp = p["cp",],
                nb_points = 20)
+print(m)
+
 #Plot 3D
 library(rgl)
 plot3d( m, type = "p", lwd = 2, top = TRUE,
