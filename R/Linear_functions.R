@@ -131,15 +131,15 @@ lf_fromPoints <- function (x){
 #' @details
 #' Get the intersecting point of two linear Functions. If only \code{x} is supplied, \code{x} needs to be a matrix or data.frame containing both
 #' linear functions. If \code{x} and or \code{y} have names you shall use the names (slope, intercept).
-#' @param x matrix or data frame (column names (slope,intercept))
-#' @param ... matrix or data frame (column names (slope,intercept))
+#' @param x vector, matrix or data frame with slope and intercept
+#' @param ... vector with slope and intercept
 #'
 #' @return vector
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
-#' x <- data.frame(slope = 2.3, intercept = -2)
-#' y <- data.frame(slope = 2.3, intercept = -2)
+#' x <- c(slope = 0.5, intercept = 1)
+#' y <- c(slope = -1, intercept = 2)
 #' lf_intersect(x,y)
 #' y <- y|>
 #'   rbind(data.frame(slope = 1.25, intercept = 2))
@@ -165,27 +165,24 @@ lf_intersect <- function(x,...){
         return(c(x = result_x, y = result_y))
       }
     }else{
-      print("x contains only a singl function")
-      return(NULL)
+      stop("x contains only a singl function")
     }
   }else{
     if(is.null(names(x))){
-      if(setequal(x,...)){
-        print("x and y are identical: cannot calculate interception point")
-        return(NULL)
+      if(x[1] == ...[1]){
+        stop("x and y are slopes identical: cannot calculate interception point")
       }else{
-        result_x = (...[,2]-x[,2])/(x[,1]-y[,1])
-        result_y = ...[,1]*result_x+...[,2]
-        return(c(x = pull(result_x), y = pull(result_y)))
+        result_x = (...[2]-x[2])/(x[1]-y[1])
+        result_y = ...[1]*result_x+...[2]
+        return(c(x = result_x, y = result_y))
       }
     }else{
-      if(setequal(x,...)){
-        print("x and y are identical: cannot calculate interception point")
-        return(NULL)
+      if(x[1] == ...[1]){
+        stop("x and y slopes are identical: cannot calculate interception point")
       }else{
-        result_x = (...[,"intercept"]-x[,"intercept"])/(x[,"slope"]-...[,"slope"])
-        result_y = ...[,"slope"]*result_x+...[,"intercept"]
-        return(c(x = pull(result_x), y = pull(result_y)))
+        result_x = (...["intercept"]-x["intercept"])/(x["slope"]-...["slope"])
+        result_y = ...["slope"]*result_x+...["intercept"]
+        return(c(result_x, result_y))
       }
     }
   }
