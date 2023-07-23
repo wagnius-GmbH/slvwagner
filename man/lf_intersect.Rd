@@ -25,15 +25,9 @@ linear functions. If \code{x} and or \code{y} have names you shall use the names
 x <- c(slope = 0.5, intercept = 1)
 y <- c(slope = -1, intercept = 2)
 lf_intersect(x,y)
-y <- y|>
-  rbind(data.frame(slope = 1.25, intercept = 2))
-lf_intersect(y)
-names(y)<-c("slope","intercept")
-lf_intersect(y)
-lf_intersect(data.frame(slope = c(0.2,-1),intercept = c(2,3)))
-lf_intersect(matrix(c(0.2,-1,2,3),ncol = 2))
-y <- matrix(c(0.2,-1,2,3),ncol = 2)
-lf_intersect(y)
+rbind(x,y)|>lf_intersect()
+matrix(c(x,y),ncol = 2, byrow = TRUE)|>lf_intersect()
+matrix(c(0.2,-1,2,3),ncol = 2)|>lf_intersect()
 }
 \author{
 Florian Wagner

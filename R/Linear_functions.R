@@ -141,49 +141,26 @@ lf_fromPoints <- function (x){
 #' x <- c(slope = 0.5, intercept = 1)
 #' y <- c(slope = -1, intercept = 2)
 #' lf_intersect(x,y)
-#' y <- y|>
-#'   rbind(data.frame(slope = 1.25, intercept = 2))
-#' lf_intersect(y)
-#' names(y)<-c("slope","intercept")
-#' lf_intersect(y)
-#' lf_intersect(data.frame(slope = c(0.2,-1),intercept = c(2,3)))
-#' lf_intersect(matrix(c(0.2,-1,2,3),ncol = 2))
-#' y <- matrix(c(0.2,-1,2,3),ncol = 2)
-#' lf_intersect(y)
+#' rbind(x,y)|>lf_intersect()
+#' matrix(c(x,y),ncol = 2, byrow = TRUE)|>lf_intersect()
+#' matrix(c(0.2,-1,2,3),ncol = 2)|>lf_intersect()
 #' @export
 
-lf_intersect <- function(x,...){
-  if(missing(...)){
-    if(nrow(x)>1){
-      if(is.null(names(x))){
-        result_x = (x[2,2]-x[1,2])/(x[1,1]-x[2,1])
-        result_y = x[2,1]*result_x+x[2,2]
+lf_intersect <- function(x, ...) {
+  if (missing(...)) {
+    x <- rbind(x,...)
+    if (nrow(x) > 1) {
+      if (x[1, 1] != x[2, 1]) {
+        result_x = (x[2, 2] - x[1, 2]) / (x[1, 1] - x[2, 1])
+        result_y = x[2, 1] * result_x + x[2, 2]
         return(c(x = result_x, y = result_y))
-      }else{
-        result_x = (x[2,"intercept"]-x[1,"intercept"])/(x[1,"slope"]-x[2,"slope"])
-        result_y = x[2,"slope"]*result_x+x[2,"intercept"]
-        return(c(x = result_x, y = result_y))
-      }
-    }else{
-      stop("x contains only a singl function")
-    }
-  }else{
-    if(is.null(names(x))){
-      if(x[1] == ...[1]){
+
+      } else{
         stop("x and y are slopes identical: cannot calculate interception point")
-      }else{
-        result_x = (...[2]-x[2])/(x[1]-y[1])
-        result_y = ...[1]*result_x+...[2]
-        return(c(x = result_x, y = result_y))
       }
-    }else{
-      if(x[1] == ...[1]){
-        stop("x and y slopes are identical: cannot calculate interception point")
-      }else{
-        result_x = (...["intercept"]-x["intercept"])/(x["slope"]-...["slope"])
-        result_y = ...["slope"]*result_x+...["intercept"]
-        return(c(result_x, result_y))
-      }
+    } else{
+      stop("x contains only a single function")
     }
   }
 }
+
