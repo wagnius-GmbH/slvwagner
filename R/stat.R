@@ -38,8 +38,7 @@ stat_cpk <- function(LSL, USL, mue, sigma){
   if(length(USL)==1 & is.numeric(USL) & length(LSL)==1 & is.numeric(LSL)){
     return(min(mue-LSL, USL-mue)/(3*sigma))
   }else{
-    writeLines("vector LSL and USL have grater lenght than 1")
-    NULL
+    stop("vector LSL and USL have grater lenght than 1")
   }
 }
 
