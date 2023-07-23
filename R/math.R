@@ -688,7 +688,6 @@ math_polynom_from_roots <- function(roots,round_digits=9){
   # Factor and simplify to get the polynomial
   for (ii in 1:length(roots)) {
     if(is.complex(roots[[ii]])){ # is the root complex?
-      #print("complex")
       input_Re <- Re(roots[[ii]])
       input_Im <- Im(roots[[ii]])|>abs()
 
@@ -703,7 +702,6 @@ math_polynom_from_roots <- function(roots,round_digits=9){
       cnt_im <- cnt_im+1
 
     }else{ # only real
-      #print("real")
       c_factors_re[[cnt_re]] <- ifelse(roots[[ii]] >= 0,
                                        paste0("x-",roots[[ii]]),
                                        paste0("x+",abs(roots[[ii]])))|>
