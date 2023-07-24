@@ -14,13 +14,13 @@ lf_lf(x, parameter, ...)
 \item{...}{intercept \code{b}}
 }
 \value{
-vector \code{x}
+vector or matrix
 }
 \description{
 linear function with parameter slope \code{m} and intercept \code{b}.
 }
 \details{
-The function calculates \code{y} for a vector of \code{x}.
+The function calculates \code{y} for given vector \code{x} with the \code{parameter},(\code{...}) supplied.
 }
 \examples{
 lf_lf(-5:5,0.8,3.265)

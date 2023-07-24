@@ -5,11 +5,11 @@
 #' @description
 #' linear function with parameter slope \code{m} and intercept \code{b}.
 #' @details
-#' The function calculates \code{y} for a vector of \code{x}.
+#' The function calculates \code{y} for given vector \code{x} with the \code{parameter},(\code{...}) supplied.
 #' @param x vector
 #' @param parameter Either vector, matrix or data.frame with parameter c(\code{m},\code{b}) or just the slope \code{m}. It is also possible to supply a matrix as a set of parameter where each row represents c(\code{m},\code{b}).
 #' @param ... intercept \code{b}
-#' @return vector \code{x}
+#' @return vector or matrix
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
