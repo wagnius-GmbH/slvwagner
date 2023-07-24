@@ -3,10 +3,8 @@
 #'
 #' @name math_betrag
 #' @description Get the magnitude of a vector of any length
-
 #' @param x numerical vector
 #' @return numerical vector of length one
-#' \code{x}
 #' @examples math_betrag(c(1,1))
 #' @examples math_betrag(c(1,1,1))
 #' @author Florian Wagner
@@ -22,10 +20,8 @@ math_betrag <- function(x) {
 #'
 #' @name math_magnitude
 #' @description Get the magnitude of a vector of any length
-
 #' @param x numerical vector
 #' @return numerical vector of length one
-#' \code{x}
 #' @examples math_magnitude(c(1,1))
 #' @examples math_magnitude(c(1,1,1))
 #' @author Florian Wagner

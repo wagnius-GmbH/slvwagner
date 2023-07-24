@@ -11,7 +11,6 @@ math_betrag(x)
 }
 \value{
 numerical vector of length one
-\code{x}
 }
 \description{
 Get the magnitude of a vector of any length
