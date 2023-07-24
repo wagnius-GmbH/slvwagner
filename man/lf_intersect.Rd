@@ -7,9 +7,9 @@
 lf_intersect(x, ...)
 }
 \arguments{
-\item{x}{matrix or data frame (column names (slope,intercept))}
+\item{x}{vector, matrix or data frame with slope and intercept}
 
-\item{...}{matrix or data frame (column names (slope,intercept))}
+\item{...}{vector with slope and intercept}
 }
 \value{
 vector
@@ -22,18 +22,12 @@ Get the intersecting point of two linear Functions. If only \code{x} is supplied
 linear functions. If \code{x} and or \code{y} have names you shall use the names (slope, intercept).
 }
 \examples{
-x <- data.frame(slope = 2.3, intercept = -2)
-y <- data.frame(slope = 2.3, intercept = -2)
+x <- c(slope = 0.5, intercept = 1)
+y <- c(slope = -1, intercept = 2)
 lf_intersect(x,y)
-y <- y|>
-  rbind(data.frame(slope = 1.25, intercept = 2))
-lf_intersect(y)
-names(y)<-c("slope","intercept")
-lf_intersect(y)
-lf_intersect(data.frame(slope = c(0.2,-1),intercept = c(2,3)))
-lf_intersect(matrix(c(0.2,-1,2,3),ncol = 2))
-y <- matrix(c(0.2,-1,2,3),ncol = 2)
-lf_intersect(y)
+rbind(x,y)|>lf_intersect()
+matrix(c(x,y),ncol = 2, byrow = TRUE)|>lf_intersect()
+matrix(c(0.2,-1,2,3),ncol = 2)|>lf_intersect()
 }
 \author{
 Florian Wagner

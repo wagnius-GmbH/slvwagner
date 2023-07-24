@@ -228,38 +228,40 @@ geo_conic_section_from_5points <- function(section_points, nb = 10){
 #' @name geo_slerp
 #' @description
 #' Radius interpolation by 3 points and a given radius.
-#' The Radius interpolation will be calculated using the \code{cp} = common center point and the vector \code{x1} and \code{x2}.
+#' The Radius interpolation will be calculated using the \code{cp} = common centre point and the vector \code{x1} as the starting point and the vector \code{x2} as the end point.
 #' @details
-#' \deqn{sin((1 - t) * phi) / sin(phi) * x1   +  sin(t * phi / sin(phi)  *  x2)}
+#' The slerp calculation is done by the following formula:
+#' \deqn{Slerp(p_0,p_1,t) = \frac{sin((1 - t) \cdot \Omega)}{sin(\Omega)} \cdot p_0   + \frac{sin(t \cdot \Omega)}{sin(\Omega)}  \cdot p_1}
 #' \url{https://en.wikipedia.org/wiki/Slerp}
 #' @param  R radius
-#' @param  x1 vector
-#' @param  x2 vector
-#' @param  cp vector
+#' @param  x1 starting point vector
+#' @param  x2 end point vector
+#' @param  cp common centre point vector
 #' @param  nb_points count of points to be generate by the function.
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
 #' Matrix with \code{nrow(nb_points)}
 #' @examples
-#' p <- t(as.matrix(data.frame(x1 = c(-10,-5,50),
-#'                             x2 = c(-20,10,2),
-#'                             cp = c(10,-10,10))))
+#' p <- data.frame(x1 = c(-10,-5,50),
+#'                 x2 = c(-20,10,2),
+#'                 cp = c(10,-10,10))|>
+#'    as.matrix()|>
+#'    t()
 #'
 #' m <- geo_slerp(R  =10,
-#'                 x1 = p["x1",],
-#'                 x2 = p["x2",],
-#'                 cp = p["cp",],
-#'                 nb_points = 20)
-#' m <- rbind(p,m)
+#'                x1 = p["x1",],
+#'                x2 = p["x2",],
+#'                cp = p["cp",],
+#'                nb_points = 20)
+#' print(m)
+#'
 #' #Plot 3D
 #' library(rgl)
-#' plot3d( m[,1], m[,2], m[,3], type = "p", lwd = 2, top = TRUE,
-#'         #col = rainbow(nrow(m)),
-#'         aspect = c(diff(c(min(m[,1]),max(m[,1]))),
-#'                    diff(c(min(m[,2]),max(m[,2]))),
-#'                    diff(c(min(m[,3]),max(m[,3])))
-#'                    ))
+#' plot3d( m, type = "p", lwd = 2, top = TRUE,
+#'         col = rainbow(nrow(m)),
+#'         aspect = "iso")
+#' plot3d(p, add = TRUE, col = "black")
 #' @export
 
 geo_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radius, Punkteanzahl

@@ -1,49 +1,40 @@
 #######################################
-#' linear function with parameter mx+b
+#' Linear function: \eqn{f(x) = y = mx+b}
 #'
-#' @name lf
+#' @name lf_lf
 #' @description
-#' linear function with parameter slope and intercept.
-#' @details \eqn{f(x)=mx+b}
+#' linear function with parameter slope \code{m} and intercept \code{b}.
+#' @details
+#' The function calculates \code{y} for given vector \code{x} with the \code{parameter},(\code{...}) supplied.
 #' @param x vector
-#' @param m slope
-#' @param b intercept
-#' @return vector \code{x}
+#' @param parameter Either vector, matrix or data.frame with parameter c(\code{m},\code{b}) or just the slope \code{m}. It is also possible to supply a matrix as a set of parameter where each row represents c(\code{m},\code{b}).
+#' @param ... intercept \code{b}
+#' @return vector or matrix
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
-#' lf(-12:10,0.8,3.265)
-#' plot(lf(-12:10,0.8,3.265))
+#' lf_lf(-5:5,0.8,3.265)
+#' lf_lf(-5:5,c(1,3))
+#' df <- data.frame(x = c(0.5,1,-0.5), y = c(1,0,-1))
+#' lf_lf(-5:5,df)
 #' @export
 
-lf <- function(x,m,b){
-  return(m*x+b)
+lf_lf <- function(x, parameter, ...) {
+  lf_ <- function(x,m,b) m*x+b
+  if (is.null(nrow(parameter))) {
+    if (missing(...)) {
+      return(lf_(x,parameter[1],parameter[2]))
+    } else{
+      return(parameter * x + ...)
+    }
+  }else{
+    apply(parameter, 1, function(y){
+      y_ <- as.vector(y)
+      lf_(x,y_[1],y_[2])
+    })
+  }
 }
 
-#######################################
-#' linear function but with data frame instead of single parameters
-#'
-#' @name lf_df_mb
-#' @description
-#' Calculate y for different linear functions.
-#' The parameters slope and intercept shall be provided by data frame with columns "slope" and "intercept".
-#' @details
-#' f(x)= y = m_{slopes}* x + b_{intercepts}
-#' @param x vector
-#' @param df_mb data frame with "slope(s)" and "intercept(s)"
-#' @return vector \code{y}
-#' @author Florian Wagner
-#' \email{florian.wagner@wagnius.ch}
-#' @examples df <- data.frame(slope = 0.5, intercept = 1)
-#' lf_df_mb(0:10,df)
-#' df <- data.frame(slope = c(0.5,1,-0.5), intercept = c(1,-10,0))
-#' lf_df_mb(10,df)
-#' @export
-
-
-lf_df_mb <- function(x,df_mb){
-  x*df_mb[,"slope"]+df_mb[,"intercept"]
-}
 
 #######################################
 #' Find linear function perpendicular to linear function through given point
@@ -131,62 +122,36 @@ lf_fromPoints <- function (x){
 #' @details
 #' Get the intersecting point of two linear Functions. If only \code{x} is supplied, \code{x} needs to be a matrix or data.frame containing both
 #' linear functions. If \code{x} and or \code{y} have names you shall use the names (slope, intercept).
-#' @param x matrix or data frame (column names (slope,intercept))
-#' @param ... matrix or data frame (column names (slope,intercept))
+#' @param x vector, matrix or data frame with slope and intercept
+#' @param ... vector with slope and intercept
 #'
 #' @return vector
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
-#' x <- data.frame(slope = 2.3, intercept = -2)
-#' y <- data.frame(slope = 2.3, intercept = -2)
+#' x <- c(slope = 0.5, intercept = 1)
+#' y <- c(slope = -1, intercept = 2)
 #' lf_intersect(x,y)
-#' y <- y|>
-#'   rbind(data.frame(slope = 1.25, intercept = 2))
-#' lf_intersect(y)
-#' names(y)<-c("slope","intercept")
-#' lf_intersect(y)
-#' lf_intersect(data.frame(slope = c(0.2,-1),intercept = c(2,3)))
-#' lf_intersect(matrix(c(0.2,-1,2,3),ncol = 2))
-#' y <- matrix(c(0.2,-1,2,3),ncol = 2)
-#' lf_intersect(y)
+#' rbind(x,y)|>lf_intersect()
+#' matrix(c(x,y),ncol = 2, byrow = TRUE)|>lf_intersect()
+#' matrix(c(0.2,-1,2,3),ncol = 2)|>lf_intersect()
 #' @export
 
-lf_intersect <- function(x,...){
-  if(missing(...)){
-    if(nrow(x)>1){
-      if(is.null(names(x))){
-        result_x = (x[2,2]-x[1,2])/(x[1,1]-x[2,1])
-        result_y = x[2,1]*result_x+x[2,2]
+lf_intersect <- function(x, ...) {
+  if (missing(...)) {
+    x <- rbind(x,...)
+    if (nrow(x) > 1) {
+      if (x[1, 1] != x[2, 1]) {
+        result_x = (x[2, 2] - x[1, 2]) / (x[1, 1] - x[2, 1])
+        result_y = x[2, 1] * result_x + x[2, 2]
         return(c(x = result_x, y = result_y))
-      }else{
-        result_x = (x[2,"intercept"]-x[1,"intercept"])/(x[1,"slope"]-x[2,"slope"])
-        result_y = x[2,"slope"]*result_x+x[2,"intercept"]
-        return(c(x = result_x, y = result_y))
+
+      } else{
+        stop("x and y are slopes identical: cannot calculate interception point")
       }
-    }else{
-      print("x contains only a singl function")
-      return(NULL)
-    }
-  }else{
-    if(is.null(names(x))){
-      if(setequal(x,...)){
-        print("x and y are identical: cannot calculate interception point")
-        return(NULL)
-      }else{
-        result_x = (...[,2]-x[,2])/(x[,1]-y[,1])
-        result_y = ...[,1]*result_x+...[,2]
-        return(c(x = pull(result_x), y = pull(result_y)))
-      }
-    }else{
-      if(setequal(x,...)){
-        print("x and y are identical: cannot calculate interception point")
-        return(NULL)
-      }else{
-        result_x = (...[,"intercept"]-x[,"intercept"])/(x[,"slope"]-...[,"slope"])
-        result_y = ...[,"slope"]*result_x+...[,"intercept"]
-        return(c(x = pull(result_x), y = pull(result_y)))
-      }
+    } else{
+      stop("x contains only a single function")
     }
   }
 }
+
