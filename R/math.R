@@ -13,8 +13,26 @@
 #' \email{florian.wagner@wagnius.ch}
 #' @export
 
-
 math_betrag <- function(x) {
+  sqrt(sum(x^2))
+}
+
+####################################
+#' Magnitude of a vector
+#'
+#' @name math_magnitude
+#' @description Get the magnitude of a vector of any length
+
+#' @param x numerical vector
+#' @return numerical vector of length one
+#' \code{x}
+#' @examples math_magnitude(c(1,1))
+#' @examples math_magnitude(c(1,1,1))
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @export
+#'
+math_magnitude <- function(x){
   sqrt(sum(x^2))
 }
 
