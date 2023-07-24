@@ -75,7 +75,7 @@ http://www.yacas.org/
 -   Process capability index (CPK)
 -   Probability density function
 
-### busines
+### business
 -   NPS (net promoter score)
 
 ### Utilities
