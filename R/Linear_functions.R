@@ -1,49 +1,40 @@
 #######################################
-#' linear function with parameter mx+b
+#' Linear function: \eqn{f(x) = y = mx+b}
 #'
-#' @name lf
+#' @name lf_lf
 #' @description
-#' linear function with parameter slope and intercept.
-#' @details \eqn{f(x)=mx+b}
+#' linear function with parameter slope \code{m} and intercept \code{b}.
+#' @details
+#' The function calculates \code{y} for a vector of \code{x}.
 #' @param x vector
-#' @param m slope
-#' @param b intercept
+#' @param parameter Either vector, matrix or data.frame with parameter c(\code{m},\code{b}) or just the slope \code{m}. It is also possible to supply a matrix as a set of parameter where each row represents c(\code{m},\code{b}).
+#' @param ... intercept \code{b}
 #' @return vector \code{x}
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
-#' lf(-12:10,0.8,3.265)
-#' plot(lf(-12:10,0.8,3.265))
+#' lf_lf(-5:5,0.8,3.265)
+#' lf_lf(-5:5,c(1,3))
+#' df <- data.frame(x = c(0.5,1,-0.5), y = c(1,0,-1))
+#' lf_lf(-5:5,df)
 #' @export
 
-lf <- function(x,m,b){
-  return(m*x+b)
+lf_lf <- function(x, parameter, ...) {
+  lf_ <- function(x,m,b) m*x+b
+  if (is.null(nrow(parameter))) {
+    if (missing(...)) {
+      return(lf_(x,parameter[1],parameter[2]))
+    } else{
+      return(parameter * x + ...)
+    }
+  }else{
+    apply(parameter, 1, function(y){
+      y_ <- as.vector(y)
+      lf_(x,y_[1],y_[2])
+    })
+  }
 }
 
-#######################################
-#' linear function but with data frame instead of single parameters
-#'
-#' @name lf_df_mb
-#' @description
-#' Calculate y for different linear functions.
-#' The parameters slope and intercept shall be provided by data frame with columns "slope" and "intercept".
-#' @details
-#' f(x)= y = m_{slopes}* x + b_{intercepts}
-#' @param x vector
-#' @param df_mb data frame with "slope(s)" and "intercept(s)"
-#' @return vector \code{y}
-#' @author Florian Wagner
-#' \email{florian.wagner@wagnius.ch}
-#' @examples df <- data.frame(slope = 0.5, intercept = 1)
-#' lf_df_mb(0:10,df)
-#' df <- data.frame(slope = c(0.5,1,-0.5), intercept = c(1,-10,0))
-#' lf_df_mb(10,df)
-#' @export
-
-
-lf_df_mb <- function(x,df_mb){
-  x*df_mb[,"slope"]+df_mb[,"intercept"]
-}
 
 #######################################
 #' Find linear function perpendicular to linear function through given point
