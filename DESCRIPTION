@@ -20,7 +20,7 @@ Suggests:
     tidyverse,
     stringi,
     testthat (>= 3.0.0)
-VignetteBuilder: knitr
+VignetteBuilder: knitr, rmarkdown
 Config/testthat/edition: 3
 Imports: 
     dplyr,
