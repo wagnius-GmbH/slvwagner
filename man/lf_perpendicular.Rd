@@ -4,22 +4,28 @@
 \alias{lf_perpendicular}
 \title{Find linear function perpendicular to linear function through given point}
 \usage{
-lf_perpendicular(x, lf)
+lf_perpendicular(x, lf, ...)
 }
 \arguments{
 \item{x}{point vector}
 
-\item{lf}{data.frame with the definiton of the given linear function containing the column slope and intercept}
+\item{lf}{vector with slope and intercept of linear function or just the slope if intercept will be supplied by \code{...}}
+
+\item{...}{intercept}
 }
 \value{
-data.frame with the slope and intercept
+matrix with slope and intercept
 }
 \description{
 Find linear function`s perpendicular to supplied linear function through given point \code{x}.
 }
 \examples{
 lf_perpendicular(x = c(2,-9),
-                      data.frame(slope = -3,intercept = 5))
+                      data.frame(slope = c(-3),intercept = c(5)))
+lf_perpendicular(x = c(2,-9),
+                      cbind(-3,5))
+lf_perpendicular(x = c(2,-9),-3,5)
+lf_perpendicular(x = c(2,-9), -3,5)
 }
 \author{
 Florian Wagner
