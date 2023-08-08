@@ -3,8 +3,10 @@
 #include <vector>
 #include <complex>
 #include <Rmath.h>
+#include <R.h>
 
 using namespace Rcpp;
+using namespace std;
 
 //////////////////////////////////////////////////////////////////////
 class class_roots_from_seeds {
@@ -180,6 +182,67 @@ List calc_roots_from_seeds_C(ComplexVector seeds, ComplexVector roots, NumericVe
                            );
   return df;
 }
+
+vector<complex<double>> expandGridComplexRowMajorOrder(const vector<double>& realVals, const vector<double>& imagVals, double epsilon = 1e-10) {
+  vector<complex<double>> result;
+  for (int ii = int(imagVals.size()) - 1; ii > -1; ii--)
+  {
+    for (int jj = 0; jj < (int)realVals.size(); jj++)
+    {
+      double realPart = realVals[jj];
+      double imagPart = imagVals[ii];
+      // Rounding of imaginary part of complex number
+      if (std::abs(imagPart) < epsilon) {
+        imagPart = 0.0; // Consider it as zero
+      }
+      result.push_back(std::complex<double>(realPart, imagPart));
+    }
+  }
+  return result;
+}
+
+
+//////////////////////////////////////////////
+//' r_map_data
+//' @name r_map_data
+//' @title r_map_data
+//' @description convert ".asc" list to dataframe
+//' @param l list with column vectors
+//' @examples
+//' data = list(1:5,10:6,11:15)
+//' data
+//' r_map_data(data)
+//' @export
+
+ // [[Rcpp::export]]
+ DataFrame r_map_data(List l) {
+   NumericVector v1 = l[0];
+   int numLists = l.length();
+   int listLength = v1.length();
+
+   IntegerVector x;
+   IntegerVector y;
+   IntegerVector z(numLists * listLength);
+
+   for (int jj = 0; jj < numLists; jj++) {
+     for (int ii = 0; ii < listLength; ii++) {
+       NumericVector temp = l[jj];
+       //Rcpp::Rcout << "ii " << ii + 1 << ", jj " << jj + 1 << std::endl;
+       z[ii + (jj * listLength)] = temp[ii];
+     }
+   }
+
+   for (int i = 1; i <= listLength; i++) {
+     for (int j = 1; j <= numLists; j++) {
+       x.push_back(i);
+       y.push_back(j);
+     }
+   }
+
+   DataFrame df = DataFrame::create(_["x"] = x, _["y"] = y, _["z"] = z);
+   return df;
+ }
+
 
 /*** R
 library(Rcpp)

@@ -23,9 +23,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// r_map_data
+DataFrame r_map_data(List l);
+RcppExport SEXP _slvwagner_r_map_data(SEXP lSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type l(lSEXP);
+    rcpp_result_gen = Rcpp::wrap(r_map_data(l));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_slvwagner_calc_roots_from_seeds_C", (DL_FUNC) &_slvwagner_calc_roots_from_seeds_C, 3},
+    {"_slvwagner_r_map_data", (DL_FUNC) &_slvwagner_r_map_data, 1},
     {NULL, NULL, 0}
 };
 
