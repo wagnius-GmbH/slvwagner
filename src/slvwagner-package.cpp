@@ -172,7 +172,7 @@ class class_roots_from_seeds {
 
 // [[Rcpp::export]]
 List calc_roots_from_seeds_C(ComplexVector seeds, ComplexVector roots, NumericVector poly){
-  // calculte
+  // calculate
   class_roots_from_seeds object(seeds, roots, poly);
   // return
   List df = List::create(Named("roots") = object.roots,
