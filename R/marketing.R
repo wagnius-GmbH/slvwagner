@@ -86,7 +86,7 @@ NPS <- function(x, rating , c_group , df_levels) {
   }
   # exit function call if rating is not defined
   if(missing(rating)){
-    message("function error NPS(): \nrating argument is missing")
+    stop("function error NPS(): \nrating argument is missing")
   }else{
     #copy data
     df_data <- x
@@ -153,6 +153,5 @@ NPS <- function(x, rating , c_group , df_levels) {
       return(df_data)
     }
   }
-  return(NULL)
 }
 
