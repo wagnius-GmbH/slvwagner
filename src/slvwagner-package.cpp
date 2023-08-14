@@ -183,19 +183,34 @@ List calc_roots_from_seeds_C(ComplexVector seeds, ComplexVector roots, NumericVe
   return df;
 }
 
-vector<complex<double>> expandGridComplexRowMajorOrder(const vector<double>& realVals, const vector<double>& imagVals, double epsilon = 1e-10) {
-  vector<complex<double>> result;
-  for (int ii = int(imagVals.size()) - 1; ii > -1; ii--)
+
+//////////////////////////////////////////////
+//' expandGridComplex
+//' @name expandGridComplex
+//' @title expandGridComplex
+//' @description
+//' Create Student data frame with all possible varians of a complex vector.
+//' @param x complex vector
+//' @param epsilon consider the value as zero
+//' @examples
+//' expandGridComplex(complex(real = rnorm(100), imag = rnorm(100)))
+//' @export
+
+// [[Rcpp::export]]
+
+ComplexVector expandGridComplex(ComplexVector x, double epsilon = 1e-10) {
+  ComplexVector result;
+  for (int ii = int(x.size()) - 1; ii > -1; ii--)
   {
-    for (int jj = 0; jj < (int)realVals.size(); jj++)
+    for (int jj = 0; jj < (int)x.size(); jj++)
     {
-      double realPart = realVals[jj];
-      double imagPart = imagVals[ii];
+      double realPart = x[jj].r;
+      double imagPart = x[ii].i;
       // Rounding of imaginary part of complex number
       if (std::abs(imagPart) < epsilon) {
         imagPart = 0.0; // Consider it as zero
       }
-      result.push_back(std::complex<double>(realPart, imagPart));
+      result.push_back(Rcomplex{realPart, imagPart});
     }
   }
   return result;

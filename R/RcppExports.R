@@ -16,7 +16,23 @@
 #' @export
 NULL
 
+#' expandGridComplex
+#' @name expandGridComplex
+#' @title expandGridComplex
+#' @description
+#' Create Student data frame with all possible varians of a complex vector.
+#' @param x complex vector
+#' @param epsilon consider the value as zero
+#' @examples
+#' expandGridComplex(complex(real = rnorm(100), imag = rnorm(100)))
+#' @export
+NULL
+
 calc_roots_from_seeds_C <- function(seeds, roots, poly) {
     .Call(`_slvwagner_calc_roots_from_seeds_C`, seeds, roots, poly)
+}
+
+expandGridComplex <- function(x, epsilon = 1e-10) {
+    .Call(`_slvwagner_expandGridComplex`, x, epsilon)
 }
 
