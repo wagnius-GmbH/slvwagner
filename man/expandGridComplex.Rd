@@ -6,7 +6,10 @@
 \arguments{
 \item{x}{complex vector}
 
-\item{epsilon}{consider the value as zero}
+\item{epsilon}{consider the imaginary value as zero if smaller then \code{epsilon}}
+}
+\value{
+returns a complex vector
 }
 \description{
 Create Student data frame with all possible varians of a complex vector.
@@ -15,5 +18,5 @@ Create Student data frame with all possible varians of a complex vector.
 expandGridComplex
 }
 \examples{
-expandGridComplex(complex(real = rnorm(100), imag = rnorm(100)))
+expandGridComplex(complex(real = 1:100, imag = rnorm(100)))
 }

@@ -192,9 +192,11 @@ List calc_roots_from_seeds_C(ComplexVector seeds, ComplexVector roots, NumericVe
 //' @description
 //' Create Student data frame with all possible varians of a complex vector.
 //' @param x complex vector
-//' @param epsilon consider the value as zero
+//' @param epsilon consider the imaginary value as zero if smaller then \code{epsilon}
+//' @return
+//' returns a complex vector
 //' @examples
-//' expandGridComplex(complex(real = rnorm(100), imag = rnorm(100)))
+//' expandGridComplex(complex(real = 1:100, imag = rnorm(100)))
 //' @export
 
 // [[Rcpp::export]]
