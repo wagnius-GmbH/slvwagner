@@ -5,12 +5,12 @@
 #' @description
 #' Calculate y for given linear function(s).
 #'
-#' The parameter slope \code{m} and intercept \code{b} can be supplied either by a set of parameter \code{c(m,b)} or by \code{parameter} = m and second (additional) argument \code{...} = b.
+#' The parameter(s) slope `m` and the intercept `b` can be supplied either by a set(s) of parameter `cbind(m,b)` or by a vector of \code{parameter} = `m` and a second (additional) argument vector of \code{...} = `b`.
 #' @details
-#' The function calculates \code{y} for given vector \code{x} with the \code{parameter},(\code{...}) supplied.
+#' The function calculates `y` for given vector \code{x} with the \code{parameter},(\code{...}) supplied.
 #' @param x vector
-#' @param parameter Either vector, matrix or data.frame with parameter c(`m`,`b`) or just the slope `m`. It is also possible to supply a matrix as a set of parameter where each row represents c(`m`,`b`).
-#' @param ... vector of intercept(s) \code{b}
+#' @param parameter Either vector, matrix or data.frame with parameter set `m,b` or just the slope `m`. It is also possible to supply a matrix as a set of parameter where each row represents c(`m`,`b`).
+#' @param ... vector of intercept(s) `b`
 #' @return vector or matrix of y values foreach `m`,`b` definition
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}

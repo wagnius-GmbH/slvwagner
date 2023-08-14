@@ -9,7 +9,7 @@ lf_lf(x, parameter, ...)
 \arguments{
 \item{x}{vector}
 
-\item{parameter}{Either vector, matrix or data.frame with parameter c(\code{m},\code{b}) or just the slope \code{m}. It is also possible to supply a matrix as a set of parameter where each row represents c(\code{m},\code{b}).}
+\item{parameter}{Either vector, matrix or data.frame with parameter set \verb{m,b} or just the slope \code{m}. It is also possible to supply a matrix as a set of parameter where each row represents c(\code{m},\code{b}).}
 
 \item{...}{vector of intercept(s) \code{b}}
 }
@@ -19,7 +19,7 @@ vector or matrix of y values foreach \code{m},\code{b} definition
 \description{
 Calculate y for given linear function(s).
 
-The parameter slope \code{m} and intercept \code{b} can be supplied either by a set of parameter \code{c(m,b)} or by \code{parameter} = m and second (additional) argument \code{...} = b.
+The parameter(s) slope \code{m} and the intercept \code{b} can be supplied either by a set(s) of parameter \code{cbind(m,b)} or by a vector of \code{parameter} = \code{m} and a second (additional) argument vector of \code{...} = \code{b}.
 }
 \details{
 The function calculates \code{y} for given vector \code{x} with the \code{parameter},(\code{...}) supplied.
