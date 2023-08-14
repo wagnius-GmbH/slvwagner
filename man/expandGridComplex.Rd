@@ -12,7 +12,7 @@
 returns a complex vector
 }
 \description{
-Create Student data frame with all possible varians of a complex vector.
+Create Student data frame with all possible variants of a complex vector.
 }
 \details{
 expandGridComplex

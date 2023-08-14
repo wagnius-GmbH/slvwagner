@@ -20,7 +20,7 @@ NULL
 #' @name expandGridComplex
 #' @title expandGridComplex
 #' @description
-#' Create Student data frame with all possible varians of a complex vector.
+#' Create Student data frame with all possible variants of a complex vector.
 #' @param x complex vector
 #' @param epsilon consider the imaginary value as zero if smaller then \code{epsilon}
 #' @return

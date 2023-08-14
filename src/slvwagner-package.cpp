@@ -190,7 +190,7 @@ List calc_roots_from_seeds_C(ComplexVector seeds, ComplexVector roots, NumericVe
 //' @name expandGridComplex
 //' @title expandGridComplex
 //' @description
-//' Create Student data frame with all possible varians of a complex vector.
+//' Create Student data frame with all possible variants of a complex vector.
 //' @param x complex vector
 //' @param epsilon consider the imaginary value as zero if smaller then \code{epsilon}
 //' @return
@@ -217,6 +217,16 @@ ComplexVector expandGridComplex(ComplexVector x, double epsilon = 1e-10) {
     }
   }
   return result;
+}
+
+
+NumericVector roundToSignificantDigits(NumericVector number, int SignificantDigits = 3) {
+  for(int ii = 0; ii < number.length(); ii++){
+    int orderOfMagnitude = static_cast<int>(floor(log10(fabs(number[ii]))));
+    double scalingFactor = pow(10, SignificantDigits - orderOfMagnitude - 1);
+    number[ii] = round(number[ii] * scalingFactor) / scalingFactor;
+  }
+  return number;
 }
 
 
