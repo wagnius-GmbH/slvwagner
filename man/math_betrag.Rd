@@ -13,7 +13,7 @@ math_betrag(x)
 numerical vector of length one
 }
 \description{
-Get the magnitude of a vector of any length
+Get the magnitude of a vector of any length. This function is the same as \code{\link[=math_magnitude]{math_magnitude()}}
 }
 \examples{
 math_betrag(c(1,1))
