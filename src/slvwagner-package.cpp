@@ -172,8 +172,9 @@ class class_roots_from_seeds {
 
 // [[Rcpp::export]]
 List calc_roots_from_seeds_C(ComplexVector seeds, ComplexVector roots, NumericVector poly){
+  // calculte
   class_roots_from_seeds object(seeds, roots, poly);
-  //object.parallel_lambda_calc_roots_from_seeds();
+  // return
   List df = List::create(Named("roots") = object.roots,
                          Named("roots_complex_conjugated") = object.roots_complex_conjugated,
                          Named("Seeds") = object.seeds,
