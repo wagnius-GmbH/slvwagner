@@ -3,13 +3,15 @@
 #'
 #' @name lf_lf
 #' @description
-#' linear function with parameter slope \code{m} and intercept \code{b}.
+#' Calculate y for given linear function(s).
+#'
+#' The parameter slope \code{m} and intercept \code{b} can be supplied either by a set of parameter \code{c(m,b)} or by \code{parameter} = m and second (additional) argument \code{...} = b.
 #' @details
 #' The function calculates \code{y} for given vector \code{x} with the \code{parameter},(\code{...}) supplied.
 #' @param x vector
-#' @param parameter Either vector, matrix or data.frame with parameter c(\code{m},\code{b}) or just the slope \code{m}. It is also possible to supply a matrix as a set of parameter where each row represents c(\code{m},\code{b}).
-#' @param ... intercept \code{b}
-#' @return vector or matrix
+#' @param parameter Either vector, matrix or data.frame with parameter c(`m`,`b`) or just the slope `m`. It is also possible to supply a matrix as a set of parameter where each row represents c(`m`,`b`).
+#' @param ... vector of intercept(s) \code{b}
+#' @return vector or matrix of y values foreach `m`,`b` definition
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
@@ -20,7 +22,7 @@
 #' @export
 
 lf_lf <- function(x, parameter, ...) {
-  lf_ <- function(x,m,b) m*x+b
+  lf_ <- function(x,m,b) {m*x+b}
   if (is.null(nrow(parameter))) {
     if (missing(...)) {
       return(lf_(x,parameter[1],parameter[2]))
@@ -29,12 +31,10 @@ lf_lf <- function(x, parameter, ...) {
     }
   }else{
     apply(parameter, 1, function(y){
-      y_ <- as.vector(y)
-      lf_(x,y_[1],y_[2])
-    })
+      return(lf_(x,y[1],y[2]))
+      })
   }
 }
-
 
 #######################################
 #' Find linear function perpendicular to linear function through given point

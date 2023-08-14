@@ -11,13 +11,15 @@ lf_lf(x, parameter, ...)
 
 \item{parameter}{Either vector, matrix or data.frame with parameter c(\code{m},\code{b}) or just the slope \code{m}. It is also possible to supply a matrix as a set of parameter where each row represents c(\code{m},\code{b}).}
 
-\item{...}{intercept \code{b}}
+\item{...}{vector of intercept(s) \code{b}}
 }
 \value{
-vector or matrix
+vector or matrix of y values foreach \code{m},\code{b} definition
 }
 \description{
-linear function with parameter slope \code{m} and intercept \code{b}.
+Calculate y for given linear function(s).
+
+The parameter slope \code{m} and intercept \code{b} can be supplied either by a set of parameter \code{c(m,b)} or by \code{parameter} = m and second (additional) argument \code{...} = b.
 }
 \details{
 The function calculates \code{y} for given vector \code{x} with the \code{parameter},(\code{...}) supplied.
