@@ -16,23 +16,7 @@
 #' @export
 NULL
 
-#' r_map_data
-#' @name r_map_data
-#' @title r_map_data
-#' @description convert ".asc" list to dataframe
-#' @param l list with column vectors
-#' @examples
-#' data = list(1:5,10:6,11:15)
-#' data
-#' r_map_data(data)
-#' @export
-NULL
-
 calc_roots_from_seeds_C <- function(seeds, roots, poly) {
     .Call(`_slvwagner_calc_roots_from_seeds_C`, seeds, roots, poly)
-}
-
-r_map_data <- function(l) {
-    .Call(`_slvwagner_r_map_data`, l)
 }
 

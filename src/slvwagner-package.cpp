@@ -202,48 +202,6 @@ vector<complex<double>> expandGridComplexRowMajorOrder(const vector<double>& rea
 }
 
 
-//////////////////////////////////////////////
-//' r_map_data
-//' @name r_map_data
-//' @title r_map_data
-//' @description convert ".asc" list to dataframe
-//' @param l list with column vectors
-//' @examples
-//' data = list(1:5,10:6,11:15)
-//' data
-//' r_map_data(data)
-//' @export
-
- // [[Rcpp::export]]
- DataFrame r_map_data(List l) {
-   NumericVector v1 = l[0];
-   int numLists = l.length();
-   int listLength = v1.length();
-
-   IntegerVector x;
-   IntegerVector y;
-   IntegerVector z(numLists * listLength);
-
-   for (int jj = 0; jj < numLists; jj++) {
-     for (int ii = 0; ii < listLength; ii++) {
-       NumericVector temp = l[jj];
-       //Rcpp::Rcout << "ii " << ii + 1 << ", jj " << jj + 1 << std::endl;
-       z[ii + (jj * listLength)] = temp[ii];
-     }
-   }
-
-   for (int i = 1; i <= listLength; i++) {
-     for (int j = 1; j <= numLists; j++) {
-       x.push_back(i);
-       y.push_back(j);
-     }
-   }
-
-   DataFrame df = DataFrame::create(_["x"] = x, _["y"] = y, _["z"] = z);
-   return df;
- }
-
-
 /*** R
 library(Rcpp)
 df <- expand.grid(re = seq(0,10,0.1),
