@@ -79,23 +79,14 @@ std::vector<std::vector<T>> expandGrid(const std::vector<std::vector<T>>& inputV
 
 // [[Rcpp::export]]
 LogicalVector math_findNeighbours_2D(const LogicalVector c_search, const int n_col) {
-
+  // coput the number of columns
   int n_row = 0;
-
   if(c_search.size() % n_col == 0) {
     n_row = (int)(c_search.size()/n_col);
   } else stop("Error: The size of the search vector is not a muliple of n_row");
 
   // create result vectors
   LogicalVector c_result(Rcpp::clone(c_search));
-
-  // Create a 2D vector for the x/y positions to be inspected
-  // The values to be inspect are bigger n_row +1  and n_col + 1 bigger than the grid. Scanning also the edges
-  std::vector<std::vector<int>> position;
-  position.push_back(seq_(-1, n_row));
-  position.push_back(seq_(-1, n_col));
-  // create expanded grid
-  std::vector<std::vector<int>> positions_xy = expandGrid(position);
 
   // Create a 2D vector for the offset vector
   IntegerVector dx = IntegerVector::create(
@@ -107,7 +98,8 @@ LogicalVector math_findNeighbours_2D(const LogicalVector c_search, const int n_c
     0, 1, 1, 1
   );
 
-  //Create a search vector
+  // Create a search vector, the c_search vector has to be expanded to search for neighbours using the offset vectors.
+  // The values need to be copied to the expanded vector.
   LogicalVector search((n_col+2)*2 + (2*n_row) + (n_col*n_row));
 
   // Fill in the values in the enlarged vector
