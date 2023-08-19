@@ -10,6 +10,18 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// math_findNeighbours_2D
+LogicalVector math_findNeighbours_2D(const LogicalVector c_search, const int n_col);
+RcppExport SEXP _slvwagner_math_findNeighbours_2D(SEXP c_searchSEXP, SEXP n_colSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const LogicalVector >::type c_search(c_searchSEXP);
+    Rcpp::traits::input_parameter< const int >::type n_col(n_colSEXP);
+    rcpp_result_gen = Rcpp::wrap(math_findNeighbours_2D(c_search, n_col));
+    return rcpp_result_gen;
+END_RCPP
+}
 // calc_roots_from_seeds_C
 List calc_roots_from_seeds_C(ComplexVector seeds, ComplexVector roots, NumericVector poly);
 RcppExport SEXP _slvwagner_calc_roots_from_seeds_C(SEXP seedsSEXP, SEXP rootsSEXP, SEXP polySEXP) {
@@ -37,6 +49,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_slvwagner_math_findNeighbours_2D", (DL_FUNC) &_slvwagner_math_findNeighbours_2D, 2},
     {"_slvwagner_calc_roots_from_seeds_C", (DL_FUNC) &_slvwagner_calc_roots_from_seeds_C, 3},
     {"_slvwagner_expandGridComplex", (DL_FUNC) &_slvwagner_expandGridComplex, 2},
     {NULL, NULL, 0}
