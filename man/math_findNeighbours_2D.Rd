@@ -4,12 +4,15 @@
 \alias{math_findNeighbours_2D}
 \title{math_findNeighbours_2D}
 \arguments{
-\item{c_search}{flat search vector to creat the matrix(c(),n_row,byrow = T) row wise sorted}
+\item{c_search}{flat search vector to create a matrix(c_search,n_row,byrow = T)}
 
 \item{n_col}{x direction of the matrix}
 }
+\value{
+logical vector if edge was found
+}
 \description{
-checks if all neighbour indices are there to detect an edge in a matrix
+checks if all neighbour indices are there to detect an edge.
 }
 \details{
 math_findNeighbours_2D
@@ -17,7 +20,7 @@ math_findNeighbours_2D
 \examples{
 n_col <- 7
  c_flat <- c(
-  0,1,0,0,0,1,0,
+  0,1,0,0,1,1,1,
   1,1,1,1,1,1,1,
   0,1,0,1,1,1,1,
   0,0,1,1,1,1,1)

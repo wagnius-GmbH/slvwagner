@@ -61,7 +61,7 @@ std::vector<std::vector<T>> expandGrid(const std::vector<std::vector<T>>& inputV
 //' @examples
 //' n_col <- 7
 //'  c_flat <- c(
-//'   0,1,0,0,0,1,0,
+//'   0,1,0,0,1,1,1,
 //'   1,1,1,1,1,1,1,
 //'   0,1,0,1,1,1,1,
 //'   0,0,1,1,1,1,1)
