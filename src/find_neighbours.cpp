@@ -232,7 +232,7 @@ p <- df_data|>
         panel.background=element_blank(),
         panel.border=element_blank(),
         plot.background=element_blank())+
-  labs(title = "findLakeEdgesRcpp")
+  labs(title = "math_findNeighbours_2D")
 
 print(p)
 */
