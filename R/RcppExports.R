@@ -4,9 +4,10 @@
 #' math_findNeighbours_2D
 #' @name math_findNeighbours_2D
 #' @title math_findNeighbours_2D
-#' @description checks if all neighbour indices are there to detect an edge in a matrix
-#' @param c_search flat search vector to creat the matrix(c(),n_row,byrow = T) row wise sorted
+#' @description checks if all neighbour indices are there to detect an edge.
+#' @param c_search flat search vector to create a matrix(c_search,n_row,byrow = T)
 #' @param n_col x direction of the matrix
+#' @return logical vector if edge was found
 #' @examples
 #' n_col <- 7
 #'  c_flat <- c(

@@ -54,9 +54,10 @@ std::vector<std::vector<T>> expandGrid(const std::vector<std::vector<T>>& inputV
 //' math_findNeighbours_2D
 //' @name math_findNeighbours_2D
 //' @title math_findNeighbours_2D
-//' @description checks if all neighbour indices are there to detect an edge in a matrix
-//' @param c_search flat search vector to creat the matrix(c(),n_row,byrow = T) row wise sorted
+//' @description checks if all neighbour indices are there to detect an edge.
+//' @param c_search flat search vector to create a matrix(c_search,n_row,byrow = T)
 //' @param n_col x direction of the matrix
+//' @return logical vector if edge was found
 //' @examples
 //' n_col <- 7
 //'  c_flat <- c(
@@ -150,6 +151,7 @@ LogicalVector math_findNeighbours_2D(const LogicalVector c_search, const int n_c
 
 /*** R
 #################################################################
+library(slvwagner)
 n_col <- 7
 c_flat <- c(
   0,1,0,0,0,1,0,
@@ -170,7 +172,7 @@ plot(df_data$x, df_data$y, col = df_data$edge, main = "Edges")
 
 library(tidyverse)
 x_def <- c(0,29)
-y_def <- c(0,29)
+y_def <- c(0,19)
 
 c_offset <- c(0,0)
 
@@ -192,7 +194,8 @@ df_data <- df_data |>
   left_join(df_data |>
               as_tibble() |>
               filter((between(x, 6, 10) & between(y, 3, 10))|
-                       (between(x, 20, 1000) & between(y, 20, 1000))
+                       (between(x, 10, 1000) & between(y, 10, 1000))|
+                       (between(x, 16, 18) & between(y, 5, 1000))
 
               )|>
               mutate(see = "Hallwiler")|>
@@ -217,7 +220,7 @@ p <- df_data|>
   ggplot(aes(x,y))+
   geom_point(data = df_data|>filter(edge == T),
              aes(shape = edge),
-             size = 6)+
+             size = 5)+
   geom_point(aes(color = see), size = 3)+
   coord_fixed()+
   scale_x_continuous(breaks = x_def[1]:x_def[2])+
@@ -233,3 +236,12 @@ p <- df_data|>
 
 print(p)
 */
+
+
+
+
+
+
+
+
+
