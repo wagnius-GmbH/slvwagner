@@ -51,34 +51,50 @@ std::vector<std::vector<T>> expandGrid(const std::vector<std::vector<T>>& inputV
 }
 
 //////////////////////////////////////////////
-//' math_findNeighbours_2D
-//' @name math_findNeighbours_2D
-//' @title math_findNeighbours_2D
-//' @description checks if all neighbour indices are there to detect an edge.
-//' @param c_search flat search vector to create a matrix(c_search,n_row,byrow = T)
+//' find_edges_2D
+//' @name find_edges_2D
+//' @title find_edges_2D
+//' @description Finds edges in an evenly spaced 2D grid.
+//' @details Checks all neighbour indices in a vector \code{c_search} for \code{TRUE}. If all neighbours are \code{TRUE} it is not an edge, else it is.
+//' @param c_search Logical vector
 //' @param n_col x direction of the matrix
 //' @return logical vector if edge was found
 //' @examples
 //' n_col <- 7
-//'  c_flat <- c(
-//'   0,1,0,0,1,1,1,
+//' n_row <- 4
+//' c_search <- c(
+//'   0,1,0,0,0,1,0,
 //'   1,1,1,1,1,1,1,
 //'   0,1,0,1,1,1,1,
-//'   0,0,1,1,1,1,1)
-//' m <- c_flat|>
-//'   matrix(ncol = n_col, byrow = T)
-//' m
-//' df_data <- expand.grid(x = 1:n_col,  y = 1:4)
-//' df_data$search <- c_flat == T
-//' df_data$edge <- math_findNeighbours_2D(c_flat,n_col)
-//' df_data$search == math_findNeighbours_2D(c_flat,n_col)
-//' plot(df_data$x, df_data$y, col = df_data$search, main = "Search")
-//' plot(df_data$x, df_data$y, col = df_data$edge, main = "Edges")
+//'   0,0,1,1,1,1,1
+//'   )
+//' m_grid <- expand.grid(x = 0:(n_col-1), y = 0:(n_row-1))|>
+//'   as.matrix()|>
+//'   cbind(c_search)
+//' m_grid|>
+//' head()
+//' m_grid|>
+//' plot(col = m_grid[,"c_search"],
+//'   xlim=c(0,n_col-1), ylim=c(0,n_row-1),
+//'   pch = 19,
+//'   cex = 2.5,
+//'   main = "Input: c_search")
 //'
+//' m_grid <- cbind(m_grid,
+//'                 edge = find_edges_2D(m_grid[,"c_search"], n_col))
+//'
+//' m_grid|>
+//'   head()
+//' m_grid|>
+//'   plot(col = m_grid[,"edge"],
+//'        xlim=c(0,n_col-1), ylim=c(0,n_row-1),
+//'        pch = 19,
+//'        cex = 2.5,
+//'        main = "Edge")
 //' @export
 
 // [[Rcpp::export]]
-LogicalVector math_findNeighbours_2D(const LogicalVector c_search, const int n_col) {
+LogicalVector find_edges_2D(const LogicalVector c_search, const int n_col) {
   // coput the number of columns
   int n_row = 0;
   if(c_search.size() % n_col == 0) {
@@ -144,89 +160,46 @@ LogicalVector math_findNeighbours_2D(const LogicalVector c_search, const int n_c
 /*** R
 #################################################################
 library(slvwagner)
+
 n_col <- 7
-c_flat <- c(
+n_row <- 4
+
+c_search <- c(
   0,1,0,0,0,1,0,
   1,1,1,1,1,1,1,
   0,1,0,1,1,1,1,
   0,0,1,1,1,1,1
   )
-m <- c_flat|>
-  matrix(ncol = n_col, byrow = T)
-m
-df_data <- expand.grid(x = 1:n_col,  y = 1:4)
-df_data$search <- c_flat == T
-df_data$edge <- math_findNeighbours_2D(c_flat,n_col)
-df_data$search == math_findNeighbours_2D(c_flat,n_col)
-plot(df_data$x, df_data$y, col = df_data$search, main = "Search")
-plot(df_data$x, df_data$y, col = df_data$edge, main = "Edges")
 
+m_grid <- expand.grid(x = 0:(n_col-1), y = 0:(n_row-1))|>
+  as.matrix()|>
+  cbind(c_search)
 
-library(tidyverse)
-x_def <- c(0,29)
-y_def <- c(0,19)
+m_grid|>
+  head()
 
-c_offset <- c(0,0)
+m_grid|>
+  plot(col = m_grid[,"c_search"],
+       xlim=c(0,n_col-1), ylim=c(0,n_row-1),
+       # asp = 1,
+       pch = 19,
+       cex = 2.5,
+       main = "Input: c_search")
 
-df_data <- expand.grid(x = x_def[1]:x_def[2],
-                       y = y_def[1]:y_def[2])
+m_grid <- cbind(m_grid,
+                edge = find_edges_2D(m_grid[,"c_search"], n_col))
 
-df_test <- df_data |>
-  as_tibble() |>
-  filter((x %in% c(2:4) & y %in% c(2:4))
-  )|>
-  mutate(see = "Hallwiler")
+m_grid|>
+  head()
 
-df_test$see[c(1,3,7,9)] <- NA
+m_grid|>
+  plot(col = m_grid[,"edge"],
+       xlim=c(0,n_col-1), ylim=c(0,n_row-1),
+       # asp = 1,
+       pch = 19,
+       cex = 2.5,
+       main = "Edge")
 
-x_def <- x_def+c_offset[1]
-y_def <- y_def+c_offset[2]
-
-df_data <- df_data |>
-  left_join(df_data |>
-              as_tibble() |>
-              filter((between(x, 6, 10) & between(y, 3, 10))|
-                       (between(x, 10, 1000) & between(y, 10, 1000))|
-                       (between(x, 16, 18) & between(y, 5, 1000))
-
-              )|>
-              mutate(see = "Hallwiler")|>
-              bind_rows(df_test),
-            by = join_by(x, y)
-  )|>
-  as_tibble()|>
-  mutate(x = x+c_offset[1],
-         y = y+c_offset[2],
-         see = !is.na(see))
-
-df_data$see[1] <- T
-df_data$see[6] <- T
-summary(df_data)
-
-######################################################################################
-
-df_data <- df_data|>
-  mutate(edge = math_findNeighbours_2D(df_data$see,diff(x_def)+1))
-
-p <- df_data|>
-  ggplot(aes(x,y))+
-  geom_point(data = df_data|>filter(edge == T),
-             aes(shape = edge),
-             size = 5)+
-  geom_point(aes(color = see), size = 3)+
-  coord_fixed()+
-  scale_x_continuous(breaks = x_def[1]:x_def[2])+
-  scale_y_continuous(breaks = y_def[1]:y_def[2])+
-  geom_vline(xintercept = x_def[1]:x_def[2])+
-  geom_hline(yintercept = y_def[1]:y_def[2])+
-  theme_light()+
-  theme(axis.line=element_blank(),
-        panel.background=element_blank(),
-        panel.border=element_blank(),
-        plot.background=element_blank())+
-  labs(title = "math_findNeighbours_2D")
-
-print(p)
 */
 
 
