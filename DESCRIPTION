@@ -1,7 +1,7 @@
 Package: slvwagner
 Type: Package
 Title: All stuff that I`m missing
-Version: 0.9.6
+Version: 0.9.6.1
 Author: Florian Wagner
 Depends: R (>= 4.2.0)
 Maintainer: Florian Wagner <florian.wagner@wagnius.ch>
@@ -20,7 +20,7 @@ Suggests:
     tidyverse,
     stringi,
     testthat (>= 3.0.0)
-VignetteBuilder: knitr
+VignetteBuilder: knitr, rmarkdown
 Config/testthat/edition: 3
 Imports: 
     dplyr,

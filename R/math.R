@@ -2,9 +2,12 @@
 #' Magnitude of a vector
 #'
 #' @name math_betrag
-#' @description Get the magnitude of a vector of any length
+#' @description
+#' Get the magnitude of a vector of any length.
+#'
+#' This function is the same as [slvwagner::math_magnitude()]
 #' @param x numerical vector
-#' @return numerical vector of length one
+#' @return numerical vector of [length()] one
 #' @examples math_betrag(c(1,1))
 #' @examples math_betrag(c(1,1,1))
 #' @author Florian Wagner
@@ -19,9 +22,12 @@ math_betrag <- function(x) {
 #' Magnitude of a vector
 #'
 #' @name math_magnitude
-#' @description Get the magnitude of a vector of any length
+#' @description
+#' Get the magnitude of a vector of any length.
+#'
+#' This function is the same as [slvwagner::math_betrag()]
 #' @param x numerical vector
-#' @return numerical vector of length one
+#' @return numerical vector of [length()] one
 #' @examples math_magnitude(c(1,1))
 #' @examples math_magnitude(c(1,1,1))
 #' @author Florian Wagner

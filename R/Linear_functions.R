@@ -3,13 +3,15 @@
 #'
 #' @name lf_lf
 #' @description
-#' linear function with parameter slope \code{m} and intercept \code{b}.
+#' Calculate y for given linear function(s).
+#'
+#' The parameter(s) slope `m` and the intercept `b` can be supplied either by a set(s) of parameter `cbind(m,b)` or by a vector of \code{parameter} = `m` and a second (additional) argument vector of \code{...} = `b`.
 #' @details
-#' The function calculates \code{y} for given vector \code{x} with the \code{parameter},(\code{...}) supplied.
+#' The function calculates `y` for given vector \code{x} with the \code{parameter},(\code{...}) supplied.
 #' @param x vector
-#' @param parameter Either vector, matrix or data.frame with parameter c(\code{m},\code{b}) or just the slope \code{m}. It is also possible to supply a matrix as a set of parameter where each row represents c(\code{m},\code{b}).
-#' @param ... intercept \code{b}
-#' @return vector or matrix
+#' @param parameter Either vector, matrix or data.frame with parameter set `m,b` or just the slope `m`. It is also possible to supply a matrix as a set of parameter where each row represents c(`m`,`b`).
+#' @param ... vector of intercept(s) `b`
+#' @return vector or matrix of y values foreach `m`,`b` definition
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
@@ -20,7 +22,7 @@
 #' @export
 
 lf_lf <- function(x, parameter, ...) {
-  lf_ <- function(x,m,b) m*x+b
+  lf_ <- function(x,m,b) {m*x+b}
   if (is.null(nrow(parameter))) {
     if (missing(...)) {
       return(lf_(x,parameter[1],parameter[2]))
@@ -29,12 +31,10 @@ lf_lf <- function(x, parameter, ...) {
     }
   }else{
     apply(parameter, 1, function(y){
-      y_ <- as.vector(y)
-      lf_(x,y_[1],y_[2])
-    })
+      return(lf_(x,y[1],y[2]))
+      })
   }
 }
-
 
 #######################################
 #' Find linear function perpendicular to linear function through given point
@@ -43,19 +43,39 @@ lf_lf <- function(x, parameter, ...) {
 #' @description
 #' Find linear function`s perpendicular to supplied linear function through given point \code{x}.
 #' @param x point vector
-#' @param lf data.frame with the definiton of the given linear function containing the column slope and intercept
-#' @return data.frame with the slope and intercept
+#' @param lf vector with slope and intercept of linear function or just the slope if intercept will be supplied by \code{...}
+#' @param ... intercept
+#' @return matrix with slope and intercept
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
 #' lf_perpendicular(x = c(2,-9),
-#'                       data.frame(slope = -3,intercept = 5))
+#'                       data.frame(slope = c(-3),intercept = c(5)))
+#' lf_perpendicular(x = c(2,-9),
+#'                       cbind(-3,5))
+#' lf_perpendicular(x = c(2,-9),-3,5)
+#' lf_perpendicular(x = c(2,-9), -3,5)
 #' @export
 
-lf_perpendicular <- function(x,lf){ #x point(s) lf(intercept, slope)
-  s=-1/lf$slope
-  i =x[2]-(lf_rev_slope(lf$slope)*x[1])
-  return(data.frame(slope = s,intercept = i))
+lf_perpendicular <- function(x,lf,...){ #x point(s), lf(intercept, slope)
+  if (!missing(...)) {
+    s = -1 / lf[1]
+    i = ... - (lf_rev_slope(lf[1]) * x[1])
+    return(cbind(slope = s, intercept = i)|> as.matrix())
+  } else{
+    if (is.data.frame(lf) || is.array(lf) || is.matrix(lf)){
+      if(is.vector(x)){
+        s = -1 / lf[,1]
+        i = x[2] - (lf_rev_slope(lf[,1]) * x[1])
+        return(cbind(slope = s, intercept = i) |> as.matrix())
+      }
+    }
+    else{
+      s = -1 / lf[1]
+      i = x[2] - (lf_rev_slope(lf[1]) * x[1])
+      return(cbind(slope = s, intercept = i))
+    }
+  }
 }
 
 #######################################
@@ -82,34 +102,33 @@ lf_rev_slope <- function(slope){#
 #' @name lf_fromPoints
 #' @description
 #' get linear fuction from 2 points x1 and x2
-#' @param x matrix or data frame
-#' @return data.frame(slope, intercept) \code{x}
+#' @param x matrix or data frame of points just first point
+#' @param ... second point
+#' @return matrix with slope and intercept
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @examples
-#' x <- matrix(c(c(-2,5),
-#'               c( 3,3)), nrow = 2, byrow = FALSE)
-#'
-#' y <- data.frame(p1 = c(x = -1, y = -5),
-#'                 p2 = c(x =  3, y =  3))
-#'
-#' lf_fromPoints(x)
-#'
-#' result <- lf_fromPoints(y)
-#'
-#' library(tidyverse)
-#' ggplot(as_tibble(t(y)),aes(x,y))+
-#' geom_abline(data = result,aes(slope = slope, intercept =intercept), size = 1.5)+
-#' geom_point(shape = 10, size = 10,color = "blue")+
-#' geom_hline(yintercept = 0)+
-#' geom_vline(xintercept = 0)
+#' lf_fromPoints(c(0,0),c(1,1))
+#' Points <- rbind(c(-2,5),
+#'            c( 3,3))
+#' result <- lf_fromPoints(Points)
+#' result
+#' plot(Points, asp = 0, xlab = "x", ylab = "y")
+#' abline(result[,2],result[,1])
 #' @export
 
-lf_fromPoints <- function (x){
-  delta <- (x[,1]-x[,2])
-  m <- delta[2]/delta[1]
-  b <- x[2,1]-m*x[1,1]
-  return(data.frame(slope = m,intercept = b))
+lf_fromPoints <- function (x,...){
+  if(missing(...)) {
+    delta <- (x[1, ] - x[2, ])
+    m <- delta[2] / delta[1]
+    b <- x[1, 2] - m * x[1, 1]
+    return(cbind(slope = m, intercept = b))
+  }else{
+    delta <- x - ...
+    m <- delta[2] / delta[1]
+    b <- x[2] - m * x[1]
+    return(cbind(slope = m, intercept = b))
+  }
 }
 
 #######################################

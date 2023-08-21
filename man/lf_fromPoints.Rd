@@ -4,34 +4,27 @@
 \alias{lf_fromPoints}
 \title{linear function from 2 points}
 \usage{
-lf_fromPoints(x)
+lf_fromPoints(x, ...)
 }
 \arguments{
-\item{x}{matrix or data frame}
+\item{x}{matrix or data frame of points just first point}
+
+\item{...}{second point}
 }
 \value{
-data.frame(slope, intercept) \code{x}
+matrix with slope and intercept
 }
 \description{
 get linear fuction from 2 points x1 and x2
 }
 \examples{
-x <- matrix(c(c(-2,5),
-              c( 3,3)), nrow = 2, byrow = FALSE)
-
-y <- data.frame(p1 = c(x = -1, y = -5),
-                p2 = c(x =  3, y =  3))
-
-lf_fromPoints(x)
-
-result <- lf_fromPoints(y)
-
-library(tidyverse)
-ggplot(as_tibble(t(y)),aes(x,y))+
-geom_abline(data = result,aes(slope = slope, intercept =intercept), size = 1.5)+
-geom_point(shape = 10, size = 10,color = "blue")+
-geom_hline(yintercept = 0)+
-geom_vline(xintercept = 0)
+lf_fromPoints(c(0,0),c(1,1))
+Points <- rbind(c(-2,5),
+           c( 3,3))
+result <- lf_fromPoints(Points)
+result
+plot(Points, asp = 0, xlab = "x", ylab = "y")
+abline(result[,2],result[,1])
 }
 \author{
 Florian Wagner

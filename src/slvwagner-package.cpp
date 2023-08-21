@@ -3,8 +3,10 @@
 #include <vector>
 #include <complex>
 #include <Rmath.h>
+#include <R.h>
 
 using namespace Rcpp;
+using namespace std;
 
 //////////////////////////////////////////////////////////////////////
 class class_roots_from_seeds {
@@ -170,8 +172,9 @@ class class_roots_from_seeds {
 
 // [[Rcpp::export]]
 List calc_roots_from_seeds_C(ComplexVector seeds, ComplexVector roots, NumericVector poly){
+  // calculate
   class_roots_from_seeds object(seeds, roots, poly);
-  //object.parallel_lambda_calc_roots_from_seeds();
+  // return
   List df = List::create(Named("roots") = object.roots,
                          Named("roots_complex_conjugated") = object.roots_complex_conjugated,
                          Named("Seeds") = object.seeds,
@@ -180,6 +183,52 @@ List calc_roots_from_seeds_C(ComplexVector seeds, ComplexVector roots, NumericVe
                            );
   return df;
 }
+
+
+//////////////////////////////////////////////
+//' expandGridComplex
+//' @name expandGridComplex
+//' @title expandGridComplex
+//' @description
+//' Create Student data frame with all possible variants of a complex vector.
+//' @param x complex vector
+//' @param epsilon consider the imaginary value as zero if smaller then \code{epsilon}
+//' @return
+//' returns a complex vector
+//' @examples
+//' expandGridComplex(complex(real = 1:100, imag = rnorm(100)))
+//' @export
+
+// [[Rcpp::export]]
+
+ComplexVector expandGridComplex(ComplexVector x, double epsilon = 1e-10) {
+  ComplexVector result;
+  for (int ii = int(x.size()) - 1; ii > -1; ii--)
+  {
+    for (int jj = 0; jj < (int)x.size(); jj++)
+    {
+      double realPart = x[jj].r;
+      double imagPart = x[ii].i;
+      // Rounding of imaginary part of complex number
+      if (std::abs(imagPart) < epsilon) {
+        imagPart = 0.0; // Consider it as zero
+      }
+      result.push_back(Rcomplex{realPart, imagPart});
+    }
+  }
+  return result;
+}
+
+
+NumericVector roundToSignificantDigits(NumericVector number, int SignificantDigits = 3) {
+  for(int ii = 0; ii < number.length(); ii++){
+    int orderOfMagnitude = static_cast<int>(floor(log10(fabs(number[ii]))));
+    double scalingFactor = pow(10, SignificantDigits - orderOfMagnitude - 1);
+    number[ii] = round(number[ii] * scalingFactor) / scalingFactor;
+  }
+  return number;
+}
+
 
 /*** R
 library(Rcpp)
