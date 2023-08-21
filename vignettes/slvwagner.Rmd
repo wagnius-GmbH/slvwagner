@@ -73,33 +73,6 @@ Functions start with find_
 
 -   find edges in evenly spaced gird
 
-
-#### statistical 
-Functions start with stat_
-
--   Process capability index (CPK)
--   Probability density function
-
-### business
--   NPS (net promoter score)
-
-### Utilities
-
-#### Plot
-Functions start with plot_
-
--    Get normal distributed overlay for faceted histograms
-
-#### System 
-Functions start with r_
-
--   r_ R utility functions, e.g. windows path to R compatible path
-
-#### Fast dictionary
-Function start with dict_
-
--   Create fast dictionary, convenience functions.
-
 ```{r}
 n_col <- 7
 n_row <- 4
@@ -138,4 +111,31 @@ m_grid|>
        main = "Edge")
 
 ```
+
+
+#### statistical 
+Functions start with stat_
+
+-   Process capability index (CPK)
+-   Probability density function
+
+### business
+-   NPS (net promoter score)
+
+### Utilities
+
+#### Plot
+Functions start with plot_
+
+-    Get normal distributed overlay for faceted histograms
+
+#### System 
+Functions start with r_
+
+-   r_ R utility functions, e.g. windows path to R compatible path
+
+#### Fast dictionary
+Function start with dict_
+
+-   Create fast dictionary, convenience functions.
 
