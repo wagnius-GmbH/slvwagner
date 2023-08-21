@@ -26,7 +26,7 @@ http://www.yacas.org/
 ## Content
 
 ### Geometrical stuff 
-  Functions start with geo_
+Functions start with geo_
 
 -   Conic section 
 -   Slerp 
@@ -36,7 +36,7 @@ http://www.yacas.org/
 -   Intersection point from three globs upon an initial guess
 
 ### Math 
-  Functions start with math_
+Functions start with math_
 
 -   Transformation from spherical to Cartesian coordinate system and back. 
 -   Rotation Matrix in R and Ryacas (YACAS)
@@ -50,13 +50,13 @@ http://www.yacas.org/
 -   Generate non linear Vector with start, end and vector length
 
 ### Math in yacas 
-  Functions start with yac_
+Functions start with yac_
 
   -   Rotation matrix 2D
   -   Rotation matrix 3D
 
 #### Linear function helper
-  Functions start with lf_
+Functions start with lf_
 
 -   Simple linear function 
 -   perpendicular to function 
@@ -64,13 +64,18 @@ http://www.yacas.org/
 -   Linear function from two points
 
 #### signal
-  Functions start with signal_
+Functions start with signal_
 
 -   To average a signal around zero (AC coupling)
 
+### find 
+Functions start with find_
+
+-   find edges in evenly spaced gird
+
 
 #### statistical 
-  Functions start with stat_
+Functions start with stat_
 
 -   Process capability index (CPK)
 -   Probability density function
@@ -81,17 +86,17 @@ http://www.yacas.org/
 ### Utilities
 
 #### Plot
-  Functions start with plot_
+Functions start with plot_
 
 -    Get normal distributed overlay for faceted histograms
 
 #### System 
-  Functions start with r_
+Functions start with r_
 
 -   r_ R utility functions, e.g. windows path to R compatible path
 
 #### Fast dictionary
-  Function start with dict_
+Function start with dict_
 
 -   Create fast dictionary, convenience functions.
 
