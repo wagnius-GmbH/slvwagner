@@ -24,29 +24,30 @@ std::vector<T> seq_(T start, T end, T step = T(1)) {
   return sequence;
 }
 
-// R like expand.grid() function to generate combinations
-template <typename T>
-std::vector<std::vector<T>> expandGrid(const std::vector<std::vector<T>>& inputVectors) {
-  size_t numVectors = inputVectors.size();
-  std::vector<std::vector<T>> result;
+template <typename t>
+std::vector<std::vector<t>> expandGrid(const std::vector<std::vector<t>>& inputvectors) {
+  size_t numvectors = inputvectors.size();
 
-  // Calculate the total number of combinations
-  size_t totalCombinations = 1;
-  for (const auto& vec : inputVectors) {
-    totalCombinations *= vec.size();
+  // calculate the total number of combinations
+  size_t totalcombinations = 1;
+  for (const auto& vec : inputvectors) {
+    totalcombinations *= vec.size();
   }
 
-  // Generate the combinations
-  for (size_t i = 0; i < totalCombinations; ++i) {
-    std::vector<T> combination(numVectors);
+  // reserve memory for the result vector
+  std::vector<std::vector<t>> result;
+  result.reserve(totalcombinations);
+
+  // generate the combinations
+  for (size_t i = 0; i < totalcombinations; ++i) {
+    std::vector<t> combination(numvectors);
     size_t temp = i;
-    for (size_t j = 0; j < numVectors; ++j) {
-      combination[j] = inputVectors[j][temp % inputVectors[j].size()];
-      temp /= inputVectors[j].size();
+    for (size_t j = 0; j < numvectors; ++j) {
+      combination[j] = inputvectors[j][temp % inputvectors[j].size()];
+      temp /= inputvectors[j].size();
     }
-    result.push_back(combination);
+    result.push_back(std::move(combination));  // move the combination into the result
   }
-
   return result;
 }
 
