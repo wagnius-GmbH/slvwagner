@@ -7,8 +7,6 @@
 \item{c_search}{Logical vector}
 
 \item{n}{dimension of 3D array c(nx, ny, nz)}
-
-\item{offset}{DataFrame with dx,dy, dz offsets}
 }
 \value{
 logical vector if edge was found

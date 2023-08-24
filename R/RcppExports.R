@@ -53,7 +53,6 @@ find_edges_2D <- function(c_search, n_col) {
 #' @description Checks all neighbour indices in a vector \code{c_search} for \code{TRUE}. If all neighbours are \code{TRUE} it is not an edge, else it is.
 #' @param c_search Logical vector
 #' @param n dimension of 3D array c(nx, ny, nz)
-#' @param offset DataFrame with dx,dy, dz offsets
 #' @return logical vector if edge was found
 #' @examples
 #' n_col <- 7
@@ -90,8 +89,8 @@ find_edges_2D <- function(c_search, n_col) {
 #' @export
 NULL
 
-find_edges_3D <- function(c_search, n, offset) {
-    .Call(`_slvwagner_find_edges_3D`, c_search, n, offset)
+find_edges_3D <- function(c_search, n) {
+    .Call(`_slvwagner_find_edges_3D`, c_search, n)
 }
 
 #' calc_roots_from_seeds_C
