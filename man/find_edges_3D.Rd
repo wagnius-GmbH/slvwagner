@@ -15,35 +15,17 @@ logical vector if edge was found
 Checks all neighbour indices in a vector \code{c_search} for \code{TRUE}. If all neighbours are \code{TRUE} it is not an edge, else it is.
 }
 \examples{
-n_col <- 7
-n_row <- 4
-c_search <- c(
-  0,1,0,0,0,1,0,
-  1,1,1,1,1,1,1,
-  0,1,0,1,1,1,1,
-  0,0,1,1,1,1,1
-  )
-m_grid <- expand.grid(x = 0:(n_col-1), y = 0:(n_row-1))|>
-  as.matrix()|>
-  cbind(c_search)
-m_grid|>
-head()
-m_grid|>
-plot(col = m_grid[,"c_search"],
-  xlim=c(0,n_col-1), ylim=c(0,n_row-1),
-  pch = 19,
-  cex = 2.5,
-  main = "Input: c_search")
-
-m_grid <- cbind(m_grid,
-                edge = find_edges_3D(m_grid[,"c_search"], n_col))
-
-m_grid|>
-  head()
-m_grid|>
-  plot(col = m_grid[,"edge"],
-       xlim=c(0,n_col-1), ylim=c(0,n_row-1),
-       pch = 19,
-       cex = 2.5,
-       main = "Edge")
+library(tidyverse)
+library(rgl)
+n <- c(4L,3L,3L)
+df_input <- expand.grid(
+  x = 1:n[1],
+  y = 1:n[2],
+  z = 1:n[3])|>
+  mutate(search= T,
+         edge = find_edges_3D(search, n),
+         color = if_else(edge, "blue", "black"))
+df_input
+df_input|>
+  plot3d(col = df_input$color, size = 15,aspect = "iso")
 }
