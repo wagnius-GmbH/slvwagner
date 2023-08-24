@@ -6,7 +6,7 @@
 \arguments{
 \item{c_search}{Logical vector}
 
-\item{n}{dimension of 3D array c(nx, ny, nz)}
+\item{n}{dimensions of 3D array c(nx, ny, nz)}
 }
 \value{
 logical vector if edge was found
@@ -22,7 +22,7 @@ df_input <- expand.grid(
   x = 1:n[1],
   y = 1:n[2],
   z = 1:n[3])|>
-  mutate(search= T,
+  mutate(search= TRUE,
          edge = find_edges_3D(search, n),
          color = if_else(edge, "blue", "black"))
 df_input

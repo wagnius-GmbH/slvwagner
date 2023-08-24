@@ -8,7 +8,7 @@ using namespace std;
 //' @title Find edges in an evenly spaced 3D grid.
 //' @description Checks all neighbour indices in a vector \code{c_search} for \code{TRUE}. If all neighbours are \code{TRUE} it is not an edge, else it is.
 //' @param c_search Logical vector
-//' @param n dimension of 3D array c(nx, ny, nz)
+//' @param n dimensions of 3D array c(nx, ny, nz)
 //' @return logical vector if edge was found
 //' @examples
 //' library(tidyverse)
@@ -18,7 +18,7 @@ using namespace std;
 //'   x = 1:n[1],
 //'   y = 1:n[2],
 //'   z = 1:n[3])|>
-//'   mutate(search= T,
+//'   mutate(search= TRUE,
 //'          edge = find_edges_3D(search, n),
 //'          color = if_else(edge, "blue", "black"))
 //' df_input
