@@ -48,6 +48,52 @@ find_edges_2D <- function(c_search, n_col) {
     .Call(`_slvwagner_find_edges_2D`, c_search, n_col)
 }
 
+#' @name find_edges_3D
+#' @title Find edges in an evenly spaced 3D grid.
+#' @description Checks all neighbour indices in a vector \code{c_search} for \code{TRUE}. If all neighbours are \code{TRUE} it is not an edge, else it is.
+#' @param c_search Logical vector
+#' @param n dimension of 3D array c(nx, ny, nz)
+#' @param offset DataFrame with dx,dy, dz offsets
+#' @return logical vector if edge was found
+#' @examples
+#' n_col <- 7
+#' n_row <- 4
+#' c_search <- c(
+#'   0,1,0,0,0,1,0,
+#'   1,1,1,1,1,1,1,
+#'   0,1,0,1,1,1,1,
+#'   0,0,1,1,1,1,1
+#'   )
+#' m_grid <- expand.grid(x = 0:(n_col-1), y = 0:(n_row-1))|>
+#'   as.matrix()|>
+#'   cbind(c_search)
+#' m_grid|>
+#' head()
+#' m_grid|>
+#' plot(col = m_grid[,"c_search"],
+#'   xlim=c(0,n_col-1), ylim=c(0,n_row-1),
+#'   pch = 19,
+#'   cex = 2.5,
+#'   main = "Input: c_search")
+#'
+#' m_grid <- cbind(m_grid,
+#'                 edge = find_edges_3D(m_grid[,"c_search"], n_col))
+#'
+#' m_grid|>
+#'   head()
+#' m_grid|>
+#'   plot(col = m_grid[,"edge"],
+#'        xlim=c(0,n_col-1), ylim=c(0,n_row-1),
+#'        pch = 19,
+#'        cex = 2.5,
+#'        main = "Edge")
+#' @export
+NULL
+
+find_edges_3D <- function(c_search, n, offset) {
+    .Call(`_slvwagner_find_edges_3D`, c_search, n, offset)
+}
+
 #' calc_roots_from_seeds_C
 #' @name calc_roots_from_seeds_C
 #' @title calc_roots_from_seeds_C

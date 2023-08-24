@@ -71,7 +71,8 @@ Functions start with signal_
 ### find 
 Functions start with find_
 
--   find edges in evenly spaced gird
+-   find_edges2D in evenly spaced gird
+-   find_edges3D in evenly spaced gird
 
 ```{r}
 n_col <- 7
