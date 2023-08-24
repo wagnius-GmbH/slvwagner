@@ -11,16 +11,16 @@ using namespace std;
 //' @param n dimensions of 3D array c(nx, ny, nz)
 //' @return logical vector if edge was found
 //' @examples
-//' library(tidyverse)
 //' library(rgl)
 //' n <- c(4L,3L,3L)
 //' df_input <- expand.grid(
 //'   x = 1:n[1],
 //'   y = 1:n[2],
-//'   z = 1:n[3])|>
-//'   mutate(search= TRUE,
-//'          edge = find_edges_3D(search, n),
-//'          color = if_else(edge, "blue", "black"))
+//'   z = 1:n[3])
+//' df_input$search <- TRUE
+//' df_input$edge <- find_edges_3D(df_input$search, n)
+//' df_input$color <- ifelse(df_input$edge, "blue", "black")
+//'
 //' df_input
 //' df_input|>
 //'   plot3d(col = df_input$color, size = 15,aspect = "iso")
@@ -37,12 +37,6 @@ LogicalVector find_edges_3D(LogicalVector c_search, const IntegerVector n) {
   IntegerVector dy = wrap(dy_);
   IntegerVector dz = wrap(dz_);
 
-  // Rcout
-  // << "dx: " << dx <<  endl
-  // << "dy: " << dy <<  endl
-  // << "dz: " << dz <<  endl
-  // <<  endl;
-
   // create result vectors
   LogicalVector c_result(Rcpp::clone(c_search));
 
@@ -52,12 +46,6 @@ LogicalVector find_edges_3D(LogicalVector c_search, const IntegerVector n) {
   int z0 = (n[0] + 2) * (n[1] + 2);
   int y0 = n[0] + 2;
   LogicalVector search((n[0] + 2) * (n[1] + 2) * (n[2] + 2));
-
-  // Rcout
-  // << "z0: " << z0
-  // << " y0: " << y0
-  // << " search.size(): " << search.size()
-  // <<  endl;
 
   // Fill in the values in the enlarged vector
   for (int ii = 0; ii < c_search.size(); ii++) {
@@ -71,27 +59,7 @@ LogicalVector find_edges_3D(LogicalVector c_search, const IntegerVector n) {
     // Fill in values into expanded search vector
     search[index] = c_search[ii];
 
-
-    // if(c_search[ii]){
-    //   Rcout
-    //   << "Index: " << ii
-    //   << " ( x: " << x
-    //   << "  y: " << y
-    //   << "  z: " << z
-    //   << " )"
-    //   << " ( Index.expanded: " << index
-    //   << " )"
-    //   << endl;}
   }
-
-
-  // for (auto val : c_search) Rcout << val << " / ";
-  // Rcout << endl;
-  // for (int ii = 0 ; ii < search.size(); ii++) {
-  //    Rcout << "index.expanded: " << ii << " search[index.expanded] " << search[ii] << endl;
-  // }
-  // Rcout << endl;
-
 
   // check all neighbours and if there are all set result to false (no edge)
   for (int ii = 0; ii < c_search.size(); ii++) {
@@ -102,18 +70,6 @@ LogicalVector find_edges_3D(LogicalVector c_search, const IntegerVector n) {
     // compute index for expanded array
     int index = z0 + y0 + y0 * y + z0 * z + x + 1;
 
-    // Rcout
-    //    << "\n\n"
-    //    << "Index: " << ii
-    //    << " ( x: " << x
-    //    << "  y: " << y
-    //    << "  z: " << z
-    //    << " )"
-    //    << " ( Index.expanded: " << index
-    //    << " )"
-    //    << "\n********************"
-    //    << endl;
-
     // Scan the neighbours only if needed
     if (c_search[ii]) {
       int neighbours = 0;
@@ -122,35 +78,15 @@ LogicalVector find_edges_3D(LogicalVector c_search, const IntegerVector n) {
       for (int jj = 0; jj < (int)dx.size(); jj++) {
         // compute indices for expanded grid with offsets
         index = z0 + y0 + y0 * (y + dy[jj]) + z0 * (z + dz[jj]) + (x + dx[jj]) + 1;
-        // Rcout
-        //    << " ( dx: " << dx[jj]
-        //    << "  dy: " << dy[jj]
-        //    << "  dz: " << dz[jj]
-        //    << " )"
-        //    << " Index: " << index
-        //    << "    Serach[index]: " << search[index]
-        //    << endl;
 
-        //
         if (search[index]) {
           neighbours++;
-          // Rcout
-          // << "neighbours: " << neighbours
-          // << endl;
         }
       }
 
       // if all neighbours are there it is considered an edge
       if (neighbours == 8+9+9) {
         c_result[ii] = false;
-        // Rcout
-        // << " ( x: " << x
-        // << "  y: " << y
-        // << "  z: " << z
-        // << " )"
-        // << " index: " << z0 + y0 + y0 * y + z0 * z + x + 1
-        // << "    Serach[index]: " << search[index]
-        // << endl;
       }
     }
   }
@@ -161,16 +97,16 @@ LogicalVector find_edges_3D(LogicalVector c_search, const IntegerVector n) {
 /*** R
 
 library(rgl)
-library(tidyverse)
 n <- c(6L,5L,4L)
 df_input <- expand.grid(
   x = 1:n[1],
   y = 1:n[2],
-  z = 1:n[3])|>
-  mutate(search= T,
-         edge = find_edges_3D(search, n),
-         color = if_else(edge, "blue", "black")
-         )
+  z = 1:n[3])
+
+df_input$search <- TRUE
+df_input$edge <- find_edges_3D(df_input$search, n)
+df_input$color <- ifelse(df_input$edge, "blue", "black")
+
 df_input
 df_input|>
   plot3d(col = df_input$color, size = 15,aspect = "iso")
