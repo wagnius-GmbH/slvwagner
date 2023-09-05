@@ -8,7 +8,11 @@ knitr::opts_chunk$set(
 library(slvwagner)
 
 ## -----------------------------------------------------------------------------
+c_slope <- 0.3
+c_intercept <- 1
 
+cbind(x = -10:10, y = lf_lf(-10:10,c_slope,c_intercept))|>
+  plot(main = "lf_lf", type = "b", asp = 1)
 
 ## -----------------------------------------------------------------------------
 library(tidyverse)
