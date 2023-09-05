@@ -15,6 +15,7 @@
 ^files$
 ^test.Rmd$
 ^test.html$
-^files\test.Rmd
-^files\test.html
-^files\*
+^files/input/tbl_of_contents.Rmd$
+^files/output/test.Rmd$
+^files/output/test.html$
+^files/*
