@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities.R
 \name{r_tbl_contents}
 \alias{r_tbl_contents}
-\title{Creates a table of contents for a Rmd file}
+\title{Automatically creates a table of contents for a .Rmd file}
 \usage{
 r_tbl_contents(FileName)
 }
@@ -10,11 +10,11 @@ r_tbl_contents(FileName)
 \item{FileName}{file name or connection}
 }
 \value{
-sting of .Rmd file with table of contents
+.Rmd file string
 }
 \description{
-Creates a table of contents for a Rmd file
+Automatically creates a table of contents for a .Rmd file
 }
 \details{
-Scans documents for headings and creates a table of contents (hyper linked),
+Scans documents for headings and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
 }
