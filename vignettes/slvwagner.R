@@ -8,6 +8,19 @@ knitr::opts_chunk$set(
 library(slvwagner)
 
 ## -----------------------------------------------------------------------------
+
+
+## -----------------------------------------------------------------------------
+library(tidyverse)
+tibble(y = rnorm(100,mean = -2.5))|>
+  mutate(x = row_number(y),
+         y_centered = signal_center(y))|>
+pivot_longer(cols = c("y", "y_centered"))|>
+ggplot(aes(x,value, color = name))+
+  geom_point()+
+  geom_hline(yintercept = 0)
+
+## -----------------------------------------------------------------------------
 n_col <- 7
 n_row <- 4
 
