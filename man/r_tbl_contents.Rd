@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities.R
 \name{r_tbl_contents}
 \alias{r_tbl_contents}
-\title{Scans documents for headings and creates a table of contents (hyper linked)}
+\title{Creates a table of contents for a Rmd file}
 \usage{
 r_tbl_contents(FileName)
 }
@@ -13,5 +13,8 @@ r_tbl_contents(FileName)
 sting of .Rmd file with table of contents
 }
 \description{
-Scans documents for headings and creates a table of contents (hyper linked)
+Creates a table of contents for a Rmd file
+}
+\details{
+Scans documents for headings and creates a table of contents (hyper linked),
 }
