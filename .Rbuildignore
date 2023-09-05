@@ -15,3 +15,6 @@
 ^files$
 ^test.Rmd
 ^test.html
+^files\test.Rmd
+^files\test.html
+^files\*
