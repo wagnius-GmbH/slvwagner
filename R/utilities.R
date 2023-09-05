@@ -129,7 +129,7 @@ r_cmd_running <- function() {
 #' Creates a table of contents for a Rmd file
 #' @name r_tbl_contents
 #' @details
-#' Scans documents for headings and creates a table of contents (hyper linked),
+#' Scans documents for headings and creates a table of contents (hyper linked). The returnend string can directly be written as .Rmd file.
 #' @param  FileName file name or connection
 #' @return sting of .Rmd file with table of contents
 #' @export
