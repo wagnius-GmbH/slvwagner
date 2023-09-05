@@ -48,6 +48,33 @@ find_edges_2D <- function(c_search, n_col) {
     .Call(`_slvwagner_find_edges_2D`, c_search, n_col)
 }
 
+#' @name find_edges_3D
+#' @title Find edges in an evenly spaced 3D grid.
+#' @description Checks all neighbour indices in a vector \code{c_search} for \code{TRUE}. If all neighbours are \code{TRUE} it is not an edge, else it is.
+#' @param c_search Logical vector
+#' @param n dimensions of 3D array c(nx, ny, nz)
+#' @return logical vector if edge was found
+#' @examples
+#' library(rgl)
+#' n <- c(4L,3L,3L)
+#' df_input <- expand.grid(
+#'   x = 1:n[1],
+#'   y = 1:n[2],
+#'   z = 1:n[3])
+#' df_input$search <- TRUE
+#' df_input$edge <- find_edges_3D(df_input$search, n)
+#' df_input$color <- ifelse(df_input$edge, "blue", "black")
+#'
+#' df_input
+#' df_input|>
+#'   plot3d(col = df_input$color, size = 15,aspect = "iso")
+#' @export
+NULL
+
+find_edges_3D <- function(c_search, n) {
+    .Call(`_slvwagner_find_edges_3D`, c_search, n)
+}
+
 #' calc_roots_from_seeds_C
 #' @name calc_roots_from_seeds_C
 #' @title calc_roots_from_seeds_C

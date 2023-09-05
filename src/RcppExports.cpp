@@ -22,6 +22,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// find_edges_3D
+LogicalVector find_edges_3D(LogicalVector c_search, const IntegerVector n);
+RcppExport SEXP _slvwagner_find_edges_3D(SEXP c_searchSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalVector >::type c_search(c_searchSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(find_edges_3D(c_search, n));
+    return rcpp_result_gen;
+END_RCPP
+}
 // calc_roots_from_seeds_C
 List calc_roots_from_seeds_C(ComplexVector seeds, ComplexVector roots, NumericVector poly);
 RcppExport SEXP _slvwagner_calc_roots_from_seeds_C(SEXP seedsSEXP, SEXP rootsSEXP, SEXP polySEXP) {
@@ -50,6 +62,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_slvwagner_find_edges_2D", (DL_FUNC) &_slvwagner_find_edges_2D, 2},
+    {"_slvwagner_find_edges_3D", (DL_FUNC) &_slvwagner_find_edges_3D, 2},
     {"_slvwagner_calc_roots_from_seeds_C", (DL_FUNC) &_slvwagner_calc_roots_from_seeds_C, 3},
     {"_slvwagner_expandGridComplex", (DL_FUNC) &_slvwagner_expandGridComplex, 2},
     {NULL, NULL, 0}

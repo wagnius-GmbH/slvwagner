@@ -1,7 +1,7 @@
 Package: slvwagner
 Type: Package
 Title: All stuff that I`m missing
-Version: 0.9.6.1
+Version: 0.9.6.2
 Author: Florian Wagner
 Depends: R (>= 4.2.0)
 Maintainer: Florian Wagner <florian.wagner@wagnius.ch>
@@ -29,6 +29,7 @@ Imports:
     Ryacas,
     tibble,
     tidyr,
-    nleqslv
+    nleqslv,
+    stringr
 LinkingTo: 
     Rcpp
