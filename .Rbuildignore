@@ -11,3 +11,7 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^slvwagner.Rproj
+^files$
+^test.Rmd
+^test.html

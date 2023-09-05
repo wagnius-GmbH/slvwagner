@@ -1,16 +1,19 @@
 ###################################################################
 #' Automatically creates a table of contents for a .Rmd file
 #' @name r_tbl_contents
-#' @details
+#' @description
 #' Scans documents for headings and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
-#' @param  FileName file name or connection
+#' @details
+#' The function argument is a stirng of a R markdown .Rmd file which can be loaded via \code{readLines("fileName.Rmd")}
+#'
+#' @param  c_Rmd Rmd file string
 #' @return .Rmd file string
 #' @examples
 #' print(tbl_of_contents.Rmd)
 #' c_rmd <- r_tbl_contents(tbl_of_contents.Rmd)
-#' c_rmd|>write("files/output/test.Rmd")
-#' rmarkdown::render("files/output/test.Rmd", c("html_document"))
-#' browseURL("files/output/test.html")
+#' c_rmd|>write("test.Rmd")
+#' rmarkdown::render("test.Rmd", c("html_document"))
+#' browseURL("test.html")
 #' @export
 
 r_tbl_contents <- function(c_Rmd) {

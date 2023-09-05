@@ -7,21 +7,21 @@
 r_tbl_contents(c_Rmd)
 }
 \arguments{
-\item{FileName}{file name or connection}
+\item{c_Rmd}{Rmd file string}
 }
 \value{
 .Rmd file string
 }
 \description{
-Automatically creates a table of contents for a .Rmd file
+Scans documents for headings and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
 }
 \details{
-Scans documents for headings and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
+The function argument is a stirng of a R markdown .Rmd file which can be loaded via \code{readLines("fileName.Rmd")}
 }
 \examples{
 print(tbl_of_contents.Rmd)
 c_rmd <- r_tbl_contents(tbl_of_contents.Rmd)
-c_rmd|>write("files/output/test.Rmd")
-rmarkdown::render("files/output/test.Rmd", c("html_document"))
-browseURL("files/output/test.html")
+c_rmd|>write("test.Rmd")
+rmarkdown::render("test.Rmd", c("html_document"))
+browseURL("test.html")
 }
