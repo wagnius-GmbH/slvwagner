@@ -91,8 +91,8 @@ r_tbl_contents <- function(c_Rmd) {
   return(c_Rmd)
 }
 
-# # r_tbl_contents
-# # data for examples
-# tbl_of_contents.Rmd <- readLines("files/input/tbl_of_contents.Rmd")
-# tbl_of_contents.Rmd
-# usethis:::use_data(tbl_of_contents.Rmd, internal = TRUE, overwrite = TRUE)
+# r_tbl_contents
+# data for examples
+tbl_of_contents.Rmd <- readLines("files/input/tbl_of_contents.Rmd")
+tbl_of_contents.Rmd
+usethis:::use_data(tbl_of_contents.Rmd, internal = TRUE, overwrite = TRUE)

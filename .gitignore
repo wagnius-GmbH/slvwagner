@@ -8,3 +8,5 @@ docs/*
 docs
 
 files/output/*
+test.html
+test.Rmd

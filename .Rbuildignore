@@ -13,8 +13,8 @@
 ^pkgdown$
 ^slvwagner.Rproj
 ^files$
-^test.Rmd
-^test.html
+^test.Rmd$
+^test.html$
 ^files\test.Rmd
 ^files\test.html
 ^files\*
