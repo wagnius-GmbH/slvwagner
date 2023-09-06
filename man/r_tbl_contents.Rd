@@ -4,10 +4,12 @@
 \alias{r_tbl_contents}
 \title{Automatically creates a table of contents for a .Rmd file}
 \usage{
-r_tbl_contents(c_Rmd)
+r_tbl_contents(c_Rmd, TOC_nb = FALSE)
 }
 \arguments{
 \item{c_Rmd}{Rmd file string}
+
+\item{TOC_nb}{boolean to enable numbering for each heading}
 }
 \value{
 .Rmd file string
@@ -16,12 +18,12 @@ r_tbl_contents(c_Rmd)
 Scans documents for headings and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
 }
 \details{
-The function argument is a stirng of a R markdown .Rmd file which can be loaded via \code{readLines("fileName.Rmd")}
+The function argument is a string of a R markdown .Rmd file which can be loaded via \code{readLines("fileName.Rmd")}
 }
 \examples{
 print(tbl_of_contents.Rmd)
 c_rmd <- r_tbl_contents(tbl_of_contents.Rmd)
-c_rmd|>write("test.Rmd")
-rmarkdown::render("test.Rmd", c("html_document"))
-browseURL("test.html")
+c_rmd
+c_rmd <- r_tbl_contents(tbl_of_contents.Rmd, TRUE)
+c_rmd
 }
