@@ -125,45 +125,5 @@ r_cmd_running <- function() {
 }
 
 
-###################################################################
-#' Creates a table of contents for a Rmd file
-#' @name r_tbl_contents
-#' @details
-#' Scans documents for headings and creates a table of contents (hyper linked). The returnend string can directly be written as .Rmd file.
-#' @param  FileName file name or connection
-#' @return sting of .Rmd file with table of contents
-#' @export
-
-r_tbl_contents <- function(FileName) {
-  # read markdown file
-  c_Rmd <- suppressWarnings(readLines(FileName))
-  c_Rmd
-
-  # regex search pattern
-  p <- "^#"
-
-  # find position to insert table of contents
-  for(ii in 1:length(c_Rmd)){
-    if(stringr::str_detect(c_Rmd[ii],p)) {
-      c_start <- ii
-      break
-    }
-  }
-
-  # Headings to find
-  heading <- c_Rmd[stringr::str_detect(c_Rmd, p)]|>stringr::str_remove_all("#")|>stringr::str_split("<", simplify = T)
-  heading <- heading[,1]|>stringr::str_trim()
-
-  # put anchor to headings
-  c_Rmd <- ifelse(stringr::str_detect(c_Rmd, p), paste0(c_Rmd, "<a name=\"",c_Rmd|>stringr::str_remove_all("#")|>stringr::str_trim(),"\"></a>"), c_Rmd)
-  c_Rmd
-
-  # create table on contents
-  c_Rmd <- c(c_Rmd[1:(c_start-1)],
-             "\n# Tabel of Content",
-             paste0("[",heading,"]","(#",heading,")","  \\"), "\n", # insert table of contents
-             c_Rmd[c_start:length(c_Rmd)])
-  return(c_Rmd)
-}
 
 

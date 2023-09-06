@@ -8,6 +8,23 @@ knitr::opts_chunk$set(
 library(slvwagner)
 
 ## -----------------------------------------------------------------------------
+c_slope <- 0.3
+c_intercept <- 1
+
+cbind(x = -10:10, y = lf_lf(-10:10,c_slope,c_intercept))|>
+  plot(main = "lf_lf", type = "b", asp = 1)
+
+## -----------------------------------------------------------------------------
+library(tidyverse)
+tibble(y = rnorm(100,mean = -2.5))|>
+  mutate(x = row_number(y),
+         y_centered = signal_center(y))|>
+pivot_longer(cols = c("y", "y_centered"))|>
+ggplot(aes(x,value, color = name))+
+  geom_point()+
+  geom_hline(yintercept = 0)
+
+## -----------------------------------------------------------------------------
 n_col <- 7
 n_row <- 4
 

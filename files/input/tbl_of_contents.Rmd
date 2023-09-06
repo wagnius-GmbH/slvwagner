@@ -1,0 +1,41 @@
+---
+title: "Rmarkdown input"
+author: "Florian Wagner"
+date: "2023-09-05"
+output:
+    html_document: default
+    word_document: default
+    pdf_document: default
+---
+
+# Heading1
+Heading1. Das ist so korrekt.  \
+Das war ein Enter (Paragraph)  \
+
+## Hading1.1
+ewerwerewr  \
+
+# Heading2
+Lllljjjdkkdkkd  \
+
+## Heading2.1
+Kljsdklfjlksdf  \
+
+### Heading2.1.1
+Jkljlsdfljklkljjkldasf. Kjkldjskljkldjf  \
+
+### Heading2.1.2
+745684564dfgdfg  \
+dfgskljkljkldgf  \
+
+#### Heading2.1.1.1
+Jlksdjflkdjklfj  \
+
+#### Heading2.1.1.2
+helllllppppp  \
+
+## Heading 2.2
+Dskjkljklwerewr  \
+
+### Hading 2.2.2
+Poipoiewrp

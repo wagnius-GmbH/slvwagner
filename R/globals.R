@@ -40,5 +40,6 @@ utils::globalVariables(c("tibble",
                          "polynom",
                          "as.polynomial",
                          "nleqslv",
-                         "stringr"
+                         "stringr",
+                         "tbl_of_contents.Rmd"
                          ))

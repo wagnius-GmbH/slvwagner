@@ -63,10 +63,30 @@ Functions start with lf_
 -   Intersection point of two functions
 -   Linear function from two points
 
+```{r}
+c_slope <- 0.3
+c_intercept <- 1
+
+cbind(x = -10:10, y = lf_lf(-10:10,c_slope,c_intercept))|>
+  plot(main = "lf_lf", type = "b", asp = 1)
+```
+
+
 #### signal
 Functions start with signal_
 
 -   To average a signal around zero (AC coupling)
+```{r}
+library(tidyverse)
+tibble(y = rnorm(100,mean = -2.5))|>
+  mutate(x = row_number(y),
+         y_centered = signal_center(y))|>
+pivot_longer(cols = c("y", "y_centered"))|>
+ggplot(aes(x,value, color = name))+
+  geom_point()+
+  geom_hline(yintercept = 0)
+```
+
 
 ### find 
 Functions start with find_
@@ -123,7 +143,6 @@ Functions start with stat_
 ### business
 -   NPS (net promoter score)
 
-### Utilities
 
 #### Plot
 Functions start with plot_
@@ -134,6 +153,7 @@ Functions start with plot_
 Functions start with r_
 
 -   r_ R utility functions, e.g. windows path to R compatible path
+-   Automatically create table of contents for a .Rmd R markdown file 
 
 #### Fast dictionary
 Function start with dict_
