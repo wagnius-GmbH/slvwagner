@@ -7,8 +7,5 @@
 tbl_of_contents.Rmd()
 }
 \description{
-R markdown date for
-}
-\details{
-The function argument is a stirng of a R markdown .Rmd file which can be loaded via \code{readLines("fileName.Rmd")}
+Data for r_tbl_contents
 }

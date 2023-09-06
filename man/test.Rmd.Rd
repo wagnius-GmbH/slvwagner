@@ -7,8 +7,5 @@
 test.Rmd()
 }
 \description{
-R markdown data
-}
-\details{
-The function argument is a stirng of a R markdown .Rmd file which can be loaded via \code{readLines("fileName.Rmd")}
+Data for r_tbl_contents
 }
