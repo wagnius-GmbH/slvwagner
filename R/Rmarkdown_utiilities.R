@@ -11,13 +11,9 @@
 #' @examples
 #' print(tbl_of_contents.Rmd)
 #' c_rmd <- r_tbl_contents(tbl_of_contents.Rmd)
-#' c_rmd|>write("test.Rmd")
-#' rmarkdown::render("test.Rmd", c("html_document"))
-#' browseURL("test.html")
-#' c_rmd <- r_tbl_contents(tbl_of_contents.Rmd, T)
-#' c_rmd|>write("test.Rmd")
-#' rmarkdown::render("test.Rmd", c("html_document"))
-#' browseURL("test.html")
+#' c_rmd
+#' c_rmd <- r_tbl_contents(tbl_of_contents.Rmd, TRUE)
+#' c_rmd
 #' @export
 
 r_tbl_contents <- function(c_Rmd, TOC_nb = FALSE) {

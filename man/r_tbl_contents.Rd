@@ -23,11 +23,7 @@ The function argument is a string of a R markdown .Rmd file which can be loaded 
 \examples{
 print(tbl_of_contents.Rmd)
 c_rmd <- r_tbl_contents(tbl_of_contents.Rmd)
-c_rmd|>write("test.Rmd")
-rmarkdown::render("test.Rmd", c("html_document"))
-browseURL("test.html")
-c_rmd <- r_tbl_contents(tbl_of_contents.Rmd, T)
-c_rmd|>write("test.Rmd")
-rmarkdown::render("test.Rmd", c("html_document"))
-browseURL("test.html")
+c_rmd
+c_rmd <- r_tbl_contents(tbl_of_contents.Rmd, TRUE)
+c_rmd
 }
