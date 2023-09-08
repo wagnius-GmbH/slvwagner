@@ -4,10 +4,11 @@
 #' @description
 #' Scans documents for headings and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
 #' @details
-#' The function argument is a string of a R markdown .Rmd file which can be loaded via \code{readLines("fileName.Rmd")}
+#' The function argument is a string of a R markdown .Rmd file which can be loaded via \code{readLines("fileName.Rmd")}.
 #' @param c_Rmd Rmd file string
 #' @param create_nb boolean to enable numbering for each heading.
-#' @param nb_front boolean to have the numbering in front of each heading.
+#' @param nb_front boolean to have the numbering in front of each heading. Do not enable if the markdown file will be rendered as html. The links will not work!
+#' @param create_top_link boolean to create link below each heading to jump back to the table of contents.
 #' @return .Rmd file string
 #' @examples
 #' print(tbl_of_contents.Rmd)
@@ -16,13 +17,9 @@
 #' c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd, TRUE)
 #' c_rmd
 #' @export
-
-r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, nb_front = FALSE) {
+r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_front = FALSE) {
   ##########################################################################
   # table of contents
-  headings <- c_Rmd[stringr::str_detect(c_Rmd, "#")]|>stringr::str_remove_all("#")|>stringr::str_trim()
-
-  # Hello
   df_data <- data.frame(index = 1:length(c_Rmd),
                         c_Rmd,
                         is.heading = stringr::str_detect(c_Rmd, "^#")
@@ -166,7 +163,8 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, nb_front = FALSE) {
         c_Heading_level," " , c_nb, " ", c_Heading ,
         "<a name=\"",
         c_nb, " ", c_Heading ,
-        "\"></a>"
+        "\"></a>",
+        if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
       )
       c_toc <- paste0("[", c_nb,  " ", c_Heading,"](#", c_nb," ", c_Heading, ")")
     } else {  # heading flowed by number system
@@ -174,7 +172,8 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, nb_front = FALSE) {
         c_Heading_level, " " , c_Heading, " ", c_nb,
         "<a name=\"",
         c_Heading, " ", c_nb,
-        "\"></a>"
+        "\"></a>",
+        if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
       )
       c_toc <- paste0("[", c_Heading, " ",c_nb,"](#", c_Heading," ",c_nb,")")
     }
@@ -183,7 +182,8 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, nb_front = FALSE) {
       c_Heading_level, " ", c_Heading,
       "<a name=\"",
       c_Heading,
-      "\"></a>"
+      "\"></a>",
+      if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
     )
     c_toc <- paste0("[", c_Heading, "](#", c_Heading, ")")
   }
@@ -203,7 +203,7 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, nb_front = FALSE) {
   #########################################################################
   # find position to insert table of contents
   check <- stringr::str_detect(c_Rmd, "(?:^#\\s|^##\\s)")
-  check
+
   for (ii in 1:length(c_Rmd)) {
     if (check[ii]) {
       c_start <- ii
@@ -211,12 +211,16 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, nb_front = FALSE) {
     }
   }
 
+  ##########################################################################
+  # create create top link
+  c_toc_heading <- ifelse(create_top_link, "# Tabel of Content<a name=\"Tabel of Content\"></a>", "# Tabel of Content")
+
   #########################################################################
   # Insert table of contents
   if (create_nb) {
     # insert table off contents
     c_Rmd <- c(df_data_$c_Rmd_ [1:(c_start - 1)],
-               "# Tabel of Content",
+               c_toc_heading,
                c_toc,
                "\n",
                df_data_$c_Rmd_[c_start:nrow(df_data)])
@@ -224,7 +228,7 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, nb_front = FALSE) {
   } else{
     # insert table off contents
     c_Rmd <- c(df_data_$c_Rmd_[1:(c_start - 1)],
-               "# Tabel of Content",
+               c_toc_heading,
                c_toc,
                "\n",
                df_data_$c_Rmd_[c_start:nrow(df_data)])
