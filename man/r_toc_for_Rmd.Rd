@@ -4,14 +4,21 @@
 \alias{r_toc_for_Rmd}
 \title{Automatically creates a table of contents for a .Rmd file}
 \usage{
-r_toc_for_Rmd(c_Rmd, create_nb = TRUE, nb_front = FALSE)
+r_toc_for_Rmd(
+  c_Rmd,
+  create_nb = TRUE,
+  create_top_link = TRUE,
+  nb_front = FALSE
+)
 }
 \arguments{
 \item{c_Rmd}{Rmd file string}
 
 \item{create_nb}{boolean to enable numbering for each heading.}
 
-\item{nb_front}{boolean to have the numbering in front of each heading.}
+\item{create_top_link}{boolean to create link below each heading to jump back to the table of contents.}
+
+\item{nb_front}{boolean to have the numbering in front of each heading. Do not enable if the markdown file will be rendered as html. The links will not work!}
 }
 \value{
 .Rmd file string
@@ -20,7 +27,7 @@ r_toc_for_Rmd(c_Rmd, create_nb = TRUE, nb_front = FALSE)
 Scans documents for headings and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
 }
 \details{
-The function argument is a string of a R markdown .Rmd file which can be loaded via \code{readLines("fileName.Rmd")}
+The function argument is a string of a R markdown .Rmd file which can be loaded via \code{readLines("fileName.Rmd")}.
 }
 \examples{
 print(tbl_of_contents.Rmd)
