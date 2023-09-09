@@ -18,7 +18,7 @@
 #' c_rmd
 #' @export
 
-r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE) {
+r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_front = FALSE) {
 
   ##########################################################################
   # create dataframe to work with
@@ -182,7 +182,8 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
       c_ancor <- paste0(
         c_Heading_level," " , c_nb, " ", c_Heading ,
         "<a name=\"",
-        "A_", c_nb, "_", c_Heading ,
+        "A_", # add some characters to ensure html links will work
+        c_nb, "_", c_Heading ,
         "\"></a>",
         if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
       )
@@ -191,21 +192,23 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
       c_ancor <- paste0(
         c_Heading_level, " " , c_Heading, " ", c_nb,
         "<a name=\"",
+        "A_", # add some characters to ensure html links will work
         c_Heading, " ", c_nb,
         "\"></a>",
         if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
       )
-      c_toc <- paste0("[", c_Heading, " ",c_nb,"](#", c_Heading," ",c_nb,")")
+      c_toc <- paste0("[", c_Heading, " ",c_nb,"](#A_", c_Heading," ",c_nb,")")
     }
   } else { # No numbering system / Do not Include number system
     c_ancor <- paste0(
       c_Heading_level, " ", c_Heading,
       "<a name=\"",
+      "A_", # add some characters to ensure html links will work
       c_Heading,
       "\"></a>",
       if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
     )
-    c_toc <- paste0("[", c_Heading, "](#", c_Heading, ")")
+    c_toc <- paste0("[", c_Heading, "](#A_", c_Heading, ")")
   }
 
   # offset toc according to heading structure
