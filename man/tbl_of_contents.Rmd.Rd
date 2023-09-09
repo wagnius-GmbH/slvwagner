@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.R
 \name{tbl_of_contents.Rmd}
 \alias{tbl_of_contents.Rmd}
-\title{Automatically creates a table of contents for a .Rmd file}
+\title{Data for table of contents for a .Rmd file}
 \usage{
 tbl_of_contents.Rmd()
 }
