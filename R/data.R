@@ -1,5 +1,5 @@
 ###################################################################
-#' Automatically creates a table of contents for a .Rmd file
+#' Data for table of contents for a .Rmd file
 #' @name tbl_of_contents.Rmd
 #' @description
 #' Data for r_tbl_contents

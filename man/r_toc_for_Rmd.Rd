@@ -24,14 +24,14 @@ r_toc_for_Rmd(
 .Rmd file string
 }
 \description{
-Scans documents for headings and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
+Scans documents for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file. All code section will be excluded for the (#) search.
 }
 \details{
-The function argument is a string of a R markdown .Rmd file which can be loaded via \code{readLines("fileName.Rmd")}.
+The function argument is a string of a R markdown .Rmd file which can be read via \code{readLines("fileName.Rmd")}.
 }
 \examples{
 print(tbl_of_contents.Rmd)
-c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd)
+c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd, FALSE)
 c_rmd
 c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd, TRUE)
 c_rmd
