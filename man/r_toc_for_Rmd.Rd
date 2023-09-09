@@ -18,7 +18,7 @@ r_toc_for_Rmd(
 
 \item{create_top_link}{boolean to create link below each heading to jump back to the table of contents.}
 
-\item{nb_front}{boolean to have the numbering in front of each heading. Do not enable if the markdown file will be rendered as html. The links will not work!}
+\item{nb_front}{boolean to have the numbering in front of each heading.}
 }
 \value{
 .Rmd file string

@@ -7,7 +7,7 @@
 #' The function argument is a string of a R markdown .Rmd file which can be read via \code{readLines("fileName.Rmd")}.
 #' @param c_Rmd Rmd file string
 #' @param create_nb boolean to enable numbering for each heading.
-#' @param nb_front boolean to have the numbering in front of each heading. Do not enable if the markdown file will be rendered as html. The links will not work!
+#' @param nb_front boolean to have the numbering in front of each heading.
 #' @param create_top_link boolean to create link below each heading to jump back to the table of contents.
 #' @return .Rmd file string
 #' @examples
@@ -182,30 +182,33 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
       c_ancor <- paste0(
         c_Heading_level," " , c_nb, " ", c_Heading ,
         "<a name=\"",
-        c_nb, " ", c_Heading ,
+        "A_", # add some characters to ensure html links will work
+        c_nb, "_", c_Heading ,
         "\"></a>",
         if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
       )
-      c_toc <- paste0("[", c_nb,  " ", c_Heading,"](#", c_nb," ", c_Heading, ")")
+      c_toc <- paste0("[", c_nb,  " ", c_Heading,"](#A_", c_nb,"_", c_Heading, ")")
     } else {  # heading flowed by number system
       c_ancor <- paste0(
         c_Heading_level, " " , c_Heading, " ", c_nb,
         "<a name=\"",
+        "A_", # add some characters to ensure html links will work
         c_Heading, " ", c_nb,
         "\"></a>",
         if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
       )
-      c_toc <- paste0("[", c_Heading, " ",c_nb,"](#", c_Heading," ",c_nb,")")
+      c_toc <- paste0("[", c_Heading, " ",c_nb,"](#A_", c_Heading," ",c_nb,")")
     }
   } else { # No numbering system / Do not Include number system
     c_ancor <- paste0(
       c_Heading_level, " ", c_Heading,
       "<a name=\"",
+      "A_", # add some characters to ensure html links will work
       c_Heading,
       "\"></a>",
       if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
     )
-    c_toc <- paste0("[", c_Heading, "](#", c_Heading, ")")
+    c_toc <- paste0("[", c_Heading, "](#A_", c_Heading, ")")
   }
 
   # offset toc according to heading structure
