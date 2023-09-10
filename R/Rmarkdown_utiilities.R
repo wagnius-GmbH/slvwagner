@@ -18,8 +18,7 @@
 #' c_rmd
 #' @export
 
-r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE) {
-
+r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_front = FALSE) {
   ##########################################################################
   # create dataframe to work with
   p <- "^```"
@@ -58,10 +57,50 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
   m <- df_data[df_data$is.heading,5:ncol(df_data)]
 
   ##########################################################################
+  # correct structure
+
+  # check for headings in each column
+  is.heading <- apply(m, 2,function(x){
+    !sum(x)>0
+  })
+
+  # change structure so that the fist heading will be found in the first column
+  if(sum(is.heading)>1) {
+    for (ii in 1:length(is.heading)) {
+      if(!is.heading[ii]) {
+        push_front <- ii
+        # Add columns according to push_back
+        m_ <- switch (push_front,
+                      m_ = m,
+                      m_ = cbind(m[,2:6],p1=rep(0,nrow(m))),
+                      m_ = cbind(m[,2:6],p1=rep(0,nrow(m[,2:5])),p2=rep(0,nrow(m))),
+                      m_ = cbind(m[,3:6],p1=rep(0,nrow(m)),p2=rep(0,nrow(m)),p3=rep(0,nrow(m))),
+                      m_ = cbind(m[,4:6],p1=rep(0,nrow(m)),p2=rep(0,nrow(m)),p3=rep(0,nrow(m)),p4=rep(0,nrow(m))),
+                      m_ = cbind(m[,5:6],p1=rep(0,nrow(m)),p2=rep(0,nrow(m)),p3=rep(0,nrow(m)),p4=rep(0,nrow(m)),p5=rep(0,nrow(m)))
+        )
+        break
+      }
+    }
+  }else{
+    # Add columns according to push_back
+    push_back <- push_back
+    m_ <- switch (push_back,
+                  m_ = m,
+                  m_ = cbind(m,p1=rep(0,nrow(m))),
+                  m_ = cbind(m,p1=rep(0,nrow(m)),p2=rep(0,nrow(m))),
+                  m_ = cbind(m,p1=rep(0,nrow(m)),p2=rep(0,nrow(m)),p3=rep(0,nrow(m))),
+                  m_ = cbind(m,p1=rep(0,nrow(m)),p2=rep(0,nrow(m)),p3=rep(0,nrow(m)),p4=rep(0,nrow(m))),
+                  m_ = cbind(m,p1=rep(0,nrow(m)),p2=rep(0,nrow(m)),p3=rep(0,nrow(m)),p4=rep(0,nrow(m)),p5=rep(0,nrow(m))),
+                  m_ = cbind(m,p2=rep(0,nrow(m)),p2=rep(0,nrow(m)),p3=rep(0,nrow(m)),p4=rep(0,nrow(m)),p5=rep(0,nrow(m)),p6=rep(0,nrow(m)))
+    )
+  }
+
+
+  ##########################################################################
   # find highest order Heading (Column)
   highest_order_jj <- 0
   for(ii in 1:6){
-    if(sum(m[,ii]>0)){
+    if(sum(m_[,ii]>0)){
       highest_order_jj <- ii
       break
     }
@@ -71,60 +110,42 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
   # find index of highest order (row)
   highest_order_ii <- 0
   for(ii in 1:nrow(m)){
-    if(m[ii,highest_order_jj] > 0){
+    if(m_[ii,highest_order_jj] > 0){
       highest_order_ii <- ii
       break
     }
   }
   # print(highest_order_ii)
 
-  ##########################################################################
-  # Correct heading structure
-  # How many columns to push pack
-  if(highest_order_jj != ncol(m)){
-    push_back <- highest_order_jj
-  }
-  # print(push_back)
-
-  # Add columns according to push_back
-  m_ <- switch (push_back,
-                # m_ = m,
-                m_ = cbind(m,p1=rep(0,nrow(m))),
-                m_ = cbind(m,p1=rep(0,nrow(m)),p2=rep(0,nrow(m))),
-                m_ = cbind(m,p1=rep(0,nrow(m)),p2=rep(0,nrow(m)),p3=rep(0,nrow(m))),
-                m_ = cbind(m,p1=rep(0,nrow(m)),p2=rep(0,nrow(m)),p3=rep(0,nrow(m)),p4=rep(0,nrow(m))),
-                m_ = cbind(m,p1=rep(0,nrow(m)),p2=rep(0,nrow(m)),p3=rep(0,nrow(m)),p4=rep(0,nrow(m)),p5=rep(0,nrow(m))),
-                m_ = cbind(m,p2=rep(0,nrow(m)),p2=rep(0,nrow(m)),p3=rep(0,nrow(m)),p4=rep(0,nrow(m)),p5=rep(0,nrow(m)),p6=rep(0,nrow(m)))
-  )
-  # print(m_)
-
-  ##########################################################################
+  # ##########################################################################
+  # # Correct heading structure
   # shift all heading according to push_back and the first found highest order index
-  for (ii in 1:nrow(m_)) {
-    if (ii >= highest_order_ii) {
-      temp <- m[ii,] |> as.matrix() |> as.vector()
-      if (push_back == 1) {
-        m_[ii,] <- c(0, temp)
-      }
-      else if (push_back == 2) {
-        m_[ii,] <- c(0, 0, temp)
-      }
-      else if (push_back == 3) {
-        m_[ii,] <- c(0, 0, 0, temp)
-      }
-      else if (push_back == 4) {
-        m_[ii,] <- c(0, 0, 0, 0, temp)
-      }
-      else if (push_back == 5) {
-        m_[ii,] <- c(0, 0, 0, 0, 0, temp)
-      }
-      else if (push_back == 6) {
-        m_[ii,] <- c(0, 0, 0, 0, 0, 0, temp)
+  if (slvwagner::r_is.defined(push_back)) {
+    for (ii in 1:nrow(m_)) {
+      if (ii >= highest_order_ii) {
+        temp <- m[ii, ] |> as.matrix() |> as.vector()
+        if (push_back == 1) {
+          m_[ii, ] <- c(0, temp)
+        }
+        else if (push_back == 2) {
+          m_[ii, ] <- c(0, 0, temp)
+        }
+        else if (push_back == 3) {
+          m_[ii, ] <- c(0, 0, 0, temp)
+        }
+        else if (push_back == 4) {
+          m_[ii, ] <- c(0, 0, 0, 0, temp)
+        }
+        else if (push_back == 5) {
+          m_[ii, ] <- c(0, 0, 0, 0, 0, temp)
+        }
+        else if (push_back == 6) {
+          m_[ii, ] <- c(0, 0, 0, 0, 0, 0, temp)
+        }
       }
     }
   }
 
-  m_ <- m_[,(push_back+1):ncol(m_)]
   names(m_) <- c("#","##","###","####","#####","######")
   # print(m_)
 
@@ -160,7 +181,6 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
     heading_cnt_ <- heading_cnt
     c_add_structure[ii] <- c_add[jj] # need to offset toc
   }
-
   # print(m__)
 
   ##########################################################################

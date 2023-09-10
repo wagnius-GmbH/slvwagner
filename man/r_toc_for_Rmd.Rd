@@ -4,7 +4,12 @@
 \alias{r_toc_for_Rmd}
 \title{Automatically creates a table of contents for a .Rmd file}
 \usage{
-r_toc_for_Rmd(c_Rmd, create_nb = TRUE, create_top_link = TRUE, nb_front = TRUE)
+r_toc_for_Rmd(
+  c_Rmd,
+  create_nb = TRUE,
+  create_top_link = TRUE,
+  nb_front = FALSE
+)
 }
 \arguments{
 \item{c_Rmd}{Rmd file string}
