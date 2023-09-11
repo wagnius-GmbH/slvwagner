@@ -9,6 +9,7 @@
 #' @param create_nb boolean to enable numbering for each heading.
 #' @param nb_front boolean to have the numbering in front of each heading.
 #' @param create_top_link boolean to create link below each heading to jump back to the table of contents.
+#' @param set_first_heading_level set first found heading level to heading 1
 #' @return .Rmd file string
 #' @examples
 #' print(tbl_of_contents.Rmd)
@@ -18,7 +19,7 @@
 #' c_rmd
 #' @export
 
-r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE) {
+r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, set_first_heading_level = FALSE) {
   ##########################################################################
   # create dataframe to work with
   p <- "^```"
@@ -58,7 +59,6 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
 
   ##########################################################################
   # correct structure
-
   # check for headings in each column
   is.heading <- apply(m, 2,function(x){
     !sum(x)>0
@@ -95,7 +95,6 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
     )
   }
 
-
   ##########################################################################
   # find highest order Heading (Column)
   highest_order_jj <- 0
@@ -105,7 +104,6 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
       break
     }
   }
-  # print(highest_order_jj)
 
   # find index of highest order (row)
   highest_order_ii <- 0
@@ -115,12 +113,11 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
       break
     }
   }
-  # print(highest_order_ii)
 
   # ##########################################################################
   # # Correct heading structure
   # shift all heading according to push_back and the first found highest order index
-  if (slvwagner::r_is.defined(push_back)) {
+  if (r_is.defined(push_back)) {
     for (ii in 1:nrow(m_)) {
       if (ii >= highest_order_ii) {
         temp <- m[ii, ] |> as.matrix() |> as.vector()
@@ -146,12 +143,8 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
     }
   }
 
-  names(m_) <- c("#","##","###","####","#####","######")
-  # print(m_)
-
   ##########################################################################
   # create structure number system
-
   # Heading structure counts
   heading_cnt <- rep(0,6)
   heading_cnt_ <- rep(0,6)
@@ -164,6 +157,7 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
              "            + ",
              "                + ",
              "                    + ")
+
   c_add_structure <- 1:nrow(m_)
 
   m__ <- m_
@@ -181,7 +175,6 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
     heading_cnt_ <- heading_cnt
     c_add_structure[ii] <- c_add[jj] # need to offset toc
   }
-  # print(m__)
 
   ##########################################################################
   # create structure number
@@ -192,56 +185,77 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
     })
 
   ##########################################################################
-  # create Heading and ancor
+  # create heading
   c_Heading <- c_Rmd[df_data$is.heading]|> stringr::str_remove_all("#") |> stringr::str_trim()
   c_Heading_level <- c_Rmd[df_data$is.heading] |> stringr::str_split(" ", simplify = TRUE)
   c_Heading_level <- c_Heading_level[,1]
 
+  c_toc_heading_string <- "Table of Contents"
+  c_top_link <- paste0("\n[",c_toc_heading_string,"](#",c_toc_heading_string,")\n")
+
+  if (set_first_heading_level & r_is.defined(push_front)) {
+    if((push_front-1) != 0){
+      c_Heading_level <- switch(
+        push_front-1,
+        c_Heading_level = c_Heading_level|>stringr::str_remove("#"),
+        c_Heading_level = c_Heading_level|>stringr::str_remove("##"),
+        c_Heading_level = c_Heading_level|>stringr::str_remove("###"),
+        c_Heading_level = c_Heading_level|>stringr::str_remove("####"),
+        c_Heading_level = c_Heading_level|>stringr::str_remove("#####"),
+        c_Heading_level = c_Heading_level|>stringr::str_remove("######"),
+      )
+    }
+    c_toc_heading <- paste0("# ")
+  } else {
+    c_toc_heading <- switch(
+      push_front,
+      c_toc_heading = paste0("# "),
+      c_toc_heading = paste0("## "),
+      c_toc_heading = paste0("### "),
+      c_toc_heading = paste0("#### "),
+      c_toc_heading = paste0("##### "),
+      c_toc_heading = paste0("###### ")
+    )
+  }
+
+  ##########################################################################
+  # create anchor
   if (create_nb) {
     if (nb_front) { # number system in front of heading
-      c_ancor <- paste0(
+      c_anchor <- paste0(
         c_Heading_level," " , c_nb, " ", c_Heading ,
         "<a name=\"",
         "A_", # add some characters to ensure html links will work
         c_nb, "_", c_Heading ,
         "\"></a>",
-        if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
+        if(create_top_link) c_top_link
       )
       c_toc <- paste0("[", c_nb,  " ", c_Heading,"](#A_", c_nb,"_", c_Heading, ")")
     } else {  # heading flowed by number system
-      c_ancor <- paste0(
+      c_anchor <- paste0(
         c_Heading_level, " " , c_Heading, " ", c_nb,
         "<a name=\"",
         "A_", # add some characters to ensure html links will work
         c_Heading, " ", c_nb,
         "\"></a>",
-        if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
+        if(create_top_link) c_top_link
       )
       c_toc <- paste0("[", c_Heading, " ",c_nb,"](#A_", c_Heading," ",c_nb,")")
     }
   } else { # No numbering system / Do not Include number system
-    c_ancor <- paste0(
+    c_anchor <- paste0(
       c_Heading_level, " ", c_Heading,
       "<a name=\"",
       "A_", # add some characters to ensure html links will work
       c_Heading,
       "\"></a>",
-      if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
+      if(create_top_link) c_top_link
     )
     c_toc <- paste0("[", c_Heading, "](#A_", c_Heading, ")")
   }
 
   # offset toc according to heading structure
   c_toc <- paste0(c_add_structure, c_toc)
-
-  #########################################################################
-  # Enhance headings
-  df_data_ <- dplyr::left_join(df_data[,1:4],
-                               data.frame(index = rownames(m__)|>as.integer(),
-                                          c_ancor),
-                               by = "index")
-
-  df_data_$c_Rmd_ <- ifelse(df_data_$is.heading,df_data_$c_ancor, c_Rmd)
 
   #########################################################################
   # find position to insert table of contents
@@ -254,9 +268,21 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
     }
   }
 
+  #########################################################################
+  # Enhance headings
+  df_data_ <- dplyr::left_join(df_data[,1:4],
+                               data.frame(index = rownames(m__)|>as.integer(),
+                                          c_anchor),
+                               by = "index")
+
+  df_data_$c_Rmd_ <- ifelse(df_data_$is.heading,df_data_$c_anchor, c_Rmd)
+
   ##########################################################################
   # create create top link
-  c_toc_heading <- ifelse(create_top_link, "# Tabel of Content<a name=\"Tabel of Content\"></a>", "# Tabel of Content")
+  c_toc_heading <- ifelse(create_top_link,
+                          paste0("\n",c_toc_heading," ", c_toc_heading_string,"<a name=\"",c_toc_heading_string,"\"></a>"),
+                          paste0(c_toc_heading," ", c_toc_heading_string))
+
 
   #########################################################################
   # Insert table of contents
