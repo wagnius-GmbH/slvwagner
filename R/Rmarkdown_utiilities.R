@@ -266,23 +266,26 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
 
   #########################################################################
   # find position to insert table of contents
-  check <- stringr::str_detect(c_Rmd, "```")
+  check <- stringr::str_detect(c_Rmd, "---")
+  c_start <- 1
+  cnt <- 0
 
   for (ii in 1:length(c_Rmd)) {
     if (check[ii]) {
       c_start <- ii
-      break
+      cnt <- cnt + 1
+      if(cnt == 2) break
     }
   }
 
   #########################################################################
   # Insert table of contents
   # insert table off contents
-  c_Rmd <- c(df_data_$c_Rmd_ [1:(c_start - 1)],
+  c_Rmd <- c(df_data_$c_Rmd_ [1:(c_start)],
              c_toc_link,
              c_toc,
              "\n",
-             df_data_$c_Rmd_[c_start:nrow(df_data)]
+             df_data_$c_Rmd_[(c_start+1):nrow(df_data)]
   )
   return(c_Rmd)
 }
