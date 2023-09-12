@@ -8,7 +8,8 @@ r_toc_for_Rmd(
   c_Rmd,
   create_nb = TRUE,
   create_top_link = TRUE,
-  nb_front = FALSE
+  nb_front = TRUE,
+  set_first_heading_level = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ r_toc_for_Rmd(
 \item{create_top_link}{boolean to create link below each heading to jump back to the table of contents.}
 
 \item{nb_front}{boolean to have the numbering in front of each heading.}
+
+\item{set_first_heading_level}{set first found heading level to heading 1}
 }
 \value{
 .Rmd file string
