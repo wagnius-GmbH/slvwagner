@@ -6,6 +6,7 @@
 \usage{
 r_toc_for_Rmd(
   c_Rmd,
+  toc_heading_string = "Table of Contents",
   create_nb = TRUE,
   create_top_link = TRUE,
   nb_front = TRUE,
@@ -14,6 +15,8 @@ r_toc_for_Rmd(
 }
 \arguments{
 \item{c_Rmd}{Rmd file string}
+
+\item{toc_heading_string}{title string for TOC, e.g "Inhaltsverzeichnis", default is "Table of contents".}
 
 \item{create_nb}{boolean to enable numbering for each heading.}
 
@@ -27,15 +30,16 @@ r_toc_for_Rmd(
 .Rmd file string
 }
 \description{
-Scans documents for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file. All code section will be excluded for the (#) search.
+Scans documents for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
+All code section will be excluded for the (#) search.
 }
 \details{
-The function argument is a string of a R markdown .Rmd file which can be read via \code{readLines("fileName.Rmd")}.
+As the function argument pass a R markdown .Rmd file string which can be read via \code{readLines("fileName.Rmd")}.
 }
 \examples{
 print(tbl_of_contents.Rmd)
-c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd, FALSE)
+c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd, create_nb = FALSE)
 c_rmd
-c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd, TRUE)
+c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd,toc_heading_string = "Inhaltsverzeichnis", create_nb = TRUE)
 c_rmd
 }

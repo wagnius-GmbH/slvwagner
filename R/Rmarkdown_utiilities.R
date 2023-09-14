@@ -2,9 +2,11 @@
 #' Automatically creates a table of contents for a .Rmd file
 #' @name r_toc_for_Rmd
 #' @description
-#' Scans documents for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file. All code section will be excluded for the (#) search.
+#' Scans documents for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
+#' All code section will be excluded for the (#) search.
 #' @details
-#' The function argument is a string of a R markdown .Rmd file which can be read via \code{readLines("fileName.Rmd")}.
+#' As the function argument pass a R markdown .Rmd file string which can be read via \code{readLines("fileName.Rmd")}.
+#' @param toc_heading_string title string for TOC, e.g "Inhaltsverzeichnis", default is "Table of contents".
 #' @param c_Rmd Rmd file string
 #' @param create_nb boolean to enable numbering for each heading.
 #' @param nb_front boolean to have the numbering in front of each heading.
@@ -13,13 +15,14 @@
 #' @return .Rmd file string
 #' @examples
 #' print(tbl_of_contents.Rmd)
-#' c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd, FALSE)
+#' c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd, create_nb = FALSE)
 #' c_rmd
-#' c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd, TRUE)
+#' c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd,toc_heading_string = "Inhaltsverzeichnis", create_nb = TRUE)
 #' c_rmd
 #' @export
 
-r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, set_first_heading_level = FALSE) {
+
+r_toc_for_Rmd <- function(c_Rmd,   toc_heading_string = "Table of Contents" ,create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, set_first_heading_level = FALSE) {
   ##########################################################################
   # create dataframe to work with
   p <- "^```"
@@ -190,8 +193,7 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
 
   ##########################################################################
   # create link link to table of contents
-  c_toc_heading_string <- "Table of Contents"
-  c_top_link <-  paste0("\n[", c_toc_heading_string, "](#", c_toc_heading_string, ")\n")
+  c_top_link <-  paste0("\n[", toc_heading_string, "](#", toc_heading_string, ")\n")
   c_top_link
 
   ##########################################################################
@@ -252,16 +254,16 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
   # create TOC
   highest_order_jj <- ifelse(set_first_heading_level, 1, highest_order_jj)
   c_toc_link <- switch(highest_order_jj,
-                       paste0(c_names[1]," ",c_toc_heading_string),
-                       paste0(c_names[2]," ",c_toc_heading_string),
-                       paste0(c_names[3]," ",c_toc_heading_string),
-                       paste0(c_names[4]," ",c_toc_heading_string),
-                       paste0(c_names[5]," ",c_toc_heading_string),
-                       paste0(c_names[6]," ",c_toc_heading_string)
+                       paste0(c_names[1]," ",toc_heading_string),
+                       paste0(c_names[2]," ",toc_heading_string),
+                       paste0(c_names[3]," ",toc_heading_string),
+                       paste0(c_names[4]," ",toc_heading_string),
+                       paste0(c_names[5]," ",toc_heading_string),
+                       paste0(c_names[6]," ",toc_heading_string)
   )
 
   c_toc_link <- ifelse(create_top_link,
-                       paste0(c_toc_link, "<a name=\"", c_toc_heading_string, "\"></a>"),
+                       paste0(c_toc_link, "<a name=\"", toc_heading_string, "\"></a>"),
                        c_toc_link)
 
   #########################################################################
