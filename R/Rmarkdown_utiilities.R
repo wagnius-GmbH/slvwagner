@@ -5,13 +5,14 @@
 #' Scans documents for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
 #' All code section will be excluded for the (#) search.
 #' @details
-#' As the function argument pass a R markdown .Rmd file string which can be read via \code{readLines("fileName.Rmd")}.
+#' The function argument is a string of a R markdown .Rmd file which can be read via \code{readLines("fileName.Rmd")}.
 #' @param toc_heading_string title string for TOC, e.g "Inhaltsverzeichnis", default is "Table of contents".
 #' @param c_Rmd Rmd file string
 #' @param create_nb boolean to enable numbering for each heading.
 #' @param nb_front boolean to have the numbering in front of each heading.
 #' @param create_top_link boolean to create link below each heading to jump back to the table of contents.
 #' @param set_first_heading_level set first found heading level to heading 1
+#' @param pagebreak_level Automatically add page breaks before new heading. Set the level to insert page breaks to e.g. c("non","1","2","3","4","5","6")
 #' @return .Rmd file string
 #' @examples
 #' print(tbl_of_contents.Rmd)
@@ -21,43 +22,16 @@
 #' c_rmd
 #' @export
 
-
-r_toc_for_Rmd <- function(c_Rmd,   toc_heading_string = "Table of Contents" ,create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, set_first_heading_level = FALSE) {
-  ##########################################################################
-  # create dataframe to work with
-  p <- "^```"
-
-  df_data <- data.frame(
-    index = 1:length(c_Rmd),
+r_toc_for_Rmd <- function(
     c_Rmd,
-    code_sections = lapply(c_Rmd, function(x)
-      stringr::str_detect(x, p)) |> unlist(),
-    is.heading = stringr::str_detect(c_Rmd, "^#")
-  )
-
-  # search and exclude code sections
-  c_start_ii <- 0
-  for (ii in 1:nrow(df_data)) {
-    if (df_data$code_sections[ii] &  (c_start_ii != 0)) {
-      df_data$code_sections[c_start_ii:ii] <-
-        rep(TRUE, length(c_start_ii:ii))
-      c_start_ii <- 0
-    } else if (df_data$code_sections[ii]) {
-      c_start_ii <- ii
-    }
-  }
-
-  # remove heading in code section
-  df_data$is.heading <- ifelse(df_data$code_sections, FALSE, df_data$is.heading)
-
-  # Store headings
-  # df_data$c_add <- rep("",nrow(df_data))
-  df_data$`#` <- stringr::str_detect(df_data$c_Rmd, "^#\\s") |> ifelse(1, 0)
-  df_data$`##` <-  stringr::str_detect(df_data$c_Rmd, "^##\\s") |> ifelse(1, 0)
-  df_data$`###` <- stringr::str_detect(df_data$c_Rmd, "^###\\s") |> ifelse(1, 0)
-  df_data$`####` <- stringr::str_detect(df_data$c_Rmd, "^####\\s") |> ifelse(1, 0)
-  df_data$`#####` <- stringr::str_detect(df_data$c_Rmd, "^#####\\s") |> ifelse(1, 0)
-  df_data$`######` <- stringr::str_detect(df_data$c_Rmd, "^######\\s") |> ifelse(1, 0)
+    toc_heading_string = "Table of Contents" ,
+    create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, set_first_heading_level = FALSE,
+    pagebreak_level = "non"
+)
+{
+  ##########################################################################
+  # create data frame to work with
+  df_data <- create_df(c_Rmd)
 
   ##########################################################################
   # Headings
@@ -282,12 +256,85 @@ r_toc_for_Rmd <- function(c_Rmd,   toc_heading_string = "Table of Contents" ,cre
 
   #########################################################################
   # Insert table of contents
-  # insert table off contents
   c_Rmd <- c(df_data_$c_Rmd_ [1:(c_start)],
              c_toc_link,
              c_toc,
              "\n",
              df_data_$c_Rmd_[(c_start+1):nrow(df_data)]
   )
+
+  #########################################################################
+  # Insert page breaks
+
+  #create data frame to work with
+  df_data <- create_df(c_Rmd)
+
+  # Headings
+  m <- df_data[df_data$is.heading, 5:ncol(df_data)]
+
+  m_pb <- switch (
+    pagebreak_level,
+    "non" = FALSE,
+    "1" = m[, 1:1]|>matrix(dimnames =list(row.names(m),"#")),
+    "2" = m[, 1:2],
+    "3" = m[, 1:3],
+    "4" = m[, 1:4],
+    "5" = m[, 1:5],
+    "6" = m[, 1:6],
+  )
+
+  # add html page break tag
+  if(is.data.frame(m_pb)) {
+    for (ii in 2:nrow(m_pb)) {
+      for (jj in 1:ncol(m_pb)) {
+        if (m_pb[ii, jj] > 0) {
+          index <- row.names(m_pb)[ii] |> as.integer()
+          c_Rmd[index] <-
+            paste0("\n",
+                   "\\newpage",
+                   # "<div style=\"page-break-after: always\"></div>",
+                   "\n",
+                   c_Rmd[index])
+        }
+      }
+    }
+  }
+
   return(c_Rmd)
+}
+
+
+create_df <- function(c_Rmd) {
+  p <- "^```"
+  df_data <- data.frame(
+    index = 1:length(c_Rmd),
+    c_Rmd,
+    code_sections = lapply(c_Rmd, function(x)
+      stringr::str_detect(x, p)) |> unlist(),
+    is.heading = stringr::str_detect(c_Rmd, "^#")
+  )
+
+  # search and exclude code sections
+  c_start_ii <- 0
+  for (ii in 1:nrow(df_data)) {
+    if (df_data$code_sections[ii] &  (c_start_ii != 0)) {
+      df_data$code_sections[c_start_ii:ii] <-
+        rep(TRUE, length(c_start_ii:ii))
+      c_start_ii <- 0
+    } else if (df_data$code_sections[ii]) {
+      c_start_ii <- ii
+    }
+  }
+
+  # remove heading in code section
+  df_data$is.heading <- ifelse(df_data$code_sections, FALSE, df_data$is.heading)
+
+  # Store headings
+  df_data$`#` <- stringr::str_detect(df_data$c_Rmd, "^#\\s") |> ifelse(1, 0)
+  df_data$`##` <-  stringr::str_detect(df_data$c_Rmd, "^##\\s") |> ifelse(1, 0)
+  df_data$`###` <- stringr::str_detect(df_data$c_Rmd, "^###\\s") |> ifelse(1, 0)
+  df_data$`####` <- stringr::str_detect(df_data$c_Rmd, "^####\\s") |> ifelse(1, 0)
+  df_data$`#####` <- stringr::str_detect(df_data$c_Rmd, "^#####\\s") |> ifelse(1, 0)
+  df_data$`######` <- stringr::str_detect(df_data$c_Rmd, "^######\\s") |> ifelse(1, 0)
+  return(df_data)
 }
