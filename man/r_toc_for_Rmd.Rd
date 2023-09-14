@@ -10,7 +10,8 @@ r_toc_for_Rmd(
   create_nb = TRUE,
   create_top_link = TRUE,
   nb_front = TRUE,
-  set_first_heading_level = FALSE
+  set_first_heading_level = FALSE,
+  pagebreak_level = "non"
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ r_toc_for_Rmd(
 \item{nb_front}{boolean to have the numbering in front of each heading.}
 
 \item{set_first_heading_level}{set first found heading level to heading 1}
+
+\item{pagebreak_level}{Automatically add page breaks before new heading. Set the level to insert page breaks to e.g. c("non","1","2","3","4","5","6")}
 }
 \value{
 .Rmd file string
@@ -34,7 +37,7 @@ Scans documents for headings (#) and creates a table of contents (hyper linked).
 All code section will be excluded for the (#) search.
 }
 \details{
-As the function argument pass a R markdown .Rmd file string which can be read via \code{readLines("fileName.Rmd")}.
+The function argument is a string of a R markdown .Rmd file which can be read via \code{readLines("fileName.Rmd")}.
 }
 \examples{
 print(tbl_of_contents.Rmd)
