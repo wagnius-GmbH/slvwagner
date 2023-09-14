@@ -30,7 +30,7 @@ r_toc_for_Rmd <- function(
 )
 {
   ##########################################################################
-  # create dataframe to work with
+  # create data frame to work with
   df_data <- create_df(c_Rmd)
 
   ##########################################################################
