@@ -291,7 +291,7 @@ r_toc_for_Rmd <- function(
   m_pb <- switch (
     pagebreak_level,
     "non" = FALSE,
-    "1" = m[, 1:1]|>matrix(dimnames =list(row.names(m),"#")),
+    "1" = m[, 1:1]|>matrix(dimnames =list(row.names(m),"#"))|>as.data.frame(),
     "2" = m[, 1:2],
     "3" = m[, 1:3],
     "4" = m[, 1:4],
@@ -354,4 +354,3 @@ create_df <- function(c_Rmd) {
   df_data$`######` <- stringr::str_detect(df_data$c_Rmd, "^######\\s") |> ifelse(1, 0)
   return(df_data)
 }
-
