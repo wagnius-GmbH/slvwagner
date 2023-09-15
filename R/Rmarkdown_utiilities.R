@@ -272,6 +272,22 @@ r_toc_for_Rmd <- function(
   # Headings
   m <- df_data[df_data$is.heading, 5:ncol(df_data)]
 
+  # Analyze heading structure
+  heading_struct <- m|>
+    apply(2, function(x) {
+      sum(x)>0
+    })
+
+  # highest order heading column index
+  for (ii in 1:ncol(m)) {
+    if(heading_struct[ii]) {
+      highest_order_jj <- ii
+      break
+    }
+  }
+
+  pagebreak_level <- (pagebreak_level|>as.integer() +  highest_order_jj - 1)|>as.character()
+
   m_pb <- switch (
     pagebreak_level,
     "non" = FALSE,
