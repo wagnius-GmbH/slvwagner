@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -14,7 +14,7 @@ c_intercept <- 1
 cbind(x = -10:10, y = lf_lf(-10:10,c_slope,c_intercept))|>
   plot(main = "lf_lf", type = "b", asp = 1)
 
-## -----------------------------------------------------------------------------
+## ----echo=FALSE, message=FALSE, warning=FALSE---------------------------------
 library(tidyverse)
 tibble(y = rnorm(100,mean = -2.5))|>
   mutate(x = row_number(y),
@@ -59,4 +59,15 @@ m_grid|>
        cex = 1.,
        main = "Edge")
 
+
+## -----------------------------------------------------------------------------
+# Input
+tbl_of_contents.Rmd
+
+## -----------------------------------------------------------------------------
+# Output with Table of contents and page break
+r_toc_for_Rmd(tbl_of_contents.Rmd, toc_heading_string = "Inhaltsverzeichnis",create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, pagebreak_level = "2")|>
+  write("test_.Rmd")
+
+readLines("test_.Rmd")
 
