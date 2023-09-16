@@ -286,7 +286,7 @@ r_toc_for_Rmd <- function(
     }
   }
 
-  if(highest_order_jj >1) pagebreak_level <- (pagebreak_level|>as.integer() +  highest_order_jj - 1)|>as.character()
+  if(highest_order_jj > 1 & pagebreak_level != "non") pagebreak_level <- (pagebreak_level|>as.integer() +  highest_order_jj - 1)|>as.character()
 
   m_pb <- switch (
     pagebreak_level,
