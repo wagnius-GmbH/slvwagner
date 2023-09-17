@@ -2,7 +2,7 @@
 % Please edit documentation in R/Rmarkdown_utiilities.R
 \name{r_toc_for_Rmd}
 \alias{r_toc_for_Rmd}
-\title{Automatically creates a table of contents for a .Rmd file}
+\title{Automatically creates a table of contents for a .Rmd file string}
 \usage{
 r_toc_for_Rmd(
   c_Rmd,
@@ -33,7 +33,7 @@ r_toc_for_Rmd(
 .Rmd file string
 }
 \description{
-Scans documents for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
+Scans . Rmd file string for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
 All code section will be excluded for the (#) search.
 }
 \details{
@@ -43,6 +43,7 @@ The function argument is a string of a R markdown .Rmd file which can be read vi
 print(tbl_of_contents.Rmd)
 c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd, create_nb = FALSE)
 c_rmd
-c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd,toc_heading_string = "Inhaltsverzeichnis", create_nb = TRUE)
+c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd,
+                        toc_heading_string = "Inhaltsverzeichnis", create_nb = TRUE)
 c_rmd
 }

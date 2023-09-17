@@ -1,8 +1,8 @@
 ###################################################################
-#' Automatically creates a table of contents for a .Rmd file
+#' Automatically creates a table of contents for a .Rmd file string
 #' @name r_toc_for_Rmd
 #' @description
-#' Scans documents for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
+#' Scans . Rmd file string for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
 #' All code section will be excluded for the (#) search.
 #' @details
 #' The function argument is a string of a R markdown .Rmd file which can be read via \code{readLines("fileName.Rmd")}.
@@ -18,7 +18,8 @@
 #' print(tbl_of_contents.Rmd)
 #' c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd, create_nb = FALSE)
 #' c_rmd
-#' c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd,toc_heading_string = "Inhaltsverzeichnis", create_nb = TRUE)
+#' c_rmd <- r_toc_for_Rmd(tbl_of_contents.Rmd,
+#'                         toc_heading_string = "Inhaltsverzeichnis", create_nb = TRUE)
 #' c_rmd
 #' @export
 
