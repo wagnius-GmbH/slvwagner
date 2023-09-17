@@ -11,10 +11,10 @@ License: GPL-3
 Depends: 
     R (>= 4.2.0)
 Imports: 
+    Rcpp,
     dplyr,
     nleqslv,
     polynom,
-    Rcpp,
     Ryacas,
     stringr,
     tibble,

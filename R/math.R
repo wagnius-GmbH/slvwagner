@@ -204,8 +204,10 @@ math_rot_matrix3d <- function(x,angle){
 #' @returns
 #' Returns 3D rotation matrix for given axis and angle.
 #' @examples
-#' rot_matrix <- math_rot_matrix3d(c(1,1,1), pi)
-#' math_rot_transform(c(1,1,1),rot_matrix)
+#' rot_matrix <- math_rot_matrix2d(pi/3)
+#' p <- cbind(c(1,0), c(0,1), c(1,1))
+#' p
+#' math_rot_transform(p,rot_matrix)
 #' @export
 
 math_rot_transform <- function(x, rot_matrix){
