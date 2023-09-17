@@ -33,7 +33,5 @@ r_tocForRmdFiles(
 Automatically creates a table of contents for all found .Rmd files in actual working directory
 }
 \examples{
-write(tbl_of_contents.Rmd)
-r_tocForRmdFiles()
 print(getwd())
 }

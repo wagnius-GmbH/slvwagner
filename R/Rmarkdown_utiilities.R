@@ -368,8 +368,6 @@ create_df <- function(c_Rmd) {
 #' @param set_first_heading_level set first found heading level to heading 1
 #' @param delete_Rmd_file boolean to delete the created .Rmd files.
 #' @examples
-#' write(tbl_of_contents.Rmd)
-#' r_tocForRmdFiles()
 #' print(getwd())
 #' @export
 
