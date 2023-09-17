@@ -16,7 +16,9 @@ devtools::install_git("https://github.com/wagnius-GmbH/slvwagner/",   build_manu
 ```
 
 <br>
-Create binary package including vignettes
+Create binary package including vignettes:
+
 ``` 
 devtools::build(devtools::build(), binary = TRUE)
+
 ```
