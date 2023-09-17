@@ -359,7 +359,7 @@ create_df <- function(c_Rmd) {
 
 
 ###################################################################
-#' Automatically creates a table of contents for all found .Rmd files in actual working directory
+#' Renders all found .Rmd files in actual working directory with automatically created table of contents.
 #' @name r_tocForRmdFiles
 #' @param render_type choose the render type e.g. c("html_document","word_document","pdf_document")
 #' @param toc_heading_string title string for TOC, e.g "Inhaltsverzeichnis", default is "Table of contents".
