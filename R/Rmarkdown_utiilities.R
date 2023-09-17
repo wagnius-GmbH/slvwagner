@@ -286,7 +286,7 @@ r_toc_for_Rmd <- function(
     }
   }
 
-  if(highest_order_jj >1) pagebreak_level <- (pagebreak_level|>as.integer() +  highest_order_jj - 1)|>as.character()
+  if(highest_order_jj > 1 & pagebreak_level != "non") pagebreak_level <- (pagebreak_level|>as.integer() +  highest_order_jj - 1)|>as.character()
 
   m_pb <- switch (
     pagebreak_level,
@@ -354,3 +354,128 @@ create_df <- function(c_Rmd) {
   df_data$`######` <- stringr::str_detect(df_data$c_Rmd, "^######\\s") |> ifelse(1, 0)
   return(df_data)
 }
+
+
+
+###################################################################
+#' Automatically creates a table of contents for all found .Rmd files in actual working directory
+#' @name r_tocForRmdFiles
+#' @param render_type choose the render type e.g. c("html_document","word_document","pdf_document")
+#' @param toc_heading_string title string for TOC, e.g "Inhaltsverzeichnis", default is "Table of contents".
+#' @param pagebreak_level Automatically add page breaks before new heading. Set the level to insert page breaks to e.g. c("non","1","2","3","4","5","6")
+#' @param create_nb boolean to enable numbering for each heading.
+#' @param nb_front boolean to have the numbering in front of each heading.
+#' @param set_first_heading_level set first found heading level to heading 1
+#' @param delete_Rmd_file boolean to delete the created .Rmd files.
+#' @examples
+#' print(getwd())
+#' @export
+
+r_tocForRmdFiles <- function(
+    render_type = c("html_document"),
+    toc_heading_string = "Table of Contents",
+    pagebreak_level = "non",
+    create_nb = TRUE,
+    nb_front = TRUE,
+    set_first_heading_level = FALSE,
+    delete_Rmd_file = TRUE
+)
+{
+
+  ################################################################################################################
+  # html documents
+  if(sum(render_type == "html_document") > 0) {
+    c_FileName <- list.files()
+    c_FileName <-  c_FileName[c_FileName |> stringr::str_detect(".Rmd$") &
+                                !c_FileName |> stringr::str_detect("_.Rmd")] |> stringr::str_remove(".Rmd$")
+
+    if (length(c_FileName) == 0)stop(paste0("\nNo \".Rmd\" files found in current working directory:\n", getwd()))
+
+    c_FileExtention <- ".Rmd"
+    c_file <-  paste0(c_FileName |> stringr::str_replace_all(" ", "_"))
+    c_Rmd <- paste0(getwd(), "/", c_file, "_", c_FileExtention)
+
+    dir.create("output/") |> suppressWarnings()
+    ####################
+    # create Rmd files
+    for (ii in 1:length(c_FileName)) {
+      paste0(c_FileName[ii], c_FileExtention) |>
+        readLines() |>
+        r_toc_for_Rmd(toc_heading_string = toc_heading_string,
+                      create_nb = create_nb,
+                      nb_front = nb_front,
+                      set_first_heading_level = set_first_heading_level
+        ) |>
+        writeLines(c_Rmd[ii])
+    }
+    ####################
+    # render files
+    for (ii in 1:length(c_FileName)) {
+      # render files
+      try(rmarkdown::render(c_Rmd[ii],
+                            c("html_document"),
+                            output_dir = paste0(getwd(), "/output")))
+    }
+
+    c_FileName <- list.files()
+    c_FileName <- c_FileName[c_FileName |> stringr::str_detect("_.Rmd")]
+
+    ii <- 1
+    for (ii in 1:length(c_FileName)) {
+      file.remove(c_FileName[ii])
+    }
+  }
+
+  ################################################################################################################
+  # word and PDF
+  c_FileName <- list.files()
+  c_FileName <- c_FileName[c_FileName|>stringr::str_detect(".Rmd$") & !c_FileName|>stringr::str_detect("_.Rmd")]|>stringr::str_remove(".Rmd$")
+  c_FileExtention <- ".Rmd"
+  c_file <-  paste0(c_FileName|>stringr::str_replace_all(" ","_"))
+  c_Rmd <- paste0(getwd(),"/",c_file,"_",c_FileExtention)
+
+  ii <- 1
+  for (ii in 1:length(c_FileName)) {
+    # create Rmd files
+    paste0(c_FileName[ii],c_FileExtention)|>
+      readLines()|>
+      r_toc_for_Rmd(toc_heading_string = toc_heading_string,
+                    pagebreak_level = pagebreak_level,
+                    create_top_link = FALSE,
+                    create_nb = create_nb,
+                    nb_front = nb_front,
+                    set_first_heading_level = set_first_heading_level
+      )|>
+      writeLines(c_Rmd[ii])
+  }
+
+  #########################
+  # render files word files
+  if("word_document" %in% render_type) {
+    for (ii in 1:length(c_FileName)) {
+      try(rmarkdown::render(c_Rmd[ii],
+                            c("word_document"),
+                            output_dir = paste0(getwd(), "/output")))
+    }
+  }
+  #########################
+  # render files pdf files
+  if("pdf_document" %in% render_type) {
+    for (ii in 1:length(c_FileName)) {
+      # render files
+      try(rmarkdown::render(c_Rmd[ii],
+                            c("pdf_document"),
+                            output_dir = paste0(getwd(), "/output")))
+    }
+  }
+
+  # Delete .Rmd files
+  if (delete_Rmd_file) {
+    c_FileName <- list.files()
+    c_FileName <- c_FileName[c_FileName |> stringr::str_detect("_.Rmd")]
+    for (ii in 1:length(c_FileName)) {
+      file.remove(c_FileName[ii])
+    }
+  }
+}
+
