@@ -2,7 +2,7 @@
 % Please edit documentation in R/Rmarkdown_utiilities.R
 \name{r_tocForRmdFiles}
 \alias{r_tocForRmdFiles}
-\title{Automatically creates a table of contents for all found .Rmd files in actual working directory}
+\title{Renders all found .Rmd files in actual working directory with automatically created table of contents.}
 \usage{
 r_tocForRmdFiles(
   render_type = c("html_document"),
@@ -30,7 +30,7 @@ r_tocForRmdFiles(
 \item{delete_Rmd_file}{boolean to delete the created .Rmd files.}
 }
 \description{
-Automatically creates a table of contents for all found .Rmd files in actual working directory
+Renders all found .Rmd files in actual working directory with automatically created table of contents.
 }
 \examples{
 print(getwd())

@@ -1,35 +1,38 @@
-Package: slvwagner
 Type: Package
+Package: slvwagner
 Title: All stuff that I`m missing
-Version: 0.9.6.7
+Version: 0.9.6.8
 Author: Florian Wagner
-Depends: R (>= 4.2.0)
 Maintainer: Florian Wagner <florian.wagner@wagnius.ch>
-Description: All stuff, I`m using so I do not want to rewrite it everytime.
-    Alles was ich schon einmal vermisst habe und nicht immmer wieder schreiben möchte.
+Description: All stuff, I`m using so I do not want to rewrite it
+    everytime.  Alles was ich schon einmal vermisst habe und nicht immmer
+    wieder schreiben möchte.
 License: GPL-3
-Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.2.3
-Roxygen: list(markdown = TRUE)
-Suggests: 
-    knitr,
-    rmarkdown,
-    rgl,
-    ggforce,
-    tidyverse,
-    stringi,
-    testthat (>= 3.0.0)
-VignetteBuilder: knitr, rmarkdown
-Config/testthat/edition: 3
+Depends: 
+    R (>= 4.2.0)
 Imports: 
     dplyr,
+    nleqslv,
     polynom,
     Rcpp,
     Ryacas,
+    stringr,
     tibble,
-    tidyr,
-    nleqslv,
-    stringr
+    tidyr
+Suggests: 
+    ggforce,
+    knitr,
+    rgl,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    tidyverse
 LinkingTo: 
     Rcpp
+VignetteBuilder: 
+    knitr,
+    rmarkdown
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
