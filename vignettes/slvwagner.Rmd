@@ -55,7 +55,7 @@ Functions start with yac_
   -   Rotation matrix 2D
   -   Rotation matrix 3D
 
-#### Linear function helper
+### Linear function helper
 Functions start with lf_
 
 -   Simple linear function 
@@ -72,7 +72,7 @@ cbind(x = -10:10, y = lf_lf(-10:10,c_slope,c_intercept))|>
 ```
 
 
-#### signal
+### signal
 Functions start with signal_
 
 -   To average a signal around zero (AC coupling) \
@@ -135,7 +135,7 @@ m_grid|>
 ```
 
 
-#### statistical 
+### statistical 
 Functions start with stat_
 
 -   Process capability index (CPK)
@@ -145,12 +145,12 @@ Functions start with stat_
 -   NPS (net promoter score)
 
 
-#### Plot
+### Plot
 Functions start with plot_
 
 -    Get normal distributed overlay for faceted histograms
 
-#### System 
+### System 
 Functions start with r_
 
 -   r_ R utility functions, e.g. windows path to R compatible path
@@ -170,7 +170,7 @@ readLines("test_.Rmd")
 ```
 
 
-#### Fast dictionary
+### Fast dictionary
 Function start with dict_
 
 -   Create fast dictionary, convenience functions.
