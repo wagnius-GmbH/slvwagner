@@ -15,7 +15,7 @@
 ^pkgdown$
 ^slvwagner.Rproj
 ^files/input/tbl_of_contents\.Rmd$
-^files
+^files/
 ^files/input/
 test.Rmd$
 test.html$

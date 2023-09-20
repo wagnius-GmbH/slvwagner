@@ -15,7 +15,6 @@ logical vector if edge was found
 Checks all neighbour indices in a vector \code{c_search} for \code{TRUE}. If all neighbours are \code{TRUE} it is not an edge, else it is.
 }
 \examples{
-library(rgl)
 n <- c(4L,3L,3L)
 df_input <- expand.grid(
   x = 1:n[1],
@@ -26,6 +25,6 @@ df_input$edge <- find_edges_3D(df_input$search, n)
 df_input$color <- ifelse(df_input$edge, "blue", "black")
 
 df_input
-df_input|>
-  plot3d(col = df_input$color, size = 15,aspect = "iso")
+#df_input|>
+#  rgl::plot3d(col = df_input$color, size = 15,aspect = "iso")
 }

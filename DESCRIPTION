@@ -7,6 +7,7 @@ Authors@R:
            family = "Wagner",
            role = c("aut", "cre"),
            email = "florian.wagner@wagnius.ch")
+Maintainer: Florian Wagner <florian.wagner@wagnius.ch>
 Description: All stuff that I`m Missing so I do not want to rewrite it
     everytime.
 License: GPL-3

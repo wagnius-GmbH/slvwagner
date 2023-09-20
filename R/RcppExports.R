@@ -55,7 +55,6 @@ find_edges_2D <- function(c_search, n_col) {
 #' @param n dimensions of 3D array c(nx, ny, nz)
 #' @return logical vector if edge was found
 #' @examples
-#' library(rgl)
 #' n <- c(4L,3L,3L)
 #' df_input <- expand.grid(
 #'   x = 1:n[1],
@@ -66,8 +65,8 @@ find_edges_2D <- function(c_search, n_col) {
 #' df_input$color <- ifelse(df_input$edge, "blue", "black")
 #'
 #' df_input
-#' df_input|>
-#'   plot3d(col = df_input$color, size = 15,aspect = "iso")
+#' #df_input|>
+#' #  rgl::plot3d(col = df_input$color, size = 15,aspect = "iso")
 #' @export
 NULL
 
