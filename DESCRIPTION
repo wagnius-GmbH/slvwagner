@@ -1,14 +1,13 @@
 Type: Package
 Package: slvwagner
-Title: All stuff that I`m missing
+Title: All Stuff that I`m Missing
 Version: 0.9.7.1
 Authors@R: 
     person(given = "Florian",
            family = "Wagner",
            role = c("aut", "cre"),
            email = "florian.wagner@wagnius.ch")
-Maintainer: Florian Wagner <florian.wagner@wagnius.ch>
-Description: All Stuff that I`m Missing so I do not want to rewrite it
+Description: All stuff that I`m Missing so I do not want to rewrite it
     everytime.
 License: GPL-3
 Depends: 
