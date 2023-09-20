@@ -267,12 +267,12 @@ geo_conic_section_from_5points <- function(section_points, nb = 10){
 geo_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radius, Punkteanzahl
   #(cp => Ortsvektor)
   #Verschieben des Koordinatensystems: Neuer Ursprung cp
-  sp <- x1-cp #Stützvektor
-  ep <- x2-cp #Stützvektor
+  sp <- x1-cp #Stuetzvektor
+  ep <- x2-cp #Stuetzvektor
 
   #Stuetzvektoren
-  s1l   <- sp-c(0,0,0) #Stützvektor aus Ortsvektor und Startpunkt
-  s2l   <- ep-c(0,0,0) #Stützvektor aus Ortsvektor und Endpunkt
+  s1l   <- sp-c(0,0,0) #Stuetzvektor aus Ortsvektor und Startpunkt
+  s2l   <- ep-c(0,0,0) #Stuetzvektor aus Ortsvektor und Endpunkt
   #Stuetzvektoren gleich gross machen
   s1 <- s1l*math_betrag(s2l)
   s2 <- s2l*math_betrag(s1l)
