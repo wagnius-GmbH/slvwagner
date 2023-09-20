@@ -6,7 +6,7 @@
 #' @export
 "tbl_of_contents.Rmd"
 
-# tbl_of_contents.Rmd <- readLines(paste0(getwd(),"/files/tbl_of_contents.Rmd"))
+# tbl_of_contents.Rmd <- readLines(paste0(getwd(),"/vignettes/tbl_of_contents.Rmd"))
 # usethis:::use_data(tbl_of_contents.Rmd, internal = TRUE, overwrite = TRUE)
 
 
