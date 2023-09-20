@@ -6,7 +6,7 @@ Author: Florian Wagner
 Maintainer: Florian Wagner <florian.wagner@wagnius.ch>
 Description: All stuff, I`m using so I do not want to rewrite it
     everytime.  Alles was ich schon einmal vermisst habe und nicht immmer
-    wieder schreiben möchte.
+    wieder schreiben moechte.
 License: GPL-3
 Depends: 
     R (>= 4.2.0)
