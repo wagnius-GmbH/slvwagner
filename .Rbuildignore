@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^.*\.Rproj$         # Designates the directory as an RStudio Project
 ^\.Rproj\.user$     # Used by RStudio for temporary files
 ^README\.Rmd$       # An Rmd file used to generate README.md
@@ -13,8 +15,9 @@
 ^pkgdown$
 ^slvwagner.Rproj
 ^files/input/tbl_of_contents\.Rmd$
-^files/output/test\.Rmd$
-^files/output/test\.html$
+^files/
+^files/input/
 test.Rmd$
 test.html$
-^files/*
+^doc$
+^Meta$

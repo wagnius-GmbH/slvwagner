@@ -13,7 +13,7 @@ math_cart2sph(xyz)
 named vector or matrix
 }
 \description{
-Transform cartesian to sperical coordinatem according to international physics convention:
+Transform Cartesian to spherical coordinates according to international physics convention:
 \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\phi} in range 0...2*pi (0...360Deg)
 }
 \details{

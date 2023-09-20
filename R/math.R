@@ -43,13 +43,13 @@ math_magnitude <- function(x){
 #'
 #' @name math_circle_from3points
 #' @description
-#' calculate circle using 3 points.The function returns a tibble (dataframe) or
-#' a named vector with the center point and the radius.
-#' @param x matrix with 3 rows of points and 2 colums with the coordinates.
+#' calculate circle using 3 points.The function returns a tibble (data frame) or
+#' a named vector with the centre point and the radius.
+#' @param x matrix with 3 rows of points and 2 columns with the coordinates.
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' Returns data frame with center coordinates and Radius.
+#' Returns data frame with centre coordinates and Radius.
 #' @examples
 #' x <- matrix(c(c(-2.23 , 4.389 ),
 #'               c(-1.001,-3.23  ),
@@ -193,7 +193,7 @@ math_rot_matrix3d <- function(x,angle){
 #' Transform vector by a rotation matrix
 #'
 #' @name math_rot_transform
-#' @description transforms a given vecotr by a given rotation matrix using matirx multiplication
+#' @description transforms a given vector by a given rotation matrix using matirx multiplication
 #' @details
 #' \code{rot_matrix}%*%\code{x}
 #' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
@@ -204,8 +204,10 @@ math_rot_matrix3d <- function(x,angle){
 #' @returns
 #' Returns 3D rotation matrix for given axis and angle.
 #' @examples
-#' rot_matrix <- math_rot_matrix3d(c(1,1,1), pi)
-#' math_rot_transform(c(1,1,1),rot_matrix)
+#' rot_matrix <- math_rot_matrix2d(pi/3)
+#' p <- cbind(c(1,0), c(0,1), c(1,1))
+#' p
+#' math_rot_transform(p,rot_matrix)
 #' @export
 
 math_rot_transform <- function(x, rot_matrix){
@@ -348,10 +350,10 @@ math_angle_quadrant  <- function(x){
 
 
 #######################################
-#' Sperical to cartesian coordinates
+#' Spherical to cartesian coordinates
 #'
 #' @name math_sph2cart
-#' @description Transform sperical to cartesian coordinates according to international physics convention:
+#' @description Transform spherical to cartesian coordinates according to international physics convention:
 #' \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\phi} in range 0...2*pi (0...360Deg)
 #' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
 #' @param tpr c(\eqn{t = \theta}, \eqn{p = \phi}, r=radius) as vector or matrix
@@ -397,7 +399,7 @@ math_sph2cart <- function (tpr)
 #' Cartesian to sperical coordinates
 #'
 #' @name math_cart2sph
-#' @description Transform cartesian to sperical coordinatem according to international physics convention:
+#' @description Transform Cartesian to spherical coordinates according to international physics convention:
 #' \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\phi} in range 0...2*pi (0...360Deg)
 #' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
 #' @param xyz cartesian coordinates as vector or matrix
@@ -472,7 +474,7 @@ math_unit_vector <- function(x){
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' Vector with length of dth dimension
+#' Vector with length of input dimension
 #' @examples
 #' math_dot_product(c(1,0,0),c(0.1,5,0))
 #' math_dot_product(c(1,0),c(0,1))
@@ -756,11 +758,11 @@ math_polynom_from_roots <- function(roots,round_digits=9){
 #' @name math_nonlinear_vector
 #' @description
 #' Function returns a vector of length \code{n}. The first value of the returned vector is \code{c_start} and the last value is \code{c_end}.
-#' The caluclation is done accordingly: \eqn{c_{end}=c_{start}a^{n−1}} => \eqn{a=\frac{c_{end}}{c_{start}}^{\frac{1}{n-1}}}
-#' so the returned vector will be caluclated with: \eqn{c_{start}\cdot a^{(0:(n-1))}}
+#' The calculation is done accordingly: \eqn{c_{end}=c_{start}a^{n−1}} => \eqn{a=\frac{c_{end}}{c_{start}}^{\frac{1}{n-1}}}
+#' so the returned vector will be calculated with: \eqn{c_{start}\cdot a^{(0:(n-1))}}
 #' @param c_start value of first value of returned vector
 #' @param c_end value of last index of returned vector
-#' @param n lenght of returned vector
+#' @param n length of returned vector
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
@@ -780,7 +782,7 @@ math_nonlinear_vector <- function(c_start, c_end, n){
 #'
 #' @name math_polyCoef
 #' @description
-#' Calculates the polynomial coefficients from a polynomial \code{equation}. The variablel \code{var} can be chosen.
+#' Calculates the polynomial coefficients from a polynomial \code{equation}. The variable \code{var} can be chosen.
 #' The order of the terms does not matter.
 #' @param equation polynomial equation string
 #' @param variable of the \code{equation}

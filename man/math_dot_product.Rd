@@ -12,7 +12,7 @@ math_dot_product(x, y)
 \item{y}{Vector or a Matrix of vectors}
 }
 \value{
-Vector with length of dth dimension
+Vector with length of input dimension
 }
 \description{
 'dot' or 'scalar' product of vectors or pairwise columns of matrices.

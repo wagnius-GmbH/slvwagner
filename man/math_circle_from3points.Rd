@@ -7,14 +7,14 @@
 math_circle_from3points(x)
 }
 \arguments{
-\item{x}{matrix with 3 rows of points and 2 colums with the coordinates.}
+\item{x}{matrix with 3 rows of points and 2 columns with the coordinates.}
 }
 \value{
-Returns data frame with center coordinates and Radius.
+Returns data frame with centre coordinates and Radius.
 }
 \description{
-calculate circle using 3 points.The function returns a tibble (dataframe) or
-a named vector with the center point and the radius.
+calculate circle using 3 points.The function returns a tibble (data frame) or
+a named vector with the centre point and the radius.
 }
 \examples{
 x <- matrix(c(c(-2.23 , 4.389 ),

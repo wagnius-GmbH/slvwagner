@@ -1,20 +1,23 @@
 Type: Package
 Package: slvwagner
-Title: All stuff that I`m missing
-Version: 0.9.7.0
-Author: Florian Wagner
+Title: All Stuff that I`m Missing
+Version: 0.9.7.1
+Authors@R: 
+    person(given = "Florian",
+           family = "Wagner",
+           role = c("aut", "cre"),
+           email = "florian.wagner@wagnius.ch")
 Maintainer: Florian Wagner <florian.wagner@wagnius.ch>
-Description: All stuff, I`m using so I do not want to rewrite it
-    everytime.  Alles was ich schon einmal vermisst habe und nicht immmer
-    wieder schreiben möchte.
+Description: All stuff that I`m Missing so I do not want to rewrite it
+    everytime.
 License: GPL-3
 Depends: 
     R (>= 4.2.0)
 Imports: 
+    Rcpp,
     dplyr,
     nleqslv,
     polynom,
-    Rcpp,
     Ryacas,
     stringr,
     tibble,
@@ -33,6 +36,7 @@ VignetteBuilder:
     rmarkdown
 Config/testthat/edition: 3
 Encoding: UTF-8
+Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3

@@ -15,7 +15,7 @@ math_polyCoef(equation, variable = "x")
 vector with polynomial coefficients.
 }
 \description{
-Calculates the polynomial coefficients from a polynomial \code{equation}. The variablel \code{var} can be chosen.
+Calculates the polynomial coefficients from a polynomial \code{equation}. The variable \code{var} can be chosen.
 The order of the terms does not matter.
 }
 \examples{

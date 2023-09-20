@@ -46,7 +46,7 @@
 #' df_transformed|>
 #' ggplot()+
 #'    geom_histogram(aes(value), binwidth = binwidth,fill = "lightgreen", color = "black")+
-#'    geom_line(data = df_gaus, aes(x,y), color = "blue", size = 1.2)+
+#'    geom_line(data = df_gaus, aes(x,y), color = "blue", linewidth = 1.2)+
 #'    facet_grid(feature~.)+
 #'    scale_x_continuous(breaks = c_bins)
 #'
