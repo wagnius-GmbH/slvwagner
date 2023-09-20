@@ -11,15 +11,15 @@ math_nonlinear_vector(c_start, c_end, n)
 
 \item{c_end}{value of last index of returned vector}
 
-\item{n}{lenght of returned vector}
+\item{n}{length of returned vector}
 }
 \value{
 vector of length \code{n}
 }
 \description{
 Function returns a vector of length \code{n}. The first value of the returned vector is \code{c_start} and the last value is \code{c_end}.
-The caluclation is done accordingly: \eqn{c_{end}=c_{start}a^{n−1}} => \eqn{a=\frac{c_{end}}{c_{start}}^{\frac{1}{n-1}}}
-so the returned vector will be caluclated with: \eqn{c_{start}\cdot a^{(0:(n-1))}}
+The calculation is done accordingly: \eqn{c_{end}=c_{start}a^{n−1}} => \eqn{a=\frac{c_{end}}{c_{start}}^{\frac{1}{n-1}}}
+so the returned vector will be calculated with: \eqn{c_{start}\cdot a^{(0:(n-1))}}
 }
 \examples{
 math_nonlinear_vector(1000,100000,8)

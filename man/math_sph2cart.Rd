@@ -2,7 +2,7 @@
 % Please edit documentation in R/math.R
 \name{math_sph2cart}
 \alias{math_sph2cart}
-\title{Sperical to cartesian coordinates}
+\title{Spherical to cartesian coordinates}
 \usage{
 math_sph2cart(tpr)
 }
@@ -13,7 +13,7 @@ math_sph2cart(tpr)
 named vector or matrix
 }
 \description{
-Transform sperical to cartesian coordinates according to international physics convention:
+Transform spherical to cartesian coordinates according to international physics convention:
 \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\phi} in range 0...2*pi (0...360Deg)
 }
 \details{
