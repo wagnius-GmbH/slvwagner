@@ -14,7 +14,7 @@
 ^docs$
 ^pkgdown$
 ^slvwagner.Rproj
-^vignettes/tbl_of_contents\.Rmd$
+^data/tbl_of_contents\.Rmd$
 test.Rmd$
 test.html$
 ^doc$
