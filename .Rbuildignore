@@ -19,3 +19,4 @@ test.Rmd$
 test.html$
 ^doc$
 ^Meta$
+^CRAN-SUBMISSION$
