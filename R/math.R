@@ -193,7 +193,7 @@ math_rot_matrix3d <- function(x,angle){
 #' Transform vector by a rotation matrix
 #'
 #' @name math_rot_transform
-#' @description transforms a given vecotr by a given rotation matrix using matirx multiplication
+#' @description transforms a given vector by a given rotation matrix using matirx multiplication
 #' @details
 #' \code{rot_matrix}%*%\code{x}
 #' \url{https://en.wikipedia.org/wiki/Rotation_matrix}
@@ -782,7 +782,7 @@ math_nonlinear_vector <- function(c_start, c_end, n){
 #'
 #' @name math_polyCoef
 #' @description
-#' Calculates the polynomial coefficients from a polynomial \code{equation}. The variablel \code{var} can be chosen.
+#' Calculates the polynomial coefficients from a polynomial \code{equation}. The variable \code{var} can be chosen.
 #' The order of the terms does not matter.
 #' @param equation polynomial equation string
 #' @param variable of the \code{equation}

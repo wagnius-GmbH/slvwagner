@@ -15,7 +15,7 @@ math_rot_transform(x, rot_matrix)
 Returns 3D rotation matrix for given axis and angle.
 }
 \description{
-transforms a given vecotr by a given rotation matrix using matirx multiplication
+transforms a given vector by a given rotation matrix using matirx multiplication
 }
 \details{
 \code{rot_matrix}\%*\%\code{x}
