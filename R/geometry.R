@@ -32,19 +32,16 @@ geo_interSec_sph_line <- function(p, u, m, r) {
 
   # Parameter t
   c_result <- eval(t_expression, list(p, u, m, r))
-  names(c_result) <- rep("",length(c_result))
-
   # Intersection points
-  l_Result <- list()
-  for (ii in 1:length(c_result)) {
-    l_Result[[ii]] <- c(p + (c_result[ii] * u))
-  }
+  l_Result <- c_result|>
+    lapply(function(x)c(p + (x * u)))
 
+  names(l_Result) <- NULL
+  # Error handling
   if(is.na(c_result)|>sum() == 0){
     return(l_Result)
   }else{
-    print(warning())
-    return(NULL)
+    stop("slvwagner::geo_interSec_sph_line creates \"NA`s\"\nVectors p,u,m need to be length of 3")
   }
 }
 
