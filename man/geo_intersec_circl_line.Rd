@@ -16,13 +16,14 @@ geo_intersec_circl_line(R, o, m, b)
 \item{b}{intersect of linear function}
 }
 \value{
-list of intersecting point(s)
+list of intersecting points
 }
 \description{
 Intersection point(s) of line and a circle
 }
 \details{
 Computes the intersecting point of a line and a circle. The line is a linear function such as  \eqn{y=mx+b}. The circle in the form \eqn{(x-o_1)^2+(y-o_1)^2 = R^2}.
+Check \code{\link[=geo_interSec_sph_line]{geo_interSec_sph_line()}} for 3D version.
 }
 \examples{
 R <- 1; o <- c(1.2,0.9); R <- 1; m <- 1; b <- 0.8;

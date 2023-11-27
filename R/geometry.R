@@ -52,6 +52,7 @@ geo_interSec_sph_line <- function(p, u, m, r) {
 #'
 #' @name geo_intersec_circl_line
 #' @details Computes the intersecting point of a line and a circle. The line is a linear function such as  \eqn{y=mx+b}. The circle in the form \eqn{(x-o_1)^2+(y-o_1)^2 = R^2}.
+#' Check [slvwagner::geo_interSec_sph_line()] for 3D version.
 #' @param R Radius of the circle
 #' @param o Position vector of the circle
 #' @param m solpe of linear function
@@ -59,7 +60,7 @@ geo_interSec_sph_line <- function(p, u, m, r) {
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' list of intersecting point(s)
+#' list of intersecting points
 #' @examples
 #' R <- 1; o <- c(1.2,0.9); R <- 1; m <- 1; b <- 0.8;
 #' geo_intersec_circl_line(R,o,m,b)
