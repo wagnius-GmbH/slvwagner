@@ -3,6 +3,7 @@
 #'
 #' @name geo_interSec_sph_line
 #' @details Computes the intersecting point of a line and the surface of a spear.
+#' Check [slvwagner::geo_intersec_circl_line()] for 2D version.
 #' @param p position vector for the line  c(x = ,y = ,z = )
 #' @param u direction vector for the line c(x = ,y = ,z = )
 #' @param m position vector of the centre of the sphere c(x = ,y = ,z = )
@@ -44,6 +45,41 @@ geo_interSec_sph_line <- function(p, u, m, r) {
     stop("slvwagner::geo_interSec_sph_line creates \"NA`s\"\nVectors p,u,m need to be length of 3")
   }
 }
+
+
+#######################################
+#' Intersection point(s) of line and a circle
+#'
+#' @name geo_intersec_circl_line
+#' @details Computes the intersecting point of a line and a circle. The line is a linear function such as  \eqn{y=mx+b}. The circle in the form \eqn{(x-o_1)^2+(y-o_1)^2 = R^2}.
+#' @param R Radius of the circle
+#' @param o Position vector of the circle
+#' @param m solpe of linear function
+#' @param b intersect of linear function
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' list of intersecting point(s)
+#' @examples
+#' R <- 1; o <- c(1.2,0.9); R <- 1; m <- 1; b <- 0.8;
+#' geo_intersec_circl_line(R,o,m,b)
+#' @export
+
+geo_intersec_circl_line <- function(R,o,m,b){
+  # circle and linear function Solved for x
+  t_expression <- expression(c((sqrt(((-2)*o[1]+(b-o[2])*m+m*(b-o[2]))^2-4*(m^2+1)*(o[1]^2+(b-o[2])^2-R^2))-((-2)*o[1]+(b-o[2])*m+m*(b-o[2])))/(2*(m^2+1)),
+                               (-((-2)*o[1]+(b-o[2])*m+m*(b-o[2])+sqrt(((-2)*o[1]+(b-o[2])*m+m*(b-o[2]))^2-4*(m^2+1)*(o[1]^2+(b-o[2])^2-R^2))))/(2*(m^2+1)))
+                             )
+  # Evaluate x
+  x <- eval(t_expression, list(R,o[1],o[2],m,b))
+  # Evaluate y
+  y <- x|>
+    sapply(function(x){
+      m*x+b
+      })
+  cbind(x, y)
+}
+
 
 #######################################
 #' Conic section from five point

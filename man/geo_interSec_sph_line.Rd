@@ -23,6 +23,7 @@ Intersection point(s) of line and sphere.
 }
 \details{
 Computes the intersecting point of a line and the surface of a spear.
+Check \code{\link[=geo_intersec_circl_line]{geo_intersec_circl_line()}} for 2D version.
 }
 \examples{
 p <- c(x = 1, y = -2, z = 3)
