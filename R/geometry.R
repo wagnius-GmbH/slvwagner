@@ -2,7 +2,7 @@
 #' Intersection point(s) of line and sphere.
 #'
 #' @name geo_interSec_sph_line
-#' @details Computes the intersecting point of a line and the surface of a spear.
+#' @details Computes the intersecting point(s) of a line and the surface of a spear.
 #' Check [slvwagner::geo_intersec_circl_line()] for 2D version.
 #' @param p position vector for the line  c(x = ,y = ,z = )
 #' @param u direction vector for the line c(x = ,y = ,z = )
