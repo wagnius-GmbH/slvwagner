@@ -1,7 +1,7 @@
 Type: Package
 Package: slvwagner
 Title: All Stuff that I`m Missing
-Version: 0.9.7.2
+Version: 0.9.7.3
 Authors@R: 
     person(given = "Florian",
            family = "Wagner",
@@ -9,7 +9,7 @@ Authors@R:
            email = "florian.wagner@wagnius.ch")
 Maintainer: Florian Wagner <florian.wagner@wagnius.ch>
 Description: All stuff that I`m Missing so I do not want to rewrite it
-    everytime.
+    every time.
 License: GPL-3
 Depends: 
     R (>= 4.2.0)

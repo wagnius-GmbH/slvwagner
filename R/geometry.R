@@ -2,7 +2,8 @@
 #' Intersection point(s) of line and sphere.
 #'
 #' @name geo_interSec_sph_line
-#' @details Computes the intersecting point of a line and the surface of a spear.
+#' @details Computes the intersecting point(s) of a line and the surface of a spear.
+#' Check [slvwagner::geo_intersec_circl_line()] for 2D version.
 #' @param p position vector for the line  c(x = ,y = ,z = )
 #' @param u direction vector for the line c(x = ,y = ,z = )
 #' @param m position vector of the centre of the sphere c(x = ,y = ,z = )
@@ -32,21 +33,54 @@ geo_interSec_sph_line <- function(p, u, m, r) {
 
   # Parameter t
   c_result <- eval(t_expression, list(p, u, m, r))
-  names(c_result) <- rep("",length(c_result))
-
   # Intersection points
-  l_Result <- list()
-  for (ii in 1:length(c_result)) {
-    l_Result[[ii]] <- c(p + (c_result[ii] * u))
-  }
+  l_Result <- c_result|>
+    lapply(function(x)c(p + (x * u)))
 
+  names(l_Result) <- NULL
+  # Error handling
   if(is.na(c_result)|>sum() == 0){
     return(l_Result)
   }else{
-    print(warning())
-    return(NULL)
+    stop("slvwagner::geo_interSec_sph_line creates \"NA`s\"\nVectors p,u,m need to be length of 3")
   }
 }
+
+
+#######################################
+#' Intersection point(s) of line and a circle
+#'
+#' @name geo_intersec_circl_line
+#' @details Computes the intersecting point of a line and a circle. The line is a linear function such as  \eqn{y=mx+b}. The circle in the form \eqn{(x-o_1)^2+(y-o_1)^2 = R^2}.
+#' Check [slvwagner::geo_interSec_sph_line()] for 3D version.
+#' @param R Radius of the circle
+#' @param o Position vector of the circle
+#' @param m solpe of linear function
+#' @param b intersect of linear function
+#' @author Florian Wagner
+#' \email{florian.wagner@wagnius.ch}
+#' @returns
+#' list of intersecting points
+#' @examples
+#' R <- 1; o <- c(1.2,0.9); R <- 1; m <- 1; b <- 0.8;
+#' geo_intersec_circl_line(R,o,m,b)
+#' @export
+
+geo_intersec_circl_line <- function(R,o,m,b){
+  # circle and linear function Solved for x
+  t_expression <- expression(c((sqrt(((-2)*o[1]+(b-o[2])*m+m*(b-o[2]))^2-4*(m^2+1)*(o[1]^2+(b-o[2])^2-R^2))-((-2)*o[1]+(b-o[2])*m+m*(b-o[2])))/(2*(m^2+1)),
+                               (-((-2)*o[1]+(b-o[2])*m+m*(b-o[2])+sqrt(((-2)*o[1]+(b-o[2])*m+m*(b-o[2]))^2-4*(m^2+1)*(o[1]^2+(b-o[2])^2-R^2))))/(2*(m^2+1)))
+                             )
+  # Evaluate x
+  x <- eval(t_expression, list(R,o[1],o[2],m,b))
+  # Evaluate y
+  y <- x|>
+    sapply(function(x){
+      m*x+b
+      })
+  cbind(x, y)
+}
+
 
 #######################################
 #' Conic section from five point
@@ -267,12 +301,12 @@ geo_conic_section_from_5points <- function(section_points, nb = 10){
 geo_slerp <- function(R,x1,x2,cp,nb_points = 10) { #slerp aus drei Punkten, Radius, Punkteanzahl
   #(cp => Ortsvektor)
   #Verschieben des Koordinatensystems: Neuer Ursprung cp
-  sp <- x1-cp #Stützvektor
-  ep <- x2-cp #Stützvektor
+  sp <- x1-cp #Stuetzvektor
+  ep <- x2-cp #Stuetzvektor
 
   #Stuetzvektoren
-  s1l   <- sp-c(0,0,0) #Stützvektor aus Ortsvektor und Startpunkt
-  s2l   <- ep-c(0,0,0) #Stützvektor aus Ortsvektor und Endpunkt
+  s1l   <- sp-c(0,0,0) #Stuetzvektor aus Ortsvektor und Startpunkt
+  s2l   <- ep-c(0,0,0) #Stuetzvektor aus Ortsvektor und Endpunkt
   #Stuetzvektoren gleich gross machen
   s1 <- s1l*math_betrag(s2l)
   s2 <- s2l*math_betrag(s1l)
