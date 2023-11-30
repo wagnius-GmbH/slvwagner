@@ -95,7 +95,6 @@ LogicalVector find_edges_3D(LogicalVector c_search, const IntegerVector n) {
 
 
 /*** R
-
 library(rgl)
 n <- c(6L,5L,4L)
 df_input <- expand.grid(
