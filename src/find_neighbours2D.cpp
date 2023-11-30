@@ -8,12 +8,12 @@ std::vector<T> seq_(T start, T end, T step = T(1)) {
   std::vector<T> sequence;
 
   if (step == T(0)) {
-    Rcerr << "Error: Step size cannot be zero." << std::endl;
+    stop("Error: Step size cannot be zero.");
     return sequence;
   }
 
   if ((step > T(0) && start > end) || (step < T(0) && start < end)) {
-    Rcerr << "Error: Invalid start, end, and step combination." << std::endl;
+    stop("Error: Invalid start, end, and step combination.");
     return sequence;
   }
 
