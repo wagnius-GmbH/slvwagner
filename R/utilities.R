@@ -24,6 +24,39 @@ r_path <- function(path = "clipboard") {
 }
 
 ###################################################################
+#' spez. Round  for Swiss currency "CHF"
+#'
+#' @name round5Rappen
+#' @description rounds for swiss currency. Between values of 0.075 to 0.1249 will be round to 0.1.
+#' From values of 0.025 to 0.0749 will be round to 0.1.
+#' @param x numeric vector
+#' @return numeric vector
+#' @examples
+#' round5Rappen(c( 0.02499, 0.025, 0.0749, 0.075))
+#' round5Rappen(c(10.02499,10.025,10.0749,10.075))
+#' round5Rappen(c(10.52499,10.525,10.5749,10.575))
+#' round5Rappen(c(10.72499,10.725,10.7749,10.775))
+#' @export
+
+round5Rappen <- function(x) {
+  result <- lapply(x, function(x){
+    y <- round(x-as.integer(x*10)/10,9)
+    if(y>=0.075){
+      return((as.integer(x*10)/10)+0.1)
+    }else {
+      if(y>=0.025){
+        return((as.integer(x*10)/10)+0.05)
+      }else{
+        return((as.integer(x*10)/10)+0.0)
+      }
+    }
+  })
+  return(result|>
+           unlist())
+}
+
+
+###################################################################
 #' Convert R path to windows compatible path
 #'
 #' @name r_win_path
