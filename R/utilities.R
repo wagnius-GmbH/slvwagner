@@ -93,6 +93,30 @@ r_is.defined <- function(sym) {
   exists(sym, env)
 }
 
+
+###################################################################
+#' Check if package is loaded in R`s global environment.
+#'
+#' @name r_is.library_loaded
+#' @description Function to Check if package is loaded R`s global environment.
+#' @param  package_name package name character vector
+#' @return TRUE or FALSE
+#' @examples
+#' r_is.library_loaded("ThisIsNotAlib")
+#' library("slvwagner")
+#' r_is.library_loaded("slvwagner")
+#' @export
+#'
+r_is.library_loaded <- function(package_name) {
+  is_loaded <- FALSE
+  tryCatch({
+    is_loaded <- requireNamespace(package_name, quietly = TRUE)
+  }, error = function(e) {
+    is_loaded <- FALSE
+  })
+  return(is_loaded)
+}
+
 ###################################################################
 #' Colourise text for display in the terminal.
 #'
