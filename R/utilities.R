@@ -40,14 +40,18 @@ r_path <- function(path = "clipboard") {
 
 round5Rappen <- function(x) {
   result <- lapply(x, function(x){
-    y <- round(x-as.integer(x*10)/10,9)
-    if(y>=0.075){
-      return((as.integer(x*10)/10)+0.1)
-    }else {
-      if(y>=0.025){
-        return((as.integer(x*10)/10)+0.05)
-      }else{
-        return((as.integer(x*10)/10)+0.0)
+    if(is.na(x)){
+      return(NA)
+    }else{
+      y <- round(x-as.integer(x*10)/10,9)
+      if(y>=0.075){
+        return((as.integer(x*10)/10)+0.1)
+      }else {
+        if(y>=0.025){
+          return((as.integer(x*10)/10)+0.05)
+        }else{
+          return((as.integer(x*10)/10)+0.0)
+        }
       }
     }
   })
