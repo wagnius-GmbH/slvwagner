@@ -186,5 +186,54 @@ r_cmd_running <- function() {
 }
 
 
+###################################################################
+#' Clear console or Terminal
+#'
+#' @export
+r_clear_terminal <- function(){
+  ##  ------------------------------------------------------------
+  ##  Detect RStudio Terminal or RStudio Console or Terminal macOS
+  ##  --------------------------------------------------------------
+  if (commandArgs()[1]=='RStudio'){
+    ##  method print: \f: Form Feed
+    print.cleanup <- function(cleanupObject) cat("\f")
 
+
+  }else if(substr(commandArgs()[1], nchar(commandArgs()[1]), nchar(commandArgs()[1])) == "R"){
+
+    ##  -------------------------------------------------------------
+    ##  }else if(tail(strsplit(commandArgs()[1], split = "")[[1]], n=length(commandArgs()[1])))
+    ##  -------------------------------------------------------------
+    ##  Reference
+    ##  Rapp defaul configuration in macOS:
+    ##  "/Library/Frameworks/R.framework/Resources/bin/exec/R"
+    ##  --------------------------------------------------------------
+    ##  http://ascii-table.com/ansi-escape-sequences.php                                                (check)
+    ##  https://invisible-island.net/ncurses/man/clear.1.html                                           (check)
+    ##  https://stackoverflow.com/questions/1348563/clearing-output-of-a-terminal-program-linux-c-c     (check)
+    print.cleanup <- function(cleanupObject) cat(c("\033[2J","\033[H"))
+
+  }else{print(paste0("not support: ",commandArgs()[1]))}
+
+
+  ##  ----------------------------------------
+  ##  About 'clc'
+  ##  ----------------------------------------
+  ##  Can replace 'clc' by:
+
+  ##  'cls' command DOS
+  ##  'clear' terminal macOS / Linux / Unix
+  ##  or whatever you choose
+
+  ##  Directly in this code or in console or terminal
+
+  ##  For example change clc by clear
+  ##  source("clc.R") or source("yourPath/clc.R")
+  ##  clear <- 0
+  ##  class(clear) <- 'cleanup'
+  ##  ----------------------------------------
+  clc <- 0                                        ##  variable from class numeric
+  class(clc) <- 'cleanup'
+  print(clc)
+}
 
