@@ -2,10 +2,10 @@
 % Please edit documentation in R/utilities.R
 \name{r_clear_terminal}
 \alias{r_clear_terminal}
-\title{Clear console or Terminal}
+\title{Clear console or Terminal function}
 \usage{
 r_clear_terminal()
 }
 \description{
-Clear console or Terminal
+Clear console or Terminal function
 }
