@@ -30,6 +30,7 @@ r_path <- function(path = "clipboard") {
 #' @description rounds for swiss currency. Between values of 0.075 to 0.1249 will be round to 0.1.
 #' From values of 0.025 to 0.0749 will be round to 0.1.
 #' @param x numeric vector
+#' @param round_digits how many digit need to be considered for rounding
 #' @return numeric vector
 #' @examples
 #' round5Rappen(c( 0.02499, 0.025, 0.0749, 0.075))
@@ -38,12 +39,12 @@ r_path <- function(path = "clipboard") {
 #' round5Rappen(c(10.72499,10.725,10.7749,10.775))
 #' @export
 
-round5Rappen <- function(x) {
+round5Rappen <- function(x, round_digits = 9) {
   result <- lapply(x, function(x){
     if(is.na(x)){
       return(NA)
     }else{
-      y <- round(x-as.integer(x*10)/10,9)
+      y <- round(x-as.integer(x*10)/10,round_digits)
       if(y>=0.075){
         return((as.integer(x*10)/10)+0.1)
       }else {
