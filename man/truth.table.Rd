@@ -9,7 +9,8 @@ truth.table(
   exponent = 2,
   hex_style = FALSE,
   stringsAsFactors = TRUE,
-  KEEP.OUT.ATTRS = TRUE
+  KEEP.OUT.ATTRS = TRUE,
+  fileName = NA
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ truth.table(
 \item{stringsAsFactors}{logical specifying if character vectors are converted to factors.Check expand.grid() documentation for more information.}
 
 \item{KEEP.OUT.ATTRS}{a logical indicating the "out.attrs" attribute. Check out expand.grid() function for more detailed information.}
+
+\item{fileName}{If a file name is supplied the created data frame will automatically saved in the actual working directory with file extension ".csv".}
 }
 \value{
 A data frame containing one row for each combination of the supplied factors(\code{bit}\code{s}) .
