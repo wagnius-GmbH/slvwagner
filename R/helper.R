@@ -40,6 +40,7 @@ r_signif <- function (x, significant_digits = 3)
 #' @param hex_style If exponent > 9 the number will be changed to letters.
 #' @param stringsAsFactors logical specifying if character vectors are converted to factors.Check expand.grid() documentation for more information.
 #' @param KEEP.OUT.ATTRS	a logical indicating the "out.attrs" attribute. Check out expand.grid() function for more detailed information.
+#' @param fileName If a file name is supplied the created data frame will automatically saved in the actual working directory with file extension ".csv".
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
@@ -50,7 +51,7 @@ r_signif <- function (x, significant_digits = 3)
 #' truth.table(3, 16, hex_style = TRUE)|>head(20)
 #' @export
 
-truth.table <- function(bit, exponent = 2, hex_style = FALSE ,stringsAsFactors = TRUE, KEEP.OUT.ATTRS = TRUE){
+truth.table <- function(bit, exponent = 2, hex_style = FALSE ,stringsAsFactors = TRUE, KEEP.OUT.ATTRS = TRUE, fileName = NA){
   # creat vector
   c_var <- 0:(exponent-1)
   # Hex style
@@ -117,6 +118,8 @@ truth.table <- function(bit, exponent = 2, hex_style = FALSE ,stringsAsFactors =
   rn <- .set_row_names(as.integer(prod(d)))
 
   df_data <- structure(cargs, class = "data.frame", row.names = rn)
+
+  if(!is.na(fileName)) write.table(df_data[,bit:0], file = paste0(fileName, ".csv"), row.names = FALSE, sep = ";")
 
   return(df_data[,bit:0])
 }

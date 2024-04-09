@@ -4,10 +4,12 @@
 \alias{round5Rappen}
 \title{spez. Round  for Swiss currency "CHF"}
 \usage{
-round5Rappen(x)
+round5Rappen(x, round_digits = 9)
 }
 \arguments{
 \item{x}{numeric vector}
+
+\item{round_digits}{how many digit need to be considered for rounding}
 }
 \value{
 numeric vector
