@@ -12,7 +12,7 @@ Description: All stuff that I`m Missing so I do not want to rewrite it
     every time.
 License: GPL-3
 Depends: 
-    R (>= 4.2.0)
+    R (>= 4.4.0)
 Imports: 
     Rcpp,
     dplyr,
