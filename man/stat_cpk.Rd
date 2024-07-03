@@ -7,9 +7,9 @@
 stat_cpk(LSL, USL, mue, sigma)
 }
 \arguments{
-\item{LSL}{lower specification limit parameter}
+\item{LSL}{lower specification limit}
 
-\item{USL}{upper specification limit parameter}
+\item{USL}{upper specification limit}
 
 \item{mue}{the estimated mean of the process \eqn{\mu}}
 
@@ -22,7 +22,7 @@ vector
 Calculation of Cpk Process capability index given parameter USL, LSL mean \eqn{\mu} and standard deviation \eqn{\sigma}.
 }
 \details{
-Estimates what the process is capable of producing, considering that the process mean may not be centered between the specification (Upper and Lower) limits.
+Estimates what the process is capable of producing, considering that the process mean may not be centred between the specification (Upper and Lower) limits.
 
 \url{https://en.wikipedia.org/wiki/Process_capability_index}
 }
