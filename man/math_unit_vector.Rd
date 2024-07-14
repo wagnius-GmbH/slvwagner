@@ -18,6 +18,8 @@ calculate unite vector from \code{x}
 \examples{
 math_unit_vector(c(x = 1,y = 1,z = 1))
 math_unit_vector(c(1,2,3))
+math_unit_vector(c(0.5,1))
+
 }
 \author{
 Florian Wagner

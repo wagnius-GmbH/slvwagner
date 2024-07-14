@@ -455,10 +455,34 @@ math_cart2sph <- function (xyz)
 #' @examples
 #' math_unit_vector(c(x = 1,y = 1,z = 1))
 #' math_unit_vector(c(1,2,3))
+#' math_unit_vector(c(0.5,1))
+#'
 #' @export
 
 math_unit_vector <- function(x){
-  x/math_betrag(x)
+  stopifnot(is.numeric(x))
+  if (is.vector(x)) {
+    y <- x/math_betrag(x)
+    if((is.nan(y)|>sum()) == 0){
+      return(y)
+    }else{
+      stop(paste("cannot convert vector to a unit vector."))
+    }
+  }else if (is.matrix(x)){
+    n <- colnames(x)
+    y <- x|>
+      apply(1, function(x){
+        y <- x/math_betrag(x)
+        if((is.nan(y)|>sum()) == 0){
+          return(y)
+        }else{
+          stop(paste("cannot convert vector to a unit vector."))
+        }
+      })|>
+      t()
+    colnames(y) <- n
+    return(y)
+  }
 }
 
 
