@@ -20,6 +20,9 @@ This function is the same as \code{\link[=math_magnitude]{math_magnitude()}}
 \examples{
 math_betrag(c(1,1))
 math_betrag(c(1,1,1))
+math_betrag(rbind(c(1,1,0.5),c(1,1,1)))
+# example code
+
 }
 \author{
 Florian Wagner

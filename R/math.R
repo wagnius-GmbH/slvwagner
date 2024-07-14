@@ -10,12 +10,24 @@
 #' @return numerical vector of [length()] one
 #' @examples math_betrag(c(1,1))
 #' @examples math_betrag(c(1,1,1))
+#' @examples math_betrag(rbind(c(1,1,0.5),c(1,1,1)))
+#' # example code
+#'
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @export
 
 math_betrag <- function(x) {
-  sqrt(sum(x^2))
+  stopifnot(is.numeric(x))
+  if(is.vector(x))  sqrt(sum(x^2))
+  else if (is.matrix(x)){
+    x|>
+      apply(1, function(x){
+        sqrt(sum(x^2))
+      })|>
+      t()|>
+      as.vector()
+  }
 }
 
 ####################################
@@ -28,14 +40,24 @@ math_betrag <- function(x) {
 #' This function is the same as [slvwagner::math_betrag()]
 #' @param x numerical vector
 #' @return numerical vector of [length()] one
-#' @examples math_magnitude(c(1,1))
-#' @examples math_magnitude(c(1,1,1))
+#' @examples math_betrag(c(1,1))
+#' @examples math_betrag(c(1,1,1))
+#' @examples math_betrag(rbind(c(1,1,0.5),c(1,1,1)))
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @export
 #'
 math_magnitude <- function(x){
-  sqrt(sum(x^2))
+  stopifnot(is.numeric(x))
+  if(is.vector(x))  sqrt(sum(x^2))
+  else if (is.matrix(x)){
+    x|>
+      apply(1, function(x){
+        sqrt(sum(x^2))
+      })|>
+      t()|>
+      as.vector()
+  }
 }
 
 #######################################
