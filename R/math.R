@@ -396,13 +396,13 @@ math_sph2cart <- function (tpr)
 
 
 #######################################
-#' Cartesian to sperical coordinates
+#' Cartesian to spherical coordinates
 #'
 #' @name math_cart2sph
 #' @description Transform Cartesian to spherical coordinates according to international physics convention:
-#' \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\phi} in range 0...2*pi (0...360Deg)
+#' \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\varphi} in range 0...2*pi (0...360Deg)
 #' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
-#' @param xyz cartesian coordinates as vector or matrix
+#' @param xyz c(x, y, z) cartesian coordinates as vector or matrix
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
