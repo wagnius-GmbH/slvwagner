@@ -7,10 +7,10 @@
 math_unit_vector(x)
 }
 \arguments{
-\item{x}{vector of cartesian coordinates}
+\item{x}{vector or matrix of coordinates}
 }
 \value{
-unit vector
+unit vector(s)
 }
 \description{
 calculate unite vector from \code{x}

@@ -447,11 +447,11 @@ math_cart2sph <- function (xyz)
 #'
 #' @name math_unit_vector
 #' @description calculate unite vector from \code{x}
-#' @param x vector of cartesian coordinates
+#' @param x vector or matrix of coordinates
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' unit vector
+#' unit vector(s)
 #' @examples
 #' math_unit_vector(c(x = 1,y = 1,z = 1))
 #' math_unit_vector(c(1,2,3))
