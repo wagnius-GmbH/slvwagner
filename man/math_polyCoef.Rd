@@ -9,7 +9,7 @@ math_polyCoef(equation, variable = "x")
 \arguments{
 \item{equation}{polynomial equation string}
 
-\item{variable}{of the \code{equation}}
+\item{variable}{variable of the polynomial equation}
 }
 \value{
 vector with polynomial coefficients.

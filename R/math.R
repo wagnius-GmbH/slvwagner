@@ -144,6 +144,8 @@ math_circle_from3points<-function(x){
 #' @export
 
 math_inbetweenAngle <- function(u,v){
+  stopifnot(is.numeric(u))
+  stopifnot(is.numeric(v))
   return(acos(sum(u*v)/(sqrt(sum(u^2))*sqrt(sum(v^2)))))
 }
 
@@ -306,6 +308,7 @@ math_quadrant_vector  <- function(x){
 #' @export
 
 math_quadrant  <- function(x){
+  stopifnot(is.numeric(x))
   if(is.null(dim(x))){ # check if only single vector
     math_quadrant_vector(x)
   }else { # check if matrix and numerical values
@@ -338,6 +341,7 @@ math_quadrant  <- function(x){
 #' @export
 
 math_angle_quadrant_vector  <- function(x){
+  stopifnot(is.numeric(x))
   if(!(x[1]== 0 & x[2]==0)){
     type <- math_quadrant_vector(x)
     if      (type %in% c(1,4)) atan(x[2]/x[1])
@@ -370,6 +374,7 @@ math_angle_quadrant_vector  <- function(x){
 #' @export
 
 math_angle_quadrant  <- function(x){
+  stopifnot(is.numeric(x))
   if(is.null(dim(x))){ # check if only single vector
     math_angle_quadrant_vector(x)
   }else { # check if matrix and numerical values
@@ -534,8 +539,9 @@ math_unit_vector <- function(x){
 #' sqrt(math_dot_product(c(1,1,1), c(1,1,1)))  #=> 1.732051
 #' @export
 
-math_dot_product <- function (x, y)
-{
+math_dot_product <- function (x, y){
+  stopifnot(is.numeric(x))
+  stopifnot(is.numeric(y))
   if (length(x) == 0 && length(y) == 0)
     return(0)
   if (!(is.numeric(x) || is.complex(x)) || !(is.numeric(y) ||
@@ -576,6 +582,8 @@ math_dot_product <- function (x, y)
 
 math_cross_product <- function (x, y)
 {
+  stopifnot(is.numeric(x))
+  stopifnot(is.numeric(y))
   if (!is.numeric(x) || !is.numeric(y))
     stop("Arguments 'x' and 'y' must be numeric vectors or matrices.")
   if (is.vector(x) && is.vector(y)) {
@@ -635,6 +643,8 @@ math_cross_product <- function (x, y)
 #' @export
 
 math_polynom_round <- function(poly,round_digits = 9) {
+  stopifnot(is.character(poly))
+  stopifnot(is.numeric(round_digits))
   c_degree <- paste0("Degree(",poly,",","x",")")|>
     Ryacas::ysym()|>
     Ryacas::as_r()
@@ -677,6 +687,8 @@ math_polynom_round <- function(poly,round_digits = 9) {
 #' @export
 
 math_polynom_from_roots <- function(roots,round_digits=9){
+  stopifnot(is.numeric(poly))
+  stopifnot(is.numeric(round_digits))
   ###################################################################
   # convert to list
   roots <- roots|>
@@ -826,6 +838,9 @@ math_polynom_from_roots <- function(roots,round_digits=9){
 #' @export
 
 math_nonlinear_vector <- function(c_start, c_end, n){
+  stopifnot(is.character(c_start))
+  stopifnot(is.numeric(c_end))
+  stopifnot(is.numeric(n))
   a <- (c_end/c_start)^(1/(n-1))
   return(c_start*a^(0:(n-1)))
 }
@@ -838,7 +853,7 @@ math_nonlinear_vector <- function(c_start, c_end, n){
 #' Calculates the polynomial coefficients from a polynomial \code{equation}. The variable \code{var} can be chosen.
 #' The order of the terms does not matter.
 #' @param equation polynomial equation string
-#' @param variable of the \code{equation}
+#' @param variable variable of the polynomial equation
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
@@ -851,6 +866,8 @@ math_nonlinear_vector <- function(c_start, c_end, n){
 #' @export
 
 math_polyCoef <- function(equation, variable = "x"){
+  stopifnot(is.character(equation))
+  stopifnot(is.character(variable))
   deg <- Ryacas::yac_str(paste0("Degree(",equation,")"))|>as.integer();
   Ryacas::yac_str(paste0("Coef(",equation,",",variable,",{",paste0(0:deg,collapse = ","),"})"))|>
     Ryacas::as_r()|>
