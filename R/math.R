@@ -98,6 +98,7 @@ math_magnitude <- function(x){
 #' @export
 
 math_circle_from3points<-function(x){
+  stopifnot(is.numeric(x))
   if(is.matrix(x) & nrow(x)==3){
     A <- cbind(c(1,1,1), x)
     b <- c(-(A[1,2]^2+A[1,3]^2),
@@ -166,6 +167,7 @@ math_inbetweenAngle <- function(u,v){
 
 ### Rotations_matrix
 math_rot_matrix2d <- function(angle){
+  stopifnot(is.numeric(angle))
   matrix(c(cos(angle),-sin(angle),
            sin(angle),cos(angle)),
          nrow = 2, byrow = T)
@@ -197,6 +199,8 @@ math_rot_matrix2d <- function(angle){
 #' @export
 
 math_rot_matrix3d <- function(x,angle){
+  stopifnot(is.numeric(x))
+  stopifnot(is.numeric(angle))
   #Drehmatrix 3d um einen Vektor
   matrix(c(c(x[1]^2*(1-cos(angle))+cos(angle),
              x[1]*x[2]*(1-cos(angle))-x[3]*sin(angle),
@@ -233,6 +237,8 @@ math_rot_matrix3d <- function(x,angle){
 #' @export
 
 math_rot_transform <- function(x, rot_matrix){
+  stopifnot(is.numeric(x))
+  stopifnot(is.numeric(rot_matrix))
   rot_matrix%*%x|>
     t()
 }
@@ -253,6 +259,7 @@ math_rot_transform <- function(x, rot_matrix){
 #' @export
 
 math_quadrant_vector  <- function(x){
+  stopifnot(is.numeric(x))
   if(class(x)%in%c("numeric","integer")){
     if (x[1]== 0 || x[2]== 0){
       if     (x[1] > 0 & x[2] == 0) return(0)
