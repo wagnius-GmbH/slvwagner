@@ -7,14 +7,14 @@
 math_sph2cart(tpr)
 }
 \arguments{
-\item{tpr}{c(\eqn{t = \theta}, \eqn{p = \phi}, r=radius) as vector or matrix}
+\item{tpr}{c(\eqn{tilt = \theta}, \eqn{pan = \varphi}, radius = r) as vector or matrix}
 }
 \value{
 named vector or matrix
 }
 \description{
 Transform spherical to cartesian coordinates according to international physics convention:
-\eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\phi} in range 0...2*pi (0...360Deg)
+\eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\varphi} in range 0...2*pi (0...360Deg)
 }
 \details{
 \url{https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen}

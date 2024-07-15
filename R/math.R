@@ -10,12 +10,24 @@
 #' @return numerical vector of [length()] one
 #' @examples math_betrag(c(1,1))
 #' @examples math_betrag(c(1,1,1))
+#' @examples math_betrag(rbind(c(1,1,0.5),c(1,1,1)))
+#' # example code
+#'
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @export
 
 math_betrag <- function(x) {
-  sqrt(sum(x^2))
+  stopifnot(is.numeric(x))
+  if(is.vector(x))  sqrt(sum(x^2))
+  else if (is.matrix(x)){
+    x|>
+      apply(1, function(x){
+        sqrt(sum(x^2))
+      })|>
+      t()|>
+      as.vector()
+  }
 }
 
 ####################################
@@ -28,14 +40,24 @@ math_betrag <- function(x) {
 #' This function is the same as [slvwagner::math_betrag()]
 #' @param x numerical vector
 #' @return numerical vector of [length()] one
-#' @examples math_magnitude(c(1,1))
-#' @examples math_magnitude(c(1,1,1))
+#' @examples math_betrag(c(1,1))
+#' @examples math_betrag(c(1,1,1))
+#' @examples math_betrag(rbind(c(1,1,0.5),c(1,1,1)))
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @export
 #'
 math_magnitude <- function(x){
-  sqrt(sum(x^2))
+  stopifnot(is.numeric(x))
+  if(is.vector(x))  sqrt(sum(x^2))
+  else if (is.matrix(x)){
+    x|>
+      apply(1, function(x){
+        sqrt(sum(x^2))
+      })|>
+      t()|>
+      as.vector()
+  }
 }
 
 #######################################
@@ -76,7 +98,8 @@ math_magnitude <- function(x){
 #' @export
 
 math_circle_from3points<-function(x){
-  if(is.matrix(x) & nrow(x)==3){
+  stopifnot(is.numeric(x))
+  if(is.matrix(x) & nrow(x)==3 & ncol(x) == 2){
     A <- cbind(c(1,1,1), x)
     b <- c(-(A[1,2]^2+A[1,3]^2),
            -(A[2,2]^2+A[2,3]^2),
@@ -88,7 +111,7 @@ math_circle_from3points<-function(x){
                       radius  = sqrt((-c_result[2]/2)^2+(-c_result[3]/2)^2- c_result[1]))
     )
   }else{
-    return(writeLines(paste("only matrix[3][2] (3 points with 2 coordinates) can be used to calculat the circle")))
+    return(writeLines(paste("only matrix[3,2] (3 points with 2 coordinates) can be used to calculate a circle")))
   }
 }
 
@@ -121,6 +144,8 @@ math_circle_from3points<-function(x){
 #' @export
 
 math_inbetweenAngle <- function(u,v){
+  stopifnot(is.numeric(u))
+  stopifnot(is.numeric(v))
   return(acos(sum(u*v)/(sqrt(sum(u^2))*sqrt(sum(v^2)))))
 }
 
@@ -144,6 +169,7 @@ math_inbetweenAngle <- function(u,v){
 
 ### Rotations_matrix
 math_rot_matrix2d <- function(angle){
+  stopifnot(is.numeric(angle))
   matrix(c(cos(angle),-sin(angle),
            sin(angle),cos(angle)),
          nrow = 2, byrow = T)
@@ -175,6 +201,8 @@ math_rot_matrix2d <- function(angle){
 #' @export
 
 math_rot_matrix3d <- function(x,angle){
+  stopifnot(is.numeric(x))
+  stopifnot(is.numeric(angle))
   #Drehmatrix 3d um einen Vektor
   matrix(c(c(x[1]^2*(1-cos(angle))+cos(angle),
              x[1]*x[2]*(1-cos(angle))-x[3]*sin(angle),
@@ -211,6 +239,8 @@ math_rot_matrix3d <- function(x,angle){
 #' @export
 
 math_rot_transform <- function(x, rot_matrix){
+  stopifnot(is.numeric(x))
+  stopifnot(is.numeric(rot_matrix))
   rot_matrix%*%x|>
     t()
 }
@@ -226,11 +256,12 @@ math_rot_transform <- function(x, rot_matrix){
 #' @returns
 #' Returns Quadrant of vector(s)
 #' @examples math_quadrant_vector(c(1,1))
-#' x <- expand.grid(x = -1:1, y = -1:1)
+#' x <- expand.grid(x = -1:1, y = -1:1)|>as.matrix()
 #' cbind(x, result = x|>apply(1,math_quadrant_vector))
 #' @export
 
 math_quadrant_vector  <- function(x){
+  stopifnot(is.numeric(x))
   if(class(x)%in%c("numeric","integer")){
     if (x[1]== 0 || x[2]== 0){
       if     (x[1] > 0 & x[2] == 0) return(0)
@@ -269,14 +300,15 @@ math_quadrant_vector  <- function(x){
 #' @returns
 #' Returns Quadrant(s) of vector(s)
 #' @examples
-#' data.frame(x = c(1,-1),y = c(1,-1))|>math_quadrant()
+#' rbind(x = c(1,-1),y = c(1,-1))|>math_quadrant()
 #' math_quadrant(c(1,0))
 #' math_quadrant(c(1,0,12))
-#' m <- expand.grid(x = -1:1, y = -1:1)
+#' m <- expand.grid(x = -1:1, y = -1:1)|>as.matrix()
 #' cbind(m, result = math_quadrant(m))
 #' @export
 
 math_quadrant  <- function(x){
+  stopifnot(is.numeric(x))
   if(is.null(dim(x))){ # check if only single vector
     math_quadrant_vector(x)
   }else { # check if matrix and numerical values
@@ -309,6 +341,7 @@ math_quadrant  <- function(x){
 #' @export
 
 math_angle_quadrant_vector  <- function(x){
+  stopifnot(is.numeric(x))
   if(!(x[1]== 0 & x[2]==0)){
     type <- math_quadrant_vector(x)
     if      (type %in% c(1,4)) atan(x[2]/x[1])
@@ -336,11 +369,12 @@ math_angle_quadrant_vector  <- function(x){
 #' matrix of angle(s)
 #' @examples
 #' math_angle_quadrant(c(1,1))/pi*180
-#' x <- expand.grid(x = -1:1, y = -1:1)
+#' x <- expand.grid(x = -1:1, y = -1:1)|>as.matrix()
 #' cbind(x, result = math_angle_quadrant(x))
 #' @export
 
 math_angle_quadrant  <- function(x){
+  stopifnot(is.numeric(x)||is.matrix())
   if(is.null(dim(x))){ # check if only single vector
     math_angle_quadrant_vector(x)
   }else { # check if matrix and numerical values
@@ -354,9 +388,9 @@ math_angle_quadrant  <- function(x){
 #'
 #' @name math_sph2cart
 #' @description Transform spherical to cartesian coordinates according to international physics convention:
-#' \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\phi} in range 0...2*pi (0...360Deg)
+#' \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\varphi} in range 0...2*pi (0...360Deg)
 #' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
-#' @param tpr c(\eqn{t = \theta}, \eqn{p = \phi}, r=radius) as vector or matrix
+#' @param tpr c(\eqn{tilt = \theta}, \eqn{pan = \varphi}, radius = r) as vector or matrix
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
@@ -394,27 +428,27 @@ math_sph2cart <- function (tpr)
   return(xyz)
 }
 
-
 #######################################
-#' Cartesian to sperical coordinates
+#' Cartesian to spherical coordinates
 #'
 #' @name math_cart2sph
 #' @description Transform Cartesian to spherical coordinates according to international physics convention:
-#' \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\phi} in range 0...2*pi (0...360Deg)
+#' \eqn{\theta} in range \eqn{0...\pi} (0...180 Deg) and \eqn{\varphi} in range \eqn{0...2\pi} (0...360Deg)
 #' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
-#' @param xyz cartesian coordinates as vector or matrix
+#' @param xyz c(x, y, z) cartesian coordinates as vector or matrix
+#' @param DEG return angles \eqn{\theta} and  \eqn{\varphi} in degree instead of radians
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
 #' named vector or matrix
 #' @examples
-#' math_cart2sph(c(1,1,1))
+#' math_cart2sph(c(1,1,1), DEG = TRUE)
 #' rbind(c(1,0.5,0.1),
 #'       c(1,0.2,0.6))|>
 #'    math_cart2sph()
 #' @export
 
-math_cart2sph <- function (xyz)
+math_cart2sph <- function (xyz, DEG = FALSE)
 {
   stopifnot(is.numeric(xyz))
   if (is.vector(xyz) && length(xyz) == 3) {
@@ -424,19 +458,27 @@ math_cart2sph <- function (xyz)
     r     <- math_betrag(xyz)
     theta <- acos(z/r)
     phi   <- atan2(y,x)
-    return(c(theta = theta, phi = phi ,r = r))
+    if(DEG){
+      return(c(theta = theta/pi*180, phi = phi/pi*180 ,r = r))
+    }else{
+      return(c(theta = theta, phi = phi ,r = r))
+    }
   }
   else if (is.matrix(xyz) && ncol(xyz) == 3) {
     x <- xyz[, 1]
     y <- xyz[, 2]
     z <- xyz[, 3]
-    r     <- xyz|>
+    r <- xyz|>
       apply(1,math_betrag)|>
       t()|>
       as.vector()
     theta <- acos(z/r)
     phi   <- atan2(y,x)
-    return(cbind(theta, phi, r))
+    if(DEG){
+      return(cbind(theta = theta/pi*180, phi = phi/pi*180 ,r = r))
+    }else{
+      return(cbind(theta = theta, phi = phi ,r = r))
+    }
   }
   else stop("Input must be a vector of length 3 or a matrix with 3 columns.")
 }
@@ -447,18 +489,42 @@ math_cart2sph <- function (xyz)
 #'
 #' @name math_unit_vector
 #' @description calculate unite vector from \code{x}
-#' @param x vector of cartesian coordinates
+#' @param x vector or matrix of coordinates
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
-#' unit vector
+#' unit vector(s)
 #' @examples
 #' math_unit_vector(c(x = 1,y = 1,z = 1))
 #' math_unit_vector(c(1,2,3))
+#' math_unit_vector(c(0.5,1))
+#'
 #' @export
 
 math_unit_vector <- function(x){
-  x/math_betrag(x)
+  stopifnot(is.numeric(x))
+  if (is.vector(x)) {
+    y <- x/math_betrag(x)
+    if((is.nan(y)|>sum()) == 0){
+      return(y)
+    }else{
+      stop(paste("cannot convert vector to a unit vector."))
+    }
+  }else if (is.matrix(x)){
+    n <- colnames(x)
+    y <- x|>
+      apply(1, function(x){
+        y <- x/math_betrag(x)
+        if((is.nan(y)|>sum()) == 0){
+          return(y)
+        }else{
+          stop(paste("cannot convert vector to a unit vector."))
+        }
+      })|>
+      t()
+    colnames(y) <- n
+    return(y)
+  }
 }
 
 
@@ -481,8 +547,9 @@ math_unit_vector <- function(x){
 #' sqrt(math_dot_product(c(1,1,1), c(1,1,1)))  #=> 1.732051
 #' @export
 
-math_dot_product <- function (x, y)
-{
+math_dot_product <- function (x, y){
+  stopifnot(is.numeric(x))
+  stopifnot(is.numeric(y))
   if (length(x) == 0 && length(y) == 0)
     return(0)
   if (!(is.numeric(x) || is.complex(x)) || !(is.numeric(y) ||
@@ -523,6 +590,8 @@ math_dot_product <- function (x, y)
 
 math_cross_product <- function (x, y)
 {
+  stopifnot(is.numeric(x))
+  stopifnot(is.numeric(y))
   if (!is.numeric(x) || !is.numeric(y))
     stop("Arguments 'x' and 'y' must be numeric vectors or matrices.")
   if (is.vector(x) && is.vector(y)) {
@@ -582,6 +651,8 @@ math_cross_product <- function (x, y)
 #' @export
 
 math_polynom_round <- function(poly,round_digits = 9) {
+  stopifnot(is.character(poly))
+  stopifnot(is.numeric(round_digits))
   c_degree <- paste0("Degree(",poly,",","x",")")|>
     Ryacas::ysym()|>
     Ryacas::as_r()
@@ -624,6 +695,7 @@ math_polynom_round <- function(poly,round_digits = 9) {
 #' @export
 
 math_polynom_from_roots <- function(roots,round_digits=9){
+  stopifnot(is.numeric(round_digits))
   ###################################################################
   # convert to list
   roots <- roots|>
@@ -773,6 +845,9 @@ math_polynom_from_roots <- function(roots,round_digits=9){
 #' @export
 
 math_nonlinear_vector <- function(c_start, c_end, n){
+  stopifnot(is.numeric(c_start))
+  stopifnot(is.numeric(c_end))
+  stopifnot(is.numeric(n))
   a <- (c_end/c_start)^(1/(n-1))
   return(c_start*a^(0:(n-1)))
 }
@@ -785,7 +860,7 @@ math_nonlinear_vector <- function(c_start, c_end, n){
 #' Calculates the polynomial coefficients from a polynomial \code{equation}. The variable \code{var} can be chosen.
 #' The order of the terms does not matter.
 #' @param equation polynomial equation string
-#' @param variable of the \code{equation}
+#' @param variable variable of the polynomial equation
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
@@ -798,6 +873,8 @@ math_nonlinear_vector <- function(c_start, c_end, n){
 #' @export
 
 math_polyCoef <- function(equation, variable = "x"){
+  stopifnot(is.character(equation))
+  stopifnot(is.character(variable))
   deg <- Ryacas::yac_str(paste0("Degree(",equation,")"))|>as.integer();
   Ryacas::yac_str(paste0("Coef(",equation,",",variable,",{",paste0(0:deg,collapse = ","),"})"))|>
     Ryacas::as_r()|>

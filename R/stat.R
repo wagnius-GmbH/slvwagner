@@ -22,10 +22,10 @@ stat_norm_dist <- function(x,mu,sd){
 #'
 #' @name stat_cpk
 #' @description Calculation of Cpk Process capability index given parameter USL, LSL mean \eqn{\mu} and standard deviation \eqn{\sigma}.
-#' @details Estimates what the process is capable of producing, considering that the process mean may not be centered between the specification (Upper and Lower) limits.
+#' @details Estimates what the process is capable of producing, considering that the process mean may not be centred between the specification (Upper and Lower) limits.
 #' @details <https://en.wikipedia.org/wiki/Process_capability_index>
-#' @param LSL lower specification limit parameter
-#' @param USL upper specification limit parameter
+#' @param LSL lower specification limit
+#' @param USL upper specification limit
 #' @param mue the estimated mean of the process \eqn{\mu}
 #' @param sigma standard deviation \eqn{\sigma}
 #' @author Florian Wagner

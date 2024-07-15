@@ -17,7 +17,7 @@ Find the angle(s) of vector(s) using the quadrant information.
 }
 \examples{
 math_angle_quadrant(c(1,1))/pi*180
-x <- expand.grid(x = -1:1, y = -1:1)
+x <- expand.grid(x = -1:1, y = -1:1)|>as.matrix()
 cbind(x, result = math_angle_quadrant(x))
 }
 \author{

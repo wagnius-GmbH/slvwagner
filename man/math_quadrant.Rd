@@ -17,10 +17,10 @@ Find the quadrant(s) of vector(s).
 If the vector(s) is a principle axis, it returns the angle(s) in degrees.
 }
 \examples{
-data.frame(x = c(1,-1),y = c(1,-1))|>math_quadrant()
+rbind(x = c(1,-1),y = c(1,-1))|>math_quadrant()
 math_quadrant(c(1,0))
 math_quadrant(c(1,0,12))
-m <- expand.grid(x = -1:1, y = -1:1)
+m <- expand.grid(x = -1:1, y = -1:1)|>as.matrix()
 cbind(m, result = math_quadrant(m))
 }
 \author{
