@@ -428,21 +428,21 @@ math_sph2cart <- function (tpr)
   return(xyz)
 }
 
-
 #######################################
 #' Cartesian to spherical coordinates
 #'
 #' @name math_cart2sph
 #' @description Transform Cartesian to spherical coordinates according to international physics convention:
-#' \eqn{\theta} in range 0...pi (0...180 Deg) and \eqn{\varphi} in range 0...2*pi (0...360Deg)
+#' \eqn{\theta} in range \eqn{0...\pi} (0...180 Deg) and \eqn{\varphi} in range \eqn{0...2\pi} (0...360Deg)
 #' @details <https://de.wikipedia.org/wiki/Kugelkoordinaten#Umrechnungen>
 #' @param xyz c(x, y, z) cartesian coordinates as vector or matrix
+#' @param DEG return angles \eqn{\theta} and  \eqn{\varphi} in degree instead of radians
 #' @author Florian Wagner
 #' \email{florian.wagner@wagnius.ch}
 #' @returns
 #' named vector or matrix
 #' @examples
-#' math_cart2sph(c(1,1,1))
+#' math_cart2sph(c(1,1,1), DEG = TRUE)
 #' rbind(c(1,0.5,0.1),
 #'       c(1,0.2,0.6))|>
 #'    math_cart2sph()
@@ -458,31 +458,27 @@ math_cart2sph <- function (xyz, DEG = FALSE)
     r     <- math_betrag(xyz)
     theta <- acos(z/r)
     phi   <- atan2(y,x)
-
     if(DEG){
       return(c(theta = theta/pi*180, phi = phi/pi*180 ,r = r))
     }else{
       return(c(theta = theta, phi = phi ,r = r))
     }
-
   }
   else if (is.matrix(xyz) && ncol(xyz) == 3) {
     x <- xyz[, 1]
     y <- xyz[, 2]
     z <- xyz[, 3]
-    r     <- xyz|>
+    r <- xyz|>
       apply(1,math_betrag)|>
       t()|>
       as.vector()
     theta <- acos(z/r)
     phi   <- atan2(y,x)
-
     if(DEG){
-      return(c(theta = theta/pi*180, phi = phi/pi*180 ,r = r))
+      return(cbind(theta = theta/pi*180, phi = phi/pi*180 ,r = r))
     }else{
-      return(c(theta = theta, phi = phi ,r = r))
+      return(cbind(theta = theta, phi = phi ,r = r))
     }
-
   }
   else stop("Input must be a vector of length 3 or a matrix with 3 columns.")
 }
