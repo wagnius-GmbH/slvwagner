@@ -443,7 +443,7 @@ math_sph2cart <- function (tpr)
 #' named vector or matrix
 #' @examples
 #' math_cart2sph(c(1,1,1), DEG = TRUE)
-#' rbind(c(1,0.5,0.1),
+#' rbind(c(1,1,1),
 #'       c(1,0.2,0.6))|>
 #'    math_cart2sph()
 #' @export
@@ -457,6 +457,7 @@ math_cart2sph <- function (xyz, DEG = FALSE)
     z <- xyz[3]
     r     <- math_betrag(xyz)
     theta <- acos(z/r)
+    names(theta) <- NULL
     phi   <- atan2(y,x)
     if(DEG){
       return(c(theta = theta/pi*180, phi = phi/pi*180 ,r = r))

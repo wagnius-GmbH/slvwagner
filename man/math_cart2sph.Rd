@@ -23,7 +23,7 @@ Transform Cartesian to spherical coordinates according to international physics 
 }
 \examples{
 math_cart2sph(c(1,1,1), DEG = TRUE)
-rbind(c(1,0.5,0.1),
+rbind(c(1,1,1),
       c(1,0.2,0.6))|>
    math_cart2sph()
 }
