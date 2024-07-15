@@ -448,7 +448,7 @@ math_sph2cart <- function (tpr)
 #'    math_cart2sph()
 #' @export
 
-math_cart2sph <- function (xyz)
+math_cart2sph <- function (xyz, DEG = FALSE)
 {
   stopifnot(is.numeric(xyz))
   if (is.vector(xyz) && length(xyz) == 3) {
@@ -458,7 +458,13 @@ math_cart2sph <- function (xyz)
     r     <- math_betrag(xyz)
     theta <- acos(z/r)
     phi   <- atan2(y,x)
-    return(c(theta = theta, phi = phi ,r = r))
+
+    if(DEG){
+      return(c(theta = theta/pi*180, phi = phi/pi*180 ,r = r))
+    }else{
+      return(c(theta = theta, phi = phi ,r = r))
+    }
+
   }
   else if (is.matrix(xyz) && ncol(xyz) == 3) {
     x <- xyz[, 1]
@@ -470,7 +476,13 @@ math_cart2sph <- function (xyz)
       as.vector()
     theta <- acos(z/r)
     phi   <- atan2(y,x)
-    return(cbind(theta, phi, r))
+
+    if(DEG){
+      return(c(theta = theta/pi*180, phi = phi/pi*180 ,r = r))
+    }else{
+      return(c(theta = theta, phi = phi ,r = r))
+    }
+
   }
   else stop("Input must be a vector of length 3 or a matrix with 3 columns.")
 }
