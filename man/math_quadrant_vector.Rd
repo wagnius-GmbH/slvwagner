@@ -17,7 +17,7 @@ Finds the quadrant of vector. If the vector is a principle axis, it returns the 
 }
 \examples{
 math_quadrant_vector(c(1,1))
-x <- expand.grid(x = -1:1, y = -1:1)
+x <- expand.grid(x = -1:1, y = -1:1)|>as.matrix()
 cbind(x, result = x|>apply(1,math_quadrant_vector))
 }
 \author{

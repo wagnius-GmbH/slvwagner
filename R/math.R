@@ -99,7 +99,7 @@ math_magnitude <- function(x){
 
 math_circle_from3points<-function(x){
   stopifnot(is.numeric(x))
-  if(is.matrix(x) & nrow(x)==3){
+  if(is.matrix(x) & nrow(x)==3 & ncol(x) == 2){
     A <- cbind(c(1,1,1), x)
     b <- c(-(A[1,2]^2+A[1,3]^2),
            -(A[2,2]^2+A[2,3]^2),
@@ -256,7 +256,7 @@ math_rot_transform <- function(x, rot_matrix){
 #' @returns
 #' Returns Quadrant of vector(s)
 #' @examples math_quadrant_vector(c(1,1))
-#' x <- expand.grid(x = -1:1, y = -1:1)
+#' x <- expand.grid(x = -1:1, y = -1:1)|>as.matrix()
 #' cbind(x, result = x|>apply(1,math_quadrant_vector))
 #' @export
 
@@ -300,10 +300,10 @@ math_quadrant_vector  <- function(x){
 #' @returns
 #' Returns Quadrant(s) of vector(s)
 #' @examples
-#' data.frame(x = c(1,-1),y = c(1,-1))|>math_quadrant()
+#' rbind(x = c(1,-1),y = c(1,-1))|>math_quadrant()
 #' math_quadrant(c(1,0))
 #' math_quadrant(c(1,0,12))
-#' m <- expand.grid(x = -1:1, y = -1:1)
+#' m <- expand.grid(x = -1:1, y = -1:1)|>as.matrix()
 #' cbind(m, result = math_quadrant(m))
 #' @export
 
@@ -369,12 +369,12 @@ math_angle_quadrant_vector  <- function(x){
 #' matrix of angle(s)
 #' @examples
 #' math_angle_quadrant(c(1,1))/pi*180
-#' x <- expand.grid(x = -1:1, y = -1:1)
+#' x <- expand.grid(x = -1:1, y = -1:1)|>as.matrix()
 #' cbind(x, result = math_angle_quadrant(x))
 #' @export
 
 math_angle_quadrant  <- function(x){
-  stopifnot(is.numeric(x))
+  stopifnot(is.numeric(x)||is.matrix())
   if(is.null(dim(x))){ # check if only single vector
     math_angle_quadrant_vector(x)
   }else { # check if matrix and numerical values
@@ -687,7 +687,6 @@ math_polynom_round <- function(poly,round_digits = 9) {
 #' @export
 
 math_polynom_from_roots <- function(roots,round_digits=9){
-  stopifnot(is.numeric(poly))
   stopifnot(is.numeric(round_digits))
   ###################################################################
   # convert to list
@@ -838,7 +837,7 @@ math_polynom_from_roots <- function(roots,round_digits=9){
 #' @export
 
 math_nonlinear_vector <- function(c_start, c_end, n){
-  stopifnot(is.character(c_start))
+  stopifnot(is.numeric(c_start))
   stopifnot(is.numeric(c_end))
   stopifnot(is.numeric(n))
   a <- (c_end/c_start)^(1/(n-1))
