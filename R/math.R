@@ -459,6 +459,7 @@ math_cart2sph <- function (xyz, DEG = FALSE)
     theta <- acos(z/r)
     names(theta) <- NULL
     phi   <- atan2(y,x)
+    names(phi) <- NULL
     if(DEG){
       return(c(theta = theta/pi*180, phi = phi/pi*180 ,r = r))
     }else{
