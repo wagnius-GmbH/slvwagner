@@ -210,4 +210,112 @@ r_clear_terminal <- function(){
 
 
 
-
+#'
+#' ###################################################################
+#' #' find all source may be included in file
+#' #'
+#' #' @name r_find_all_source
+#' #' @param c_filePath file pathe to the source file
+#' #' @export
+#' r_find_all_source <- function(c_filePath) {
+#'
+#'   c_original_path <- getwd()
+#'
+#'   c_path <- strsplit(c_filePath,"/")|>
+#'     unlist()
+#'
+#'   c_path <- c_path[1:(length(c_path)-1)]
+#'   c_path|>
+#'     paste0(collapse = "/")|>
+#'     setwd()
+#'
+#'   extract_source <- function(input_string) {
+#'     # Use a regular expression to extract the path within quotes
+#'     match <- regmatches(input_string, regexpr('(?<=").*?(?=")', input_string, perl = TRUE))
+#'     return(match)
+#'   }
+#'
+#'   read_source <- function(c_path, c_file) {
+#'     file_path <- if (c_path == "") c_file else file.path(c_path, c_file)
+#'     c_raw <- readLines(file_path, warn = FALSE)
+#'     return(c_raw)
+#'   }
+#'
+#'   check_source <- function(c_raw) {
+#'     indices <- which(grepl('source\\(["\'](.+?)["\']\\)', c_raw, perl = TRUE))
+#'     if (length(indices) == 0) {
+#'       return(NULL)
+#'     }
+#'
+#'     links <- sapply(c_raw[indices], extract_source, USE.NAMES = FALSE)
+#'     links <- links[!grepl("#", links) & !grepl("clc.R", links)]
+#'
+#'     if (length(links) == 0) {
+#'       return(NULL)
+#'     }
+#'
+#'     df_index <- data.frame(
+#'       index = indices,
+#'       link = links,
+#'       stringsAsFactors = FALSE
+#'     )
+#'
+#'     return(df_index)
+#'   }
+#'
+#'   find_connected_source_ <- function(c_path, c_file) {
+#'     c_raw <- read_source(c_path, c_file)
+#'     df_index <- check_source(c_raw)
+#'
+#'     if (!is.null(df_index)) {
+#'       input_file <- if (c_path != "") file.path(c_path, c_file) else c_file
+#'       df_index$input_file <- input_file
+#'       df_index$checked <- FALSE
+#'       return(df_index)
+#'     } else {
+#'       return(NULL)
+#'     }
+#'   }
+#'
+#'   find_connected_source <- function(c_filePath) {
+#'     if (grepl("/", c_filePath)) {
+#'       components <- strsplit(c_filePath, "/", fixed = TRUE)[[1]]
+#'       c_path <- paste(head(components, -1), collapse = "/")
+#'       c_file <- tail(components, 1)
+#'       return(find_connected_source_(c_path, c_file))
+#'     } else {
+#'       return(find_connected_source_("", c_filePath))
+#'     }
+#'   }
+#'
+#'   # Initialize a data frame to track sources
+#'   df_source <- data.frame(
+#'     index = NA,
+#'     link = c_filePath,
+#'     input_file = "",
+#'     checked = FALSE,
+#'     level = 1L,
+#'     stringsAsFactors = FALSE
+#'   )
+#'
+#'   cnt <- 1L
+#'   while (TRUE) {
+#'     df_temp <- df_source[!df_source$checked, ]
+#'
+#'     if (nrow(df_temp) > 0) {
+#'       df_index <- find_connected_source(df_temp$link[1])
+#'       df_source$checked[df_source$link == df_temp$link[1]] <- TRUE
+#'
+#'       if (!is.null(df_index)) {
+#'         cnt <- cnt + 1
+#'         df_index$level <- cnt
+#'         df_source <- rbind(df_source, df_index)
+#'       }
+#'     } else {
+#'       break
+#'     }
+#'   }
+#'   setwd(c_original_path)
+#'   return(df_source)
+#' }
+#'
