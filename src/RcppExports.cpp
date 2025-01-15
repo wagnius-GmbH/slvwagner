@@ -10,6 +10,23 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// pendulum_motion
+NumericMatrix pendulum_motion(const int L, const double delta_t, const double THETA_0, const double THETA_DOT_0, const double mu, const double calculation_stop, const int nb_return_values);
+RcppExport SEXP _slvwagner_pendulum_motion(SEXP LSEXP, SEXP delta_tSEXP, SEXP THETA_0SEXP, SEXP THETA_DOT_0SEXP, SEXP muSEXP, SEXP calculation_stopSEXP, SEXP nb_return_valuesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const double >::type delta_t(delta_tSEXP);
+    Rcpp::traits::input_parameter< const double >::type THETA_0(THETA_0SEXP);
+    Rcpp::traits::input_parameter< const double >::type THETA_DOT_0(THETA_DOT_0SEXP);
+    Rcpp::traits::input_parameter< const double >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const double >::type calculation_stop(calculation_stopSEXP);
+    Rcpp::traits::input_parameter< const int >::type nb_return_values(nb_return_valuesSEXP);
+    rcpp_result_gen = Rcpp::wrap(pendulum_motion(L, delta_t, THETA_0, THETA_DOT_0, mu, calculation_stop, nb_return_values));
+    return rcpp_result_gen;
+END_RCPP
+}
 // find_edges_2D
 LogicalVector find_edges_2D(const LogicalVector c_search, const int n_col);
 RcppExport SEXP _slvwagner_find_edges_2D(SEXP c_searchSEXP, SEXP n_colSEXP) {
@@ -61,6 +78,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_slvwagner_pendulum_motion", (DL_FUNC) &_slvwagner_pendulum_motion, 7},
     {"_slvwagner_find_edges_2D", (DL_FUNC) &_slvwagner_find_edges_2D, 2},
     {"_slvwagner_find_edges_3D", (DL_FUNC) &_slvwagner_find_edges_3D, 2},
     {"_slvwagner_calc_roots_from_seeds_C", (DL_FUNC) &_slvwagner_calc_roots_from_seeds_C, 3},
