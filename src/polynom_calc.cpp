@@ -607,16 +607,17 @@ plot(result)
 
 #######
 # seeds
-c_dpi <- 200
-seeds <- expand.grid(seq(-2,2, length.out = c_dpi),
-                    seq(-2,2, length.out = c_dpi))
-seeds <- complex(real = seeds$Var1, imaginary = seeds$Var2)
+n <- 200
+seeds <- expand.grid(re = seq(-2,2, length.out = n),
+                     im = seq(-2,2, length.out = n)
+                     )
+seeds <- complex(real = seeds$re, imaginary = seeds$im)
 
 digits <- 6
 result <- microbenchmark::microbenchmark(
  "calc_it_V2 C" = seeds|>calc_it_V2(roots,100,digits),
  "calc_it_V3 C" = seeds|>calc_it_V3(roots,100,digits),
- times = 10
+ times = 20
 )
 result
 plot(result)

@@ -75,6 +75,23 @@ pendulum_motion <- function(L, delta_t, THETA_0, THETA_DOT_0, mu, calculation_st
     .Call(`_slvwagner_pendulum_motion`, L, delta_t, THETA_0, THETA_DOT_0, mu, calculation_stop, nb_return_values)
 }
 
+#' @name cufft
+#' @title Perform a 1D FFT using CUFFT
+#' @description This function uses CUDA's CUFFT library to compute the 1D FFT on a given set of data.
+#' @param n Integer. The number of elements in the FFT.
+#' @param inverse Logical. Whether to compute the inverse FFT (TRUE) or forward FFT (FALSE).
+#' @param h_idata_re Numeric vector. The real part of the input data.
+#' @param h_idata_im Numeric vector. The imaginary part of the input data.
+#' @param h_odata_re Numeric vector. The real part of the output data.
+#' @param h_odata_im Numeric vector. The imaginary part of the output data.
+#' @return A list with the real and imaginary parts of the transformed data.
+#' @export
+NULL
+
+cufft <- function(n, inverse, h_idata_re, h_idata_im, h_odata_re, h_odata_im) {
+    invisible(.Call(`_slvwagner_cufft`, n, inverse, h_idata_re, h_idata_im, h_odata_re, h_odata_im))
+}
+
 #' find_edges_2D
 #' @name find_edges_2D
 #' @title find_edges_2D

@@ -44,6 +44,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cufft
+void cufft(Rcpp::IntegerVector n, bool inverse, Rcpp::NumericVector h_idata_re, Rcpp::NumericVector h_idata_im, Rcpp::NumericVector h_odata_re, Rcpp::NumericVector h_odata_im);
+RcppExport SEXP _slvwagner_cufft(SEXP nSEXP, SEXP inverseSEXP, SEXP h_idata_reSEXP, SEXP h_idata_imSEXP, SEXP h_odata_reSEXP, SEXP h_odata_imSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type n(nSEXP);
+    Rcpp::traits::input_parameter< bool >::type inverse(inverseSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type h_idata_re(h_idata_reSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type h_idata_im(h_idata_imSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type h_odata_re(h_odata_reSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type h_odata_im(h_odata_imSEXP);
+    cufft(n, inverse, h_idata_re, h_idata_im, h_odata_re, h_odata_im);
+    return R_NilValue;
+END_RCPP
+}
 // find_edges_2D
 LogicalVector find_edges_2D(const LogicalVector c_search, const int n_col);
 RcppExport SEXP _slvwagner_find_edges_2D(SEXP c_searchSEXP, SEXP n_colSEXP) {
@@ -235,6 +250,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_slvwagner_Flugbahn", (DL_FUNC) &_slvwagner_Flugbahn, 7},
     {"_slvwagner_pendulum_motion", (DL_FUNC) &_slvwagner_pendulum_motion, 7},
+    {"_slvwagner_cufft", (DL_FUNC) &_slvwagner_cufft, 6},
     {"_slvwagner_find_edges_2D", (DL_FUNC) &_slvwagner_find_edges_2D, 2},
     {"_slvwagner_find_edges_3D", (DL_FUNC) &_slvwagner_find_edges_3D, 2},
     {"_slvwagner_f_ableitung", (DL_FUNC) &_slvwagner_f_ableitung, 1},
