@@ -157,7 +157,7 @@ NumericMatrix Flugbahn
     s_y.push_back(s_y[i - 1] + v_y[i] * t); // alte Position + v_y*t
 
     //Abbruch wenn die alte Distanz kleiner als die neue
-    if (dist_ < betrag(target_vector[0] - s_x[i], target_vector[1] - s_y[i])||_isnan(v_x[i])) {
+    if (dist_ < betrag(target_vector[0] - s_x[i], target_vector[1] - s_y[i]) || std::isnan(v_x[i])) {
       run = 0;
       //Zeit
       vec_t.push_back(t * i);
