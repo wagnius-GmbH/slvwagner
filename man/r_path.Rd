@@ -7,18 +7,38 @@
 r_path(path = "clipboard")
 }
 \arguments{
-\item{path}{Path can be copied to clipboard}
+\item{path}{Either "clipboard" to read from clipboard, or a character string containing a file path.
+Default is "clipboard".}
 }
 \value{
-Character vector of R compatible file path
+Character vector of R compatible file path with forward slashes
 }
 \description{
-Copy the file path from windows explorer to your clipboard and call the function with no argument.
-The R compatible file Path will be returned
+Copy a Windows file path to your clipboard and call the function to convert backslashes to forward slashes.
+The converted path is returned and (on Windows) automatically copied back to your clipboard.
+}
+\details{
+On Windows, the function reads from and writes to the clipboard automatically.
+On macOS, it uses \code{pbpaste} to read from clipboard (writing to clipboard is not supported).
+On Linux, it uses \code{xclip} to read from clipboard (must be installed, writing not supported).
+
+If you're on Linux and want clipboard support, install xclip:
+\code{sudo apt-get install xclip}
 }
 \examples{
-# Copy file path to the cliboard and call the function.
-utils::writeClipboard("C:\\\\Windows")
-r_path()
+\donttest{
+# Windows: Copy a path to clipboard first, then run:
+if (.Platform$OS.type == "windows") {
+  utils::writeClipboard("C:\\\\Windows")
+  r_path()
+}
+
+# Provide a path directly (works on all platforms)
 r_path("C:\\\\Windows")
+r_path("C:/Windows")
+r_path("D:/My Documents/file.txt")
+
+# Example with network path
+r_path("\\\\\\\\server\\\\share\\\\folder")
+}
 }

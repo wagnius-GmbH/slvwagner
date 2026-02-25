@@ -2,24 +2,70 @@
 #' Convert Windows file path to R compatible file path
 #'
 #' @name r_path
-#' @description Copy the file path from windows explorer to your clipboard and call the function with no argument.
-#' The R compatible file Path will be returned
-#' @param path Path can be copied to clipboard
-#' @return Character vector of R compatible file path
-#' @examples # Copy file path to the cliboard and call the function.
-#' utils::writeClipboard("C:\\Windows")
-#' r_path()
+#' @description Copy a Windows file path to your clipboard and call the function to convert backslashes to forward slashes.
+#' The converted path is returned and (on Windows) automatically copied back to your clipboard.
+#'
+#' @param path Either "clipboard" to read from clipboard, or a character string containing a file path.
+#'        Default is "clipboard".
+#'
+#' @return Character vector of R compatible file path with forward slashes
+#'
+#' @details
+#' On Windows, the function reads from and writes to the clipboard automatically.
+#' On macOS, it uses \code{pbpaste} to read from clipboard (writing to clipboard is not supported).
+#' On Linux, it uses \code{xclip} to read from clipboard (must be installed, writing not supported).
+#'
+#' If you're on Linux and want clipboard support, install xclip:
+#' \code{sudo apt-get install xclip}
+#'
+#' @examples
+#' \donttest{
+#' # Windows: Copy a path to clipboard first, then run:
+#' if (.Platform$OS.type == "windows") {
+#'   utils::writeClipboard("C:\\Windows")
+#'   r_path()
+#' }
+#'
+#' # Provide a path directly (works on all platforms)
 #' r_path("C:\\Windows")
+#' r_path("C:/Windows")
+#' r_path("D:/My Documents/file.txt")
+#'
+#' # Example with network path
+#' r_path("\\\\server\\share\\folder")
+#' }
 #' @export
 
 r_path <- function(path = "clipboard") {
+  # Read from clipboard or use provided path
   if (path == "clipboard") {
-    y <- utils::readClipboard()
+    y <- if (.Platform$OS.type == "windows") {
+      utils::readClipboard()
+    } else if (Sys.info()["sysname"] == "Darwin") {
+      # macOS
+      system("pbpaste", intern = TRUE)
+    } else {
+      # Linux/Unix - try xclip
+      tryCatch({
+        system("xclip -selection clipboard -o", intern = TRUE)
+      }, error = function(e) {
+        stop("Clipboard access requires 'xclip' on Linux. Install with: sudo apt-get install xclip")
+      }, warning = function(w) {
+        stop("Clipboard access requires 'xclip' on Linux. Install with: sudo apt-get install xclip")
+      })
+    }
   } else {
     y <- path
   }
+
+  # Convert backslashes to forward slashes
   x <- chartr("\\", "/", y)
-  utils::writeClipboard(x)
+
+  # Write back to clipboard only on Windows (as per original design)
+  if (.Platform$OS.type == "windows" && path == "clipboard") {
+    utils::writeClipboard(x)
+  }
+
   return(x)
 }
 
@@ -65,21 +111,73 @@ round5Rappen <- function(x, round_digits = 9) {
 #' Convert R path to windows compatible path
 #'
 #' @name r_win_path
-#' @description Function to convert R path to windows compatible path.
-#' @param  path R path character vector
-#' @return Windows compatible character vector
+#' @description Convert an R-style path (with forward slashes) to Windows-style (with backslashes).
+#'              On Windows, can optionally read from and write to clipboard.
+#'
+#' @param path Either "clipboard" to read from clipboard (Windows only), or a character string
+#'        containing a file path. Default is "clipboard".
+#' @param write_back Logical; if TRUE, copy result back to clipboard (Windows only). Default is TRUE.
+#'
+#' @return Character vector of Windows-compatible path with backslashes
+#'
+#' @details
+#' On Windows, when path = "clipboard", the function reads from and optionally writes back to the clipboard.
+#' On macOS/Linux, the clipboard functionality is disabled and you must provide a path directly.
+#'
+#' For Linux clipboard support, install xclip: \code{sudo apt-get install xclip}
+#'
 #' @examples
+#' \donttest{
+#' # Basic conversion with direct input (works on all platforms)
 #' r_win_path(tempdir())
+#' r_win_path("/home/user/documents/file.txt")
+#'
+#' # Windows-only clipboard examples
+#' if (.Platform$OS.type == "windows") {
+#'   # Copy a path to clipboard first, then convert
+#'   utils::writeClipboard("C:/Windows")
+#'   r_win_path()
+#'
+#'   # Convert without writing back to clipboard
+#'   r_win_path("C:/Windows", write_back = FALSE)
+#' }
+#' }
 #' @export
 
-r_win_path <- function(path = "clipboard"){
+r_win_path <- function(path = "clipboard", write_back = TRUE) {
+  # Read from clipboard or use provided path
   if (path == "clipboard") {
-    y <- utils::readClipboard()
-  }else{
+    if (.Platform$OS.type == "windows") {
+      y <- utils::readClipboard()
+    } else if (Sys.info()["sysname"] == "Darwin") {
+      # macOS - try pbpaste
+      y <- tryCatch({
+        system("pbpaste", intern = TRUE)
+      }, error = function(e) {
+        stop("Clipboard reading on macOS requires pbpaste (should be built-in)")
+      })
+    } else {
+      # Linux - try xclip
+      y <- tryCatch({
+        system("xclip -selection clipboard -o", intern = TRUE)
+      }, error = function(e) {
+        stop("Clipboard reading on Linux requires xclip. Install with: sudo apt-get install xclip")
+      })
+    }
+  } else {
     y <- path
   }
-  x <- chartr("/","\\", y)
-  utils::writeClipboard(x)
+
+  # Convert forward slashes to backslashes
+  x <- chartr("/", "\\", y)
+
+  # Write back to clipboard only on Windows when requested and when reading from clipboard
+  if (write_back && .Platform$OS.type == "windows" && path == "clipboard") {
+    utils::writeClipboard(x)
+  } else if (write_back && path == "clipboard" && .Platform$OS.type != "windows") {
+    warning("Clipboard writing is only supported on Windows")
+  }
+
   return(x)
 }
 

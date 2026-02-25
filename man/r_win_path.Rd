@@ -4,17 +4,41 @@
 \alias{r_win_path}
 \title{Convert R path to windows compatible path}
 \usage{
-r_win_path(path = "clipboard")
+r_win_path(path = "clipboard", write_back = TRUE)
 }
 \arguments{
-\item{path}{R path character vector}
+\item{path}{Either "clipboard" to read from clipboard (Windows only), or a character string
+containing a file path. Default is "clipboard".}
+
+\item{write_back}{Logical; if TRUE, copy result back to clipboard (Windows only). Default is TRUE.}
 }
 \value{
-Windows compatible character vector
+Character vector of Windows-compatible path with backslashes
 }
 \description{
-Function to convert R path to windows compatible path.
+Convert an R-style path (with forward slashes) to Windows-style (with backslashes).
+On Windows, can optionally read from and write to clipboard.
+}
+\details{
+On Windows, when path = "clipboard", the function reads from and optionally writes back to the clipboard.
+On macOS/Linux, the clipboard functionality is disabled and you must provide a path directly.
+
+For Linux clipboard support, install xclip: \code{sudo apt-get install xclip}
 }
 \examples{
+\donttest{
+# Basic conversion with direct input (works on all platforms)
 r_win_path(tempdir())
+r_win_path("/home/user/documents/file.txt")
+
+# Windows-only clipboard examples
+if (.Platform$OS.type == "windows") {
+  # Copy a path to clipboard first, then convert
+  utils::writeClipboard("C:/Windows")
+  r_win_path()
+
+  # Convert without writing back to clipboard
+  r_win_path("C:/Windows", write_back = FALSE)
+}
+}
 }
