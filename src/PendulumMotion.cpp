@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 #include <vector>
+#include <cmath>      // for std::abs
 #include <Rmath.h>
 
 using namespace Rcpp;
@@ -39,61 +40,65 @@ double get_theta_double_dot(double theta, double theta_dot, double L, double mu)
 /* this fixes it */
 // [[Rcpp::plugins("cpp11")]]
 // [[Rcpp::export]]
- NumericMatrix pendulum_motion(const int L,
+NumericMatrix pendulum_motion(const int L,
                                const double delta_t,
                                const double THETA_0, const double THETA_DOT_0,
                                const double mu,
                                const double calculation_stop,
                                const int nb_return_values)
- { // Werte die abgespeichert werden und an R zurueckgegeben werden
+ {
+   // Werte die abgespeichert werden und an R zurueckgegeben werden
    const int column = 3;             // colums of matrix
    double theta = (THETA_0);         // angel
    double theta_dot = (THETA_DOT_0); // angular velocity
    double theta_double_dot;          // angular acceleration
 
    // variable length vectors
-   std::vector<double> p_theta (1,theta);          // angel (Position of Pendulum)
-   std::vector<double> p_theta_dot (1,theta_dot);  // angular velocity
+   std::vector<double> p_theta(1, theta);          // angel (Position of Pendulum)
+   std::vector<double> p_theta_dot(1, theta_dot);  // angular velocity
 
-   int stop_1 = abs(theta_dot) > calculation_stop;
-   int stop_2 = abs(fmod(theta, -pi / 2)) > calculation_stop;
+   // FIXED: Changed abs() to std::abs()
+   int stop_1 = std::abs(theta_dot) > calculation_stop;
+   int stop_2 = std::abs(std::fmod(theta, -pi / 2)) > calculation_stop;
 
-   while ((int)stop_1 || (int)stop_2)
+   while (stop_1 || stop_2)
    {
      theta_double_dot = get_theta_double_dot(theta, theta_dot, (L), (mu)); // angular acceleration
      theta = theta + (theta_dot * (delta_t));
      theta_dot = theta_dot + (theta_double_dot * (delta_t));
      p_theta.push_back(theta);
      p_theta_dot.push_back(theta_dot);
-     stop_1 = abs(theta_dot)  > calculation_stop;
-     stop_2 = abs(fmod(theta , -pi / 2)) > calculation_stop;
+
+     // FIXED: Changed abs() to std::abs()
+     stop_1 = std::abs(theta_dot) > calculation_stop;
+     stop_2 = std::abs(std::fmod(theta, -pi / 2)) > calculation_stop;
    }
 
    // Wieviele Werte sollen an R zurückgegeben werden
    //Anzahl Werte
    int vec_size = nb_return_values;
-   if(nb_return_values == 0)
+   if (nb_return_values == 0)
    {
      vec_size = p_theta.size();
    }
 
    //Matrix an R
-   NumericMatrix result(vec_size,column);
-   colnames(result) = CharacterVector({"time","angle","angular velocity"});
+   NumericMatrix result(vec_size, column);
+   colnames(result) = CharacterVector({"time", "angle", "angular velocity"});
 
-   //Alle Werte zrückgeben
-   if(nb_return_values == 0)
+   //Alle Werte zurückgeben
+   if (nb_return_values == 0)
    {
-     result(0,0) = 0;                  // time
-     result(0,1) = p_theta[0];         // angel (pendulum position)
-     result(0,2) = p_theta_dot[0];     // angular velocity
+     result(0, 0) = 0;                  // time
+     result(0, 1) = p_theta[0];         // angel (pendulum position)
+     result(0, 2) = p_theta_dot[0];     // angular velocity
 
      //Abfüllen aller Wert
-     for(long int i = 1; i < vec_size; i++)
+     for (long int i = 1; i < vec_size; i++)
      {
-       result(i,0) = delta_t*i;          // time
-       result(i,1) = p_theta[i];         // angel (pendulum position)
-       result(i,2) = p_theta_dot[i];     // angular velocity
+       result(i, 0) = delta_t * i;          // time
+       result(i, 1) = p_theta[i];         // angel (pendulum position)
+       result(i, 2) = p_theta_dot[i];     // angular velocity
      }
    }
    else // Nur die vorgegebenen Anzahl Werte zurückgeben
@@ -103,11 +108,11 @@ double get_theta_double_dot(double theta, double theta_dot, double L, double mu)
      //Rcout << "\nvec_size: " << vec_size << "\n************************\n";
 
      //Abfüllen der Werte
-     for(long int i = 0; i < nb_return_values; i++)
+     for (long int i = 0; i < nb_return_values; i++)
      {
-       result(i,0) = delta_t*i*ratio;      // time
-       result(i,1) = p_theta[i*ratio];     // angel (pendulum position)
-       result(i,2) = p_theta_dot[i*ratio]; // angular velocity
+       result(i, 0) = delta_t * i * ratio;    // time
+       result(i, 1) = p_theta[i * ratio];     // angel (pendulum position)
+       result(i, 2) = p_theta_dot[i * ratio]; // angular velocity
      }
    }
    return result;
@@ -129,7 +134,7 @@ pendulum_motion(L, delta_t, THETA_0, THETA_DOT_0, mu, calculation_stop, nb_retur
 pendulum_motion(L, delta_t, THETA_0, THETA_DOT_0, mu, calculation_stop, nb_return_values)|>
   plot(type = "l", main = "RccpTest: Pendulum Motion",xlab = "t", ylab = "angle")
 
-results <- microbenchmark::microbenchmark(#RcExtentions = RCExtension::pendulum_motion(t , L , delta_t , THETA_0 , THETA_DOT_0 , mu ),
+results <- microbenchmark::microbenchmark(
   RcppTest_all = pendulum_motion(L, delta_t, THETA_0, THETA_DOT_0, mu, calculation_stop, nb_return_values = 0),
   RcppTest_n   = pendulum_motion(L, delta_t, THETA_0, THETA_DOT_0, mu, calculation_stop, nb_return_values = nb_return_values),
   times = 3)
