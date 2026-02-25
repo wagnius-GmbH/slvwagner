@@ -19,6 +19,7 @@ StripTrailingWhitespace: Yes
 BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
+PackageCheckArgs: _R_CHECK_SYSTEM_CLOCK_" = "FALSE"
 PackageRoxygenize: rd,collate,namespace,vignette
 
 SpellingDictionary: en_GB
