@@ -1,7 +1,7 @@
 Type: Package
 Package: slvwagner
 Title: All Stuff that I`m Missing
-Version: 0.9.7.3
+Version: 0.9.7.4
 Authors@R: 
     person(given = "Florian",
            family = "Wagner",
